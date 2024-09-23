@@ -46,3 +46,52 @@ body {
     line-height: normal;
     cursor: pointer;
 }
+
+@media screen and (max-width: 1440px) {
+    .navbar {
+        padding: 0 15rem;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .umcLogo {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .navbar {
+        padding: 0 10rem;
+    }
+
+    .navbar ul{
+        gap: 1.5rem;
+    }
+    
+    .navbar li {
+        font-size: 0.85rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 0 3rem;
+    }
+    
+    .navbar li {
+        font-size: 0.75rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 0 1rem;
+    }
+
+    .navbar ul{
+        gap: 1rem;
+    }
+    
+    .navbar li {
+        font-size: 0.65rem;
+    }
+}
