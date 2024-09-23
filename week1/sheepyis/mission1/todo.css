@@ -1,0 +1,142 @@
+body {
+    background-color: #E1E7F5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#title {
+    color: black;
+    margin: 6.95vw 0;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+hr {
+    width: 70%;
+    height: 0.1vw;
+    background-color: #B5D2ED;
+    border: none;
+}
+
+input {
+    width: 50%;
+    height: 3rem;
+    background-color: white;
+    outline: 0.1vw solid black;
+    margin: 1.65vw 0;
+    padding: 0 1vw;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: #A19D9D;
+
+    &::placeholder {
+        font-style: italic;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    input {
+        width: 60%;
+        height: 2rem;
+        font-size: 0.6rem;
+    }
+}
+
+.container {
+    width: 50%;
+    display: flex;
+}
+
+@media screen and (max-width: 767px) {
+    .container {
+        width: 60%;
+    }
+}
+
+#todo, 
+#finish {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#todoTitle, 
+#finishTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    border-bottom: 0.1vw solid #B5D2ED;
+}
+
+@media screen and (max-width: 767px) {
+    #todoTitle, 
+    #finishTitle {
+        font-size: 0.5rem;
+    }
+}
+
+.todoContainer, 
+.finishContainer {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* js에서 만든 요소 */
+.todoItem, 
+.finishItem {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.25vw solid #B5D2ED;
+}
+
+@media screen and (max-width: 1439px) {
+    .todoItem,
+    .finishItem{
+        width: 100%;
+    }
+}
+
+#todoDetailTitle,
+#finishDetailTitle {
+    font-size: 1rem;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    width: 65%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 767px) {
+    #todoDetailTitle,
+    #finishDetailTitle {
+        font-size: 0.5rem;
+        width: 60%;
+    }
+}
+
+.finishButton,
+.deleteButton {
+    width: 30%;
+    padding: 0.4rem 0;
+    background-color: #B5D2ED;
+    font-size: 0.8rem;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 767px) {
+    .finishButton,
+    .deleteButton {
+        padding: 0.2rem 0;
+        font-size: 0.5rem;
+    }
+}
