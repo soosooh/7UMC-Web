@@ -27,7 +27,7 @@ body {
     flex-shrink: 0;
 }
 
-.navbar ul{
+.nav-links{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -36,7 +36,7 @@ body {
     gap: 2rem;
 }
 
-.navbar li {
+.nav-links li {
     display: inline;
     color: #FFF;
     font-family: Pretendard;
@@ -47,6 +47,12 @@ body {
     cursor: pointer;
 }
 
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1440px) {
     .navbar {
         padding: 0 15rem;
@@ -54,20 +60,15 @@ body {
 }
 
 @media screen and (max-width: 1024px) {
-    .umcLogo {
-        width: 1.25rem;
-        height: 1.25rem;
-    }
-
     .navbar {
         padding: 0 10rem;
     }
 
-    .navbar ul{
+    .nav-links{
         gap: 1.5rem;
     }
     
-    .navbar li {
+    .nav-links li {
         font-size: 0.85rem;
     }
 }
@@ -76,22 +77,12 @@ body {
     .navbar {
         padding: 0 3rem;
     }
-    
-    .navbar li {
-        font-size: 0.75rem;
-    }
-}
 
-@media screen and (max-width: 480px) {
-    .navbar {
-        padding: 0 1rem;
+    .nav-links {
+        display: none;
     }
 
-    .navbar ul{
-        gap: 1rem;
-    }
-    
-    .navbar li {
-        font-size: 0.65rem;
+    .hamburger {
+        display: flex;
     }
 }
