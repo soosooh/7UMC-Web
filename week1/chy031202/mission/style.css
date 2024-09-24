@@ -1,0 +1,33 @@
+body{
+    background-color: lightcyan;
+    
+}
+h1{
+    text-align: center;
+    color: blue;
+}
+
+#input{
+    font-style: italic;
+    color: gainsboro;
+    width:1000px;
+    height: 50px;
+
+}
+
+#dolist{
+    background-color: lightblue;
+}
+
+h3{
+    text-decoration: underline ;
+}
+
+.todo{
+    display: flex;
+    flex-direction: row;
+    padding-right: 200px;
+    padding-left: 200px;
+    gap: 20px;
+    justify-content: space-between;
+}
