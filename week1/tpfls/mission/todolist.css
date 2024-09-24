@@ -1,0 +1,98 @@
+:root {
+    background: #E1E7F5; 
+    --line-color: #B5D2ED; 
+    --font: 'Inter'; 
+}
+
+body {
+    margin: 20;
+    padding: 0;
+}
+
+.mainTitle {
+    display: flex;
+    justify-content: center; 
+    font-size: 32px;         
+    font-weight: 700;        
+    padding-top: 139px;
+    padding-bottom: 72px;
+    margin: 12px auto;       
+    width: 70%;              
+    border-bottom: 1.5px solid #B5D2ED;
+}
+
+.addToDo {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 25px;
+    width: 50%; 
+    border: 2px solid #000000; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+
+.addToDoInfo {
+    width: 100%; 
+    line-height: normal;
+    padding: 6px;
+    height: 34px;
+    font-size: 24px; 
+}
+
+
+
+.addToDoInfo::placeholder {
+    color: #A19D9D; 
+    font-family: 'Inter'; 
+    font-size: 18px; 
+    
+}
+
+.list {
+    display: flex;
+    justify-content: center; 
+    width: 63%;
+    margin: 0 auto;
+}
+
+.list .activeToDo, .list .doneToDo {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 48%;          
+    text-align: center; 
+    font-weight: 700;
+}
+
+.list .activeTitle, .list .doneTitle {
+    padding: 2px;
+    border-bottom: 1.9px solid var(--line-color); 
+    position: relative; 
+    width:15%;
+}
+
+.list ul {
+    padding: 0;
+    margin: 12px; 
+}
+
+.list li {
+    display: flex;
+    justify-content: space-between; 
+    text-align: center;
+    width: 130%;
+    margin: 7px ;  
+    padding: 15px; 
+    border-bottom: 5px solid var(--line-color); 
+    transform: translateX(-30px); 
+    
+}
+
+.list button {
+    border: none;                  
+    background-color: var(--line-color); 
+    font-family: var(--font);
+    padding: 4px 6px;
+    margin-left: 20px;
+}
