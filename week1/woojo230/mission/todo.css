@@ -1,0 +1,102 @@
+body {
+  background-color: #edf2f7; /* 배경색 */
+  color: #333;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 2rem 0;
+  font-weight: bold;
+}
+
+.header__line {
+  width: 90%;
+  margin: 0 auto;
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+}
+
+/* 검색 바 스타일 */
+.searchBar {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.searchBar input {
+  background: white;
+  width: 70%;
+  height: 40px;
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* list */
+.lists {
+  display: flex;
+  justify-content: space-around; /*목록들 사이 공간을 균등하게 분배*/
+  align-items: flex-start; /* 각 목록이 상단에서 시작 */
+  gap: 50rem; /* 목록들 사이에 50px의 간격 추가 */
+  width: 55%; /*전체 너비를 제한하여 중앙 정렬*/
+  margin: 0 auto; /* 중앙에 위치 */
+  margin-top: 20px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column; /* 텍스트와 목록을 수직으로 배치 */
+  align-items: center; /* 가운데 정렬 */
+  width: 50%;
+}
+
+/* 목록 제목 스타일 */
+.list-container p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-decoration-color: #ccc;
+  text-underline-offset: 0.5rem;
+}
+
+/* 할일 목록과 해낸 일 목록 스타일 */
+.doList,
+.didList {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+}
+
+.doList li,
+.didList li {
+  margin: 10px 0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between; /* 항목과 버튼 간격 조정 */
+  border-bottom: 3px solid #ccc; /* 각 리스트 항목 하단에 밑줄 추가 */
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  align-items: center;
+}
+
+.doList li button,
+.didList li button {
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.doList li button:hover,
+.didList li button:hover {
+  background-color: #ddd;
+}
