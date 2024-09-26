@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: lightgray;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 200px;
+    background-color: #0b0d1b;
+  }
+  
+  .logo img {
+    height: 22px;
+  }
+  
+  .navbar ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar ul li {
+    margin: 0 20px;
+  }
+  
+  .navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  
+  .navbar ul li a:hover {
+    color: #c4c4c4;
+  }
+  
+  .menu-icon {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .menu-icon img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* 반응형 디자인 */
+  @media screen and (max-width: 940px) {
+    .navbar ul {
+      display: none;
+    }
+  
+    .menu-icon {
+      display: block;
+    }
+  }
+  
