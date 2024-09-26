@@ -1,0 +1,88 @@
+/* style.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-size: 1.3em;
+  }
+  
+  .header-menu {
+    display: flex;
+    height: 100px;
+  }
+  
+  .header {
+    width: 30%;
+    background-color: #0F1629;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .menu {
+    width: 70%;
+    background-color: #EF3D4D;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero {
+    background-color: #4C86C6;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* 원하는 height 설정 */
+  }
+  
+  .main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 0; /* 공백 없이 배치 */
+    flex: 1; /* 나머지 공간을 차지하게 설정 */
+  }
+  
+  .main {
+    background-color: #24344B;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+  }
+  
+  .spacer {
+    background-color: white; /* 공백 */
+  }
+  
+  .side-content {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+  }
+  
+  .image {
+    background-color: #C1E4E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .extra {
+    background-color: #4DBD97;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .banner {
+    background-color: #FFD169;
+    color: black;
+    text-align: center;
+    padding: 50px;
+  }
+  
