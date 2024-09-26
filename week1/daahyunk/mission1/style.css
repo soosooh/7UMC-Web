@@ -1,10 +1,10 @@
 body {
     margin: 0;
+    padding-top: 50px;
     font-family: 'Arial', sans-serif;
     background-color: #E2E7F4;
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
