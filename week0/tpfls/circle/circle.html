@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Bouncing Ball Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* 바닥에 맞춰 정렬 */
+            height: 100vh;
+            background-color: white;
+            margin: 0;
+        }
+
+        .ball {
+            width: 50px;
+            height: 50px;
+            background-color: pink;
+            border-radius: 50%; /* 공 모양 */
+            animation: bounce 1s ease-in-out infinite alternate; /* 축약형 애니메이션 속성 */
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0); /* 기본 위치 */
+            }
+            100% {
+                transform: translateY(-150px); /* 위로 튀어오름 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ball"></div>
+</body>
+</html>

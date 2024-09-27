@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skew 예제</title>
+    <style>
+        .skew {
+            width: 100px;
+            height: 100px;
+            background-color: lightpink;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s;
+        }
+
+        .skew:hover {
+            transform: skew(10deg, 10deg); /* 기울이기 */
+        }
+    </style>
+</head>
+<body>
+    <div class="skew">기울이기</div>
+</body>
+</html>
