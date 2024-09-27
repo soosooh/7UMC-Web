@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition Timing Function 예제</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            transition-property: background-color, transform; /* 전환할 속성 */
+            transition-duration: 1s; /* 전환 시간: 1초 */
+            transition-timing-function: ease-in-out; /* 속도 곡선 */
+        }
+
+        .box:hover {
+            background-color: coral; /* 배경색 변경 */
+            transform: scale(1.5); /* 크기 확대 */
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>

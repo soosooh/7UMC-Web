@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation Shorthand Example</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            animation: move 3s ease-in-out 1s infinite alternate; /* 축약형 */
+        }
+
+        @keyframes move {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(200px); background-color: lightblue; }
+            100% { transform: translateX(0); background-color: pink; }
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>

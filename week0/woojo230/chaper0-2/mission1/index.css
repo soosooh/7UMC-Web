@@ -1,0 +1,57 @@
+/* Common */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Header */
+header {
+  width: 100%;
+  display: flex;
+  background-color: rgb(2, 2, 60);
+  justify-content: center;
+  padding: 20px;
+}
+
+.navBar__img {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+}
+
+.menu {
+  display: flex;
+  color: white;
+  font-size: 1.3rem;
+}
+
+.menu li {
+  padding: 1.2rem;
+}
+
+.menu__icon {
+  display: none;
+  font-size: 2rem;
+  color: aliceblue;
+}
+
+@media screen and (max-width: 1260px) {
+  .menu {
+    display: none;
+  }
+
+  .menu__icon {
+    display: flex;
+  }
+}
