@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation Fill Mode Example</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            animation-name: move;
+            animation-duration: 3s;
+            animation-fill-mode: forwards; /* 애니메이션 끝 상태 유지 */
+        }
+
+        @keyframes move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(200px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation Play State Example</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            animation-name: move;
+            animation-duration: 3s;
+            animation-play-state: paused; /* 애니메이션 상태 */
+        }
+
+        @keyframes move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(200px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        // 페이지 로드 후 애니메이션 시작
+        window.onload = function() {
+            const box = document.querySelector('.box');
+            box.style.animationPlayState = 'running'; // 애니메이션 실행
+        };
+    </script>
+</body>
+</html>

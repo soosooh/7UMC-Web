@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block, Inline, Inline-Block 예제</title>
+    <style>
+        .block {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background-color: lightcoral;
+        }
+        .inline {
+            display: inline;
+            width: 100px; /* width가 무시됨 */
+            height: 100px; /* height가 무시됨 */
+            margin: 10px;
+            background-color: lightblue;
+        }
+        .inline-block {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Block 요소</h2>
+    <div class="block">Block</div>
+    <div class="block">Block</div>
+
+    <h2>Inline 요소</h2>
+    <span class="inline">Inline</span>
+    <span class="inline">Inline</span>
+
+    <h2>Inline-Block 요소</h2>
+    <div class="inline-block">Inline-Block</div>
+    <div class="inline-block">Inline-Block</div>
+
+    <!-- CSS 코드 버전 -->
+    <!--
+    .block {
+        display: block;
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        background-color: lightcoral;
+    }
+    .inline {
+        display: inline;
+        width: 100px; /* width가 무시됨 */
+        height: 100px; /* height가 무시됨 */
+        margin: 10px;
+        background-color: lightblue;
+    }
+    .inline-block {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        background-color: lightgreen;
+    }
+    -->
+</body>
+</html>
