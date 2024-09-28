@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Change on Hover</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column; /* 세로 방향으로 정렬 */
+            justify-content: center; /* 세로 중앙 정렬 */
+            align-items: center; /* 가로 중앙 정렬 */
+            height: 100vh; /* 전체 높이 */
+            background-color: white;
+            margin: 0; /* 기본 마진 제거 */
+        }
+
+        .diamond {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            transform: rotate(45deg);
+            margin: 20px;
+            transition: background-color 0.3s ease;
+            cursor: pointer; /* 클릭 가능하게 커서 변경 */
+        }
+
+        .diamond:hover {
+            background-color: lightblue; /* 호버 시 변할 색상 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="diamond"></div>
+    <div class="diamond"></div>
+    <div class="diamond"></div>
+
+</body>
+</html>
