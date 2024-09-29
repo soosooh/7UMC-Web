@@ -1,0 +1,29 @@
+body {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    margin: 10px;
+}
+
+.box1, .box2, .box3 {
+    width: 150px;
+    height: 150px;
+    background-color: pink;
+    transform: rotate(45deg);
+    margin: 35px;
+    transition-property: background-color;
+}
+
+.box2{
+    transition-duration: 1s;
+}
+.box3 {
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+}
+
+.box1:hover, .box2:hover, .box3:hover{
+    background-color: purple;
+
+}

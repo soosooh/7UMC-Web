@@ -1,0 +1,75 @@
+html, body{
+    color: #ffffff;
+    height: 100%;
+    margin: 0;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.headerContainer{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+.header{
+    background-color: #031057;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu{
+    background-color: red;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hero{
+    background-color: #5979d4;
+    display: flex;
+    flex: 3;
+    justify-content: center;
+    align-items: center;
+}
+.mainContainer{
+    display: grid;
+    flex: 3;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+}
+.main{
+    background-color: #121f6b;
+    grid-column: 1/3;
+    grid-row: 1/3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image{
+    grid-column: 4/4;
+    grid-row: 1/2;
+    background-color: #93c7da;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.extra{
+    grid-column:4/4;
+    grid-row: 2/2;
+    background-color: #1a8783;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner{
+    background-color: #dbcd75;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
