@@ -1,0 +1,101 @@
+body {
+    color: white;
+    font-weight: bold;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, main, footer {
+    display: flex;
+}
+
+header, footer {
+    height: 10vh;
+}
+
+header {
+    background-color: black;
+}
+
+.logo {
+    width: 30%;
+    background-color: inherit;
+}
+
+nav {
+    width: 70%;
+    background-color: red;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero, .content {
+    flex: 1;
+}
+
+.hero {
+    background-color: blue;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 20px 1fr; /* 중간에 20px 공백 추가 */
+    gap: 10px;
+}
+
+article {
+    background-color: darkblue;
+}
+
+.white-space {
+    background-color: white;
+}
+
+aside {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.image {
+    background-color: lightblue;
+    color: black;
+}
+
+.extra {
+    background-color: cadetblue;
+    color: black;
+}
+
+footer {
+    background-color: gold;
+    color: black;
+}
+
+.logo, nav, .hero, article, .image, .extra, footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+    
+    .white-space {
+        display: none;
+    }
+    
+    aside {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+}
+
