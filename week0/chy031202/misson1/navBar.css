@@ -1,45 +1,84 @@
+
 .navbar {
 
-    flex-wrap: wrap;
     display: flex;
-    align-items: center;
-    width: 1920px;
+    justify-content: flex-end; 
+    
+    display: flex;
+    
+    width: 100%;
     height: 60px;
 
     background-color: black;
 }
 
 .logo {
-    flex-wrap: wrap;
-    display: inline-block;
-    position: relative;
-    top: 16px;
-    left: 370px;
-    width:28px;
-    height:28px;
+    
+    margin-left: 100em;
+    position: absolute;
+    left: 15px;
+    margin: 15px;
+    width: 10px;
+    height: 10px;
+    
+    margin-left: 10%;
+    text-align: left;
+    
 }
 
-.navbar span {
+.navbar span { 
     
-    margin: 20px;
-    height: 40px;
-    top: 10px;
+    margin: 20px; 
+    text-align: right;
+    justify-content: flex-end;
     
 
     color: white;
 }
+.item {
+    margin: 0 10px;
+    color: white;
+}
+
+.item img {
+    display: none;
+}
+
 
 @media screen and (min-width: 430px){
     .navbar {
         
         
     }
+    
 
     .logo {
-        justify-content: flex-start; /* 로고를 왼쪽에 고정 */
-        padding: 0 50px; /* 더 넓은 화면에서 좌우 여백을 늘림 */
+        width: 2vw;
+        height: 2vw;
         
     }
 }
 
+@media screen and (max-width: 500px){
+    .item {
+        display: none;
+    }
+    .item img {
+        display: inline-block; 
+        position: absolute;
+        left: 15px;
+        margin: 15px;
+        width: 10px;
+        height: 10px;
+        
+        margin-left: 10%;
+    }
+    
+
+    .logo {
+        width: 2vw;
+        height: 2vw;
+        
+    }
+}
 
