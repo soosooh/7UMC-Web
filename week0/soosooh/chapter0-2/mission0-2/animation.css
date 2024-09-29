@@ -1,0 +1,22 @@
+body{
+    display: flex;
+}
+.circle{
+    background-color: purple;
+    margin-top: 500px;
+    margin-left: 200px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    animation-name: exampleAnimation;
+    animation-duration: 1s;
+    animation-direction:normal;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes exampleAnimation{
+    0% { transform: translateY(0); }
+    50%{ transform: translateY(100px); }
+    100% { transform: translateY(0); }
+}
