@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Animation Direction Example</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            animation-name: move;
+            animation-duration: 3s;
+            animation-direction: alternate; /* 애니메이션 방향 */
+        }
+
+        @keyframes move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(200px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>
