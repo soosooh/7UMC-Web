@@ -16,14 +16,14 @@ body {
     width: 100%; 
     max-width: 1920px; 
     height: 60px; 
-    padding: 10px 370px; 
+    padding: 10px 20px; /* 중앙 정렬 및 여백을 더 자연스럽게 조정 */
     gap: 0px; 
     position: relative;
     margin: 0 auto; 
 }
 
 .logo {
-    margin-left: 80px; 
+    margin-left: 20px;
 }
 
 .logo img {
@@ -35,7 +35,6 @@ body {
 .nav-links {
     display: flex;
     list-style: none;
-    margin-right: 50px; 
 }
 
 .nav-links li {
@@ -64,7 +63,7 @@ body {
     }
 
     .hamburger {
-        display: block; 
+        display: block;
     }
 
     .nav-links.open {
