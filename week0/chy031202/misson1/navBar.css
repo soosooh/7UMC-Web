@@ -18,9 +18,8 @@
     position: absolute;
     left: 15px;
     margin: 15px;
-    width: 10px;
-    height: 10px;
-    
+    width: 30px;
+    height: 30px;
     margin-left: 10%;
     text-align: left;
     
@@ -35,50 +34,27 @@
 
     color: white;
 }
-.item {
-    margin: 0 10px;
-    color: white;
-}
 
-.item img {
+
+.menu {
+    margin: 13px;
+    margin-right: 20vw;
     display: none;
-}
-
-
-@media screen and (min-width: 430px){
-    .navbar {
-        
-        
-    }
+    width: 30px;
+    height: 30px;
     
-
-    .logo {
-        width: 2vw;
-        height: 2vw;
-        
-    }
 }
 
-@media screen and (max-width: 500px){
+
+@media screen and (max-width: 1000px){
     .item {
         display: none;
     }
-    .item img {
-        display: inline-block; 
-        position: absolute;
-        left: 15px;
-        margin: 15px;
-        width: 10px;
-        height: 10px;
-        
-        margin-left: 10%;
-    }
     
 
-    .logo {
-        width: 2vw;
-        height: 2vw;
-        
+    .menu{
+        display : flex;
     }
+    
 }
 
