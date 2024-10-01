@@ -1,0 +1,30 @@
+.navbar{
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000629;
+    padding: 10px 20px;
+}
+.navbar img{
+    margin-left: 3rem;
+    height: 2rem;
+}
+.navbar ul {
+    list-style-type: none;
+    padding: 3rem;
+    display: flex;
+}
+.navbar ul li {
+    color: white;
+    margin-right: 2rem;
+}
+
+@media (max-width: 768px) {
+    .navbar ul {
+        display: none;
+    }
+    .navbar {
+        align-items: center;
+    }
+}

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import GlobalStyle from './styles/globalStyles';
 
-import Todo from './pages/todo';
+import Movie from './pages/movie';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <GlobalStyle />
       <Router>
         <Routes>
-          <Route path="/" element={<Todo />} />
+          <Route path="/" element={<Movie />} />
         </Routes>
       </Router>
     </>
