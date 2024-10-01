@@ -1,0 +1,78 @@
+body {
+  background-color: #232649;
+  padding: 1.5vw;
+  
+}
+
+.movieLi{
+
+  list-style: none;
+}
+
+.movieLi li {
+  position: relative;
+  float: left;
+  margin-right: 2vw;
+  margin-bottom: 3vw;
+  /* padding: 2vw; */
+}
+
+.movieLi li .overview {
+  display: none;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.movieLi li:hover::before{
+  content: ''; 
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; 
+  background-color: rgba(0, 0, 0, 0.7); 
+  z-index: 1; 
+  border-radius: 10px;
+
+}
+
+.movieLi li:hover .overview{
+  content: ''; 
+  position: absolute; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; 
+  z-index: 1; 
+  display: block;
+}
+
+
+.poster {
+  margin: 0;
+  display: block;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.docs{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #383B67;
+  color: white;
+  width: 194px;
+  height: 77.41px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.title {
+  padding-left: 15px;
+  width: 6em;
+}
+
+.review {
+  padding-right: 15px;
+}
