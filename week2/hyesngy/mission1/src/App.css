@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  padding: 5rem 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addTodoDiv {
+  width: 70%;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todoList {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todoName {
+  width: 30rem;
+}
+
+.listItem {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: black;
+  align-self: center;
+  margin-right: 1rem;
+}
