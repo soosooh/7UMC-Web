@@ -3,6 +3,7 @@ import colors from "../../styles/colors";
 
 const ButtonTodo = styled.button`
     width: 5rem;
+    height: 3rem;
     background-color: ${colors.buttonColor};
     font-size: 0.8rem;
     border: none;
