@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Input from "./components/Input";
 import Button from "./components/Button";
+import TodoList from "./components/TodoList";
 import "./App.css";
 
 const App = () => {
@@ -54,38 +55,19 @@ const App = () => {
             <Button onClick={() => addTodo()} text="할 일 등록" type="submit" />
           </form>
         </div>
-        <div className="todoList">
-          {todos.map((todo) => (
-            <>
-              <div className="todo" style={{ display: 'flex', gap: '20px' }}>
-                {editingId !== todo.id && (
-                  <div className="todoName" key={todo.id} style={{ display: 'flex', gap: '5px' }}>
-                    <div className="listItem" />
-                    <p>{todo.task}</p>
-                  </div>
-                )}
-                {editingId === todo.id && (
-                  <div className="todoName" key={todo.id} style={{ display: 'flex', gap: '5px' }}>
-                    <div className="listItem" />
-                    <Input value={editText} onChange={(e) => setEditText(e.target.value)} inputType="edit" />
-                  </div>
-                )}
-                <div className="buttonDiv">
-                  <Button onClick={() => deleteTodo(todo.id)} text="삭제하기" />
-                  {editingId === todo.id ? (
-                    <Button onClick={() => updateTodo(editingId, editText)} text="수정완료" />
-                  ) : (
-                    <Button onClick={() => setEditingId(todo.id)} text="수정진행" />
-
-                  )}
-                </div>
-              </div>
-            </>
-          ))}
-        </div>
+        <TodoList
+          todos={todos}
+          editingId={editingId}
+          setEditText={setEditText}
+          setEditingId={setEditingId}
+          deleteTodo={deleteTodo}
+          updateTodo={updateTodo}
+          editText={editText}
+        />
       </div>
     </>
   );
 };
+
 
 export default App;

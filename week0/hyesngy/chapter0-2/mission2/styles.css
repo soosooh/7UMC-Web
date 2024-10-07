@@ -1,86 +1,80 @@
 * {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: #fff;
-}
-
-.container {
-    display: grid;
-    grid-template-rows: 100px auto 300px 100px;
-    grid-template-columns: 1fr;
-    min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #fff;
 }
 
 .content {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
-        "main main . image"
-        "main main . extra";
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "main contentRight";
+  height: 35vh;
+}
+
+.contentRight {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-area: contentRight;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-text,
+.menu,
+.hero,
+.main,
+.image,
+.extra,
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-text {
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex:1;
+  background: black;
+  flex: 1;
 }
 
 .menu {
-    background: crimson;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex:3;
+  background: crimson;
+  flex: 3;
 }
 
 .hero {
-    background: cornflowerblue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 35vh;
+  background: cornflowerblue;
 }
 
 .main {
-    background: navy;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-area: main;
+  background: navy;
+  grid-area: main;
 }
 
 .image {
-    background: lightskyblue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-area: image;
+  background: lightskyblue;
+  grid-row: 1;
+  grid-column: 2;
 }
 
 .extra {
-    background: green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-area: extra;
+  background: green;
+  grid-row: 2;
+  grid-column: 2;
 }
 
 .banner {
-    background: goldenrod;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 20vh;
+  background: goldenrod;
 }
