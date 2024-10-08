@@ -14,7 +14,10 @@ const ListData = ({ movies }) => {
                                 height='251.59px'
                             />
                             <Docs className='docs'>
-                                <Title className='title'>{movie.title}</Title>
+                                <TitleTag>
+                                    <Title className='title'>{movie.title}</Title>
+                                    <Releasedate>{movie.release_date}</Releasedate>
+                                </TitleTag>
                                 <Review className='review'>{movie.vote_average}</Review>
                             </Docs>
 
@@ -28,9 +31,20 @@ const ListData = ({ movies }) => {
     );
 };
 
+const TitleTag = styled.div `
+    display:flex;
+    flex-direction: column;
+    
+`
+
 const Title = styled.span`
     padding-left: 15px;
     width: 6em;
+`
+
+const Releasedate = styled.span`
+    padding-left: 15px;
+    flex-grow: 1;
 `
 
 const Review = styled.span`

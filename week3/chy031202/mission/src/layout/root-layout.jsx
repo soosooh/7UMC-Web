@@ -9,7 +9,10 @@ const RootLayout = () => {
             <Navbar/>
             <MainContent>
                 <Sidbar/>
-                <Outlet/>
+                <OutletContent>
+                    <Outlet/>
+                </OutletContent>
+                
             </MainContent>
             
         </LayoutContainer>
@@ -18,13 +21,24 @@ const RootLayout = () => {
 
 const LayoutContainer = styled.div `
     display: flex;
-    flex-direction: colum;
+    flex-direction: column;
     height: 100vh; 
 `
 
 const MainContent = styled.div`
     display: flex;
-    flex: 1;  // 남은 공간을 차지
+    flex: 1;  
     `
+    
+const OutletContent = styled.div `
+    flex: 1;  // 남은 공간을 Outlet이 차지
+    margin-left: 180px;
+    margin-top : 40px;
+    padding: 20px;
+    width:100%;
+    background-color: #000000;  // 배경색 예시
+    color: white;
+    
+`
 export default RootLayout;
 

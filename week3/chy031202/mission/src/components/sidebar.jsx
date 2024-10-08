@@ -10,7 +10,7 @@ const SidebarComponent =() =>{
             <Search to='/search' onClick = {()=>navigate("/search")}>
                 <FaSearch /> 찾기
             </Search>
-            <MovieContainer>
+            <MovieContainer onClick = {()=>navigate("/category")}>
                 <MdMovie/> 영화
             </MovieContainer>
         </Sidebar>
@@ -25,8 +25,15 @@ const Sidebar = styled.aside `
     background-color: #413F3F;
     display:flex;
     height:100%;
+    flex-direction: column; /* 세로 정렬 */
+    gap: 20px;
+    padding-left : 20px;
+    
 `
 const Search = styled.div `
+    
+`
+const MovieContainer = styled.div `
 `
 
 export default SidebarComponent;
