@@ -3,7 +3,7 @@ import List from '../components/List';
 
 const Popular = () => {
     return (
-        <List url={"popular"} />
+        <List url={"popular"}/>
     );
 };
 
