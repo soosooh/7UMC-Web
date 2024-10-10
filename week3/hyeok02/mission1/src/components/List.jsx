@@ -5,14 +5,13 @@ import PropTypes from 'prop-types';
 import MovieItem from './Item';
 
 const Container = styled.div`
-  width: calc(100vw - 160px);
-  padding: 2.5rem; 
-  justify-content: center;
+  width: calc(100vw - 180px);
+  padding: 3rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  justify-content: center;
+  gap: 20px;
 `;
-
 
 const List = ({ url }) => {
   const [movies, setMovies] = useState([]);

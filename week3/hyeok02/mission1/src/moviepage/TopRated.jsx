@@ -3,7 +3,7 @@ import List from '../components/List';
 
 const TopRated = () => {
     return (
-        <List url={"top_rated"} />
+        <List url={"top_rated"}/>
     );
 };
 
