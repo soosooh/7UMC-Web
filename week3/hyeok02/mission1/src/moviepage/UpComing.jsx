@@ -3,7 +3,7 @@ import List from '../components/List';
 
 const UpComing = () => {
     return (
-        <List url={"upcoming"} />
+        <List url={"upcoming"}/>
     );
 };
 
