@@ -15,7 +15,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <Title>로그인 페이지</Title>
-      {/* 여기에 로그인 폼을 추가할 수 있습니다 */}
+      {}
     </LoginContainer>
   );
 };

@@ -15,7 +15,7 @@ const Signup = () => {
   return (
     <SignupContainer>
       <Title>회원가입 페이지</Title>
-      {/* 여기에 회원가입 폼을 추가할 수 있습니다 */}
+      {}
     </SignupContainer>
   );
 };
