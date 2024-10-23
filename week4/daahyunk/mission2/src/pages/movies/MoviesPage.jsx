@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MovieCard from '../components/movies/MovieCard';
+import MovieCard from '../../components/movies/MovieCard';
 import { MOVIES } from '../mocks/movies';
 
 const MovieListContainer = styled.div`
