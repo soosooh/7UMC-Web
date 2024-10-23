@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // useNavigate를 불러옵니다.
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MovieDetail from './MovieDetail';
@@ -67,11 +68,17 @@ const Overlay = styled.div`
 
 const MovieCard = ({ movie }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();  // useNavigate 훅을 사용하여 경로 이동
+
+  const handleClick = () => {
+    navigate(`/movies/${movie.id}`);  // 클릭 시 movie.id를 기반으로 상세 페이지로 이동
+  };
 
   return (
     <Card
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}  // 카드 클릭 시 상세 페이지로 이동
     >
       <Poster src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
       <Info>
@@ -91,6 +98,7 @@ MovieCard.propTypes = {
     title: PropTypes.string.isRequired,
     overview: PropTypes.string,
     release_date: PropTypes.string, 
+    id: PropTypes.number.isRequired,  // movie.id 추가
   }).isRequired,
 };
 
