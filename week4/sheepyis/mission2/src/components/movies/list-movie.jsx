@@ -1,4 +1,4 @@
-import useMovie from "../../hooks/useMovie";
+import useFetch from "../../hooks/useFetch";
 import styled from "styled-components";
 import ItemMovie from "./item-movie";
 
@@ -10,14 +10,14 @@ const ListContainer = styled.div`
 `;
 
 const ListMovie = ({ url }) => {
-    const { movies, loading, error } = useMovie(url);
+    const { data, loading, error } = useFetch(url);
 
     if (loading) return <div className="outletContainer" style={{textAlign: "center"}}>영화 로딩 중...</div>;
     if (error) return <div className="outletContainer" style={{textAlign: "center"}}>로딩 중 오류가 발생했습니다.</div>;
 
     return (
         <ListContainer>
-            {movies.map(movie => (
+            {data.map(movie => (
                 <ItemMovie 
                     key={movie.id}
                     id={movie.id}
