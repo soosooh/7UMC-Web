@@ -7,6 +7,7 @@ import NowPlaying from './pages/Movies/NowPlayingPage';
 import Popular from './pages/Movies/PopularPage';
 import TopRated from './pages/Movies/TopRatedPage';
 import UpComing from './pages/Movies/UpcomingPage';
+import MovieDetail from './pages/Movies/MovieDetailPage';
 import Login from './pages/LoginPage';
 import SignUp from './pages/SignUpPage';
 import Category from './pages/CategoryPage';
@@ -46,8 +47,11 @@ const router = createBrowserRouter([
           {
             path: 'up-coming',
             element: <UpComing />
+          },
+          {
+            path: ':movieId',
+            element: <MovieDetail />
           }
-
         ]
       },
 
