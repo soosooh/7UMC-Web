@@ -6,9 +6,10 @@ import { FaSearch, FaFilm } from 'react-icons/fa';
 const SideBarContainer = styled.div`
   width: 200px;
   background-color: #413f3f;
-  height: 100vh;
+  height: 100%;  // 100vh 대신 100%
   padding: 20px;
   color: white;
+  flex-shrink: 0;  // 사이드바 크기 고정
 `;
 
 const SideBarItem = styled(Link)`

@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUpcoming } from '../../../utils/api';
+import { fetchUpcoming } from '../../../api/movieApi.js';
 import MovieCard from '../../../components/MovieCard';
-import styled from 'styled-components';
-
-const MovieGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-`;
+import { Container, Title, Grid } from '../../../styles/commonStyles';
 
 const Upcoming = () => {
   const [movies, setMovies] = useState([]);
@@ -20,11 +13,11 @@ const Upcoming = () => {
       try {
         setLoading(true);
         const response = await fetchUpcoming();
-        console.log('API 응답:', response.data); // 응답 데이터 로깅
+        console.log('API 응답:', response.data);
         setMovies(response.data.results);
         setLoading(false);
       } catch (err) {
-        console.error('API 에러:', err); // 에러 로깅
+        console.error('API 에러:', err);
         setError('개봉 예정 영화 데이터를 불러오는데 실패했습니다.');
         setLoading(false);
       }
@@ -33,13 +26,13 @@ const Upcoming = () => {
     getMovies();
   }, []);
 
-  if (loading) return <div>로딩 중...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <Container>로딩 중...</Container>;
+  if (error) return <Container>{error}</Container>;
 
   return (
-    <div>
-      <h1>개봉 예정 영화</h1>
-      <MovieGrid>
+    <Container>
+      <Title>개봉 예정 영화</Title>
+      <Grid>
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}
@@ -48,8 +41,8 @@ const Upcoming = () => {
             releaseDate={movie.release_date}
           />
         ))}
-      </MovieGrid>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 

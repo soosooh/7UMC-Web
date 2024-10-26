@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { fetchPopular } from '../../../utils/api';
+import { fetchNowPlaying } from "../../../api/movieApi.js";
 import MovieCard from '../../../components/MovieCard';
-import styled from 'styled-components';
+import { Container, Title, Grid } from '../../../styles/commonStyles';
 
-const MovieGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-`;
-
-const Popular = () => {
+const NowPlaying = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,13 +12,13 @@ const Popular = () => {
     const getMovies = async () => {
       try {
         setLoading(true);
-        const response = await fetchPopular();
-        console.log('API 응답:', response.data); // 응답 데이터 로깅
+        const response = await fetchNowPlaying();
+        console.log('API 응답:', response.data);
         setMovies(response.data.results);
         setLoading(false);
       } catch (err) {
-        console.error('API 에러:', err); // 에러 로깅
-        setError('인기 영화 데이터를 불러오는데 실패했습니다.');
+        console.error('API 에러:', err);
+        setError('현재 상영 중인 영화 데이터를 불러오는데 실패했습니다.');
         setLoading(false);
       }
     };
@@ -33,13 +26,13 @@ const Popular = () => {
     getMovies();
   }, []);
 
-  if (loading) return <div>로딩 중...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <Container>로딩 중...</Container>;
+  if (error) return <Container>{error}</Container>;
 
   return (
-    <div>
-      <h1>인기 영화</h1>
-      <MovieGrid>
+    <Container>
+      <Title>현재 상영 중</Title>
+      <Grid>
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}
@@ -48,9 +41,9 @@ const Popular = () => {
             releaseDate={movie.release_date}
           />
         ))}
-      </MovieGrid>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 
-export default Popular;
+export default NowPlaying;
