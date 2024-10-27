@@ -1,9 +1,9 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import NowPlaying from './moviepage/NowPlaying';
-import UpComing from './moviepage/UpComing';
-import Popular from './moviepage/Popular';
-import TopRated from './moviepage/TopRated';
+import NowPlaying from './page/moviepage/NowPlaying';
+import UpComing from './page/moviepage/UpComing';
+import Popular from './page/moviepage/Popular';
+import TopRated from './page/moviepage/TopRated';
 import Category from './page/Category';
 import Home from './page/Home';
 import Login from './page/Login';
@@ -12,7 +12,7 @@ import Search from './page/Search';
 import SignUp from './page/SignUp';
 import RootLayout from './Layout/Root-layout';
 import GlobalStyle from './styles/GlobalStyles';
-import Detail from './page/Detail';
+import Detail from './page/moviepage/Detail';
 
 
 
