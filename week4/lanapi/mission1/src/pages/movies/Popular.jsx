@@ -3,7 +3,7 @@ import MovieCard from '../../components/MovieCard';
 import CardContainer from '../../components/CardContainer';
 import axios from 'axios';
 
-const Token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMTYzYzUwZGQwMjI5Y2ViMDUyZGM5ZTNlMGRlOWEyNSIsIm5iZiI6MTcyODI4ODY3NC4zNTAxNDEsInN1YiI6IjY2ZmViY2JhYzlhMTBkNDZlYTdjOWQ0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hiJR7nmiA0-Hbx5nJuALWjUN0IzIMpWtGzKXplLYSYw";
+const Token = "Bearer mytoken";
 
 const Popular = () => {
     const [movies, setMovies] = useState([]);
@@ -18,7 +18,7 @@ const Popular = () => {
                 });
                 setMovies(response.data.results);
             } catch (error) {
-                console.error('Error fetching movies:', error);
+                console.error('화면을 불러올 수 없습니다. 주소를 확인해주세요:', error);
             }
         };
         getMovies();
