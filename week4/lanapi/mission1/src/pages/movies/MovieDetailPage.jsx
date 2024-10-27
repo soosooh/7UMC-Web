@@ -5,7 +5,7 @@ import axios from 'axios';
 import MovieDetailBanner from '../../components/movies/MovieDetailBanner';
 import styled from 'styled-components';
 
-const Token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMTYzYzUwZGQwMjI5Y2ViMDUyZGM5ZTNlMGRlOWEyNSIsIm5iZiI6MTcyODI4ODY3NC4zNTAxNDEsInN1YiI6IjY2ZmViY2JhYzlhMTBkNDZlYTdjOWQ0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hiJR7nmiA0-Hbx5nJuALWjUN0IzIMpWtGzKXplLYSYw";
+const Token = "Bearer mytoken";
 
 const MovieDetailPage = () => {
     const { movieId } = useParams(); // movieId 파라미터 가져오기
@@ -87,9 +87,9 @@ const CreditWrapper = styled.div`
 const CreditItem = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; /* 이미지와 텍스트를 중앙 정렬 */
-  width: calc(10% - 40px); /* 한 줄에 10개씩 배치 */
-  flex-basis: calc(10% - 40px); /* 이미지 크기와 간격에 맞춰 배치 */
+  align-items: center; 
+  width: calc(10% - 40px); 
+  flex-basis: calc(10% - 40px); 
 `;
 
 const CreditImage = styled.img`
@@ -106,7 +106,7 @@ const CreditImage = styled.img`
 const CreditName = styled.p`
   font-size: 14px;
   color: white;
-  margin: 5px 0 3px 0; /* 이미지와 텍스트 사이 간격 조정 */
+  margin: 5px 0 3px 0;
   text-align: center;
 `;
 
