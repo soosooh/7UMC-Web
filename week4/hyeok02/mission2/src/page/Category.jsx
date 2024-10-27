@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import NowPlayingImg from '../assets/NowPlaying.png';
-import TopRatedImg from '../assets/TopRated.png';
-import PopularImg from '../assets/Popular.png';
-import UpComingImg from '../assets/UpComing.png';
+import NowPlayingImg from '../assets/image/NowPlaying.png';
+import TopRatedImg from '../assets/image/TopRated.png';
+import PopularImg from '../assets/image/Popular.png';
+import UpComingImg from '../assets/image/UpComing.png';
 
 const Container = styled.div`
   padding: 1rem 3rem;

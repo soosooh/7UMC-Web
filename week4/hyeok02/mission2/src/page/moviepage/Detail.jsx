@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import useFetchData from '../Hook/Hook';
-import CastCard from '../components/Credit';
+import useFetchData from '../../Hook/Hook';
+import CastCard from '../../components/Credit';
 
 const Container = styled.div`
   display: flex;
