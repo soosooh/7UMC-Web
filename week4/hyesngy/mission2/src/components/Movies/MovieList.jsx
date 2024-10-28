@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MovieItem from './MovieItem';
-import useCustomFetch from '../hooks/useCustomFetch';
+import useCustomFetch from '../../hooks/useCustomFetch';
 
 const ListContainer = styled.div`
   width: calc(100vw - 180px);
