@@ -1,5 +1,6 @@
 import * as yup from 'yup';
-import useForm from "../../hooks/useForm";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { InputContainer, InputBox, ErrorP } from "../../styles/auth";
 
 const SignUpPage = () => {
@@ -9,7 +10,10 @@ const SignUpPage = () => {
         passwordCheck: yup.string().oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다.').required('비밀번호 검증은 필수 요소입니다.')
     });
 
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm(schema);
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    });
 
     const onSubmit = (data) => {
         console.log('회원가입 제출: ', data);

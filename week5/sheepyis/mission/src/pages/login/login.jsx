@@ -1,5 +1,6 @@
 import * as yup from 'yup';
-import useForm from '../../hooks/useForm';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { InputContainer, InputBox, ErrorP } from "../../styles/auth";
 
 const LoginPage = () => {
@@ -8,7 +9,10 @@ const LoginPage = () => {
         password: yup.string().min(8, '비밀번호는 8~16자 사이로 입력해주세요!').max(16, '비밀번호는 8~16자 사이로 입력해주세요!').required('비밀번호는 8~16자 사이로 입력해주세요!')
     });
 
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm(schema);
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    });
 
     const onSubmit = (data) => {
         console.log('로그인 제출: ', data);
