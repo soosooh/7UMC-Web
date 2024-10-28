@@ -15,17 +15,11 @@ const SignUpPage = () => {
             }, { message: '유효하지 않은 날짜입니다.' }),
         email: z.string('문자열이어야 합니다.').email('유효한 이메일 형식이어야 합니다.').nonempty('이메일은 필수 입력 요소입니다.'),
         password: z.string('문자열이어야 합니다.').min(8, '비밀번호는 8자 이상 16자 이하여야 합니다.').max(16, '비밀번호는 8자 이상 16자 이하여야 합니다.').nonempty('비밀번호는 필수 입력 요소입니다.'),
-        passwordCheck: z.string('문자열이어야 합니다.').nonempty('비밀번호 검증은 필수 요소입니다.')
-            .refine((val, ctx) => {
-                if (val !== ctx.parent.password) {
-                    ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        message: '비밀번호가 일치하지 않습니다.',
-                    });
-                    return false;
-                }
-                return true;
-            })
+        passwordCheck: z.string('문자열이어야 합니다.')
+        .nonempty('비밀번호 검증은 필수 요소입니다.')
+    }).refine(data => data.password === data.passwordCheck, {
+        message: '비밀번호가 일치하지 않습니다.',
+        path: ['passwordCheck'],
     });
 
     const { register, handleSubmit, formState: { errors, isValid } } = useForm(schema);
