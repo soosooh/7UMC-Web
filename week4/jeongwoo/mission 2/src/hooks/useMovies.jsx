@@ -1,22 +1,31 @@
 import { useState, useEffect } from 'react';
 import { Container } from '../styles/commonStyles';
 
-const useMovies = (fetchFunction) => {
-  const [movies, setMovies] = useState([]);  // 빈 배열로 초기화
+const useMovies = (fetchFunction, params) => {
+  const [data, setData] = useState([]);  // null 대신 빈 배열로 초기화
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState({ component: null });
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetchFunction();
-        setMovies(response.data.results || []);  // results가 없을 경우 빈 배열
+        const response = await fetchFunction(params);
+        
+        // 영화 목록 데이터인 경우
+        if (response.data.results) {
+          setData(response.data.results);
+        } 
+        // 영화 상세 정보인 경우
+        else {
+          setData(response.data);
+        }
+        
         setError(null);
         setStatus({ component: null });
       } catch (err) {
-        const errorMessage = err.message || '영화 데이터를 불러오는데 실패했습니다.';
+        const errorMessage = err.message || '데이터를 불러오는데 실패했습니다.';
         setError(errorMessage);
         setStatus({ component: <Container>{errorMessage}</Container> });
       } finally {
@@ -24,25 +33,25 @@ const useMovies = (fetchFunction) => {
       }
     };
 
-    fetchMovies();
-  }, [fetchFunction]);
+    fetchData();
+  }, [fetchFunction, params]);
 
   if (loading) {
     return {
-      movies: [],
+      data: [],  // 로딩 중에도 빈 배열 반환
       component: <Container>로딩 중...</Container>
     };
   }
 
   if (error) {
     return {
-      movies: [],
+      data: [],  // 에러 상태에서도 빈 배열 반환
       component: status.component
     };
   }
 
   return {
-    movies,
+    data,
     component: null
   };
 };
