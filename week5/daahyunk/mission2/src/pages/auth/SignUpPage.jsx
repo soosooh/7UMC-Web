@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../../utils/validationSchema.js";
 import styled from "styled-components";
 
@@ -68,14 +68,15 @@ const SignUpPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isSubmitting, isValid },
   } = useForm({
-    resolver: yupResolver(signupSchema),
-    mode: "onChange", 
+    resolver: zodResolver(signupSchema),
+    mode: "onChange",
+    criteriaMode: "all", 
   });
 
   const onSubmit = (data) => {
-    console.log(data); 
+    console.log("회원가입 데이터:", data); // 제출된 데이터 확인
   };
 
   return (
@@ -98,13 +99,20 @@ const SignUpPage = () => {
         {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
 
         <Input
-          type="password"
-          placeholder="비밀번호를 다시 입력해주세요!"
-          {...register("passwordCheck")}
+          type="text"
+          placeholder="생년월일을 입력해주세요 (YYYY-MM-DD)"
+          {...register("birthDate")}
         />
-        {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck.message}</ErrorMessage>}
+        {errors.birthDate && <ErrorMessage>{errors.birthDate.message}</ErrorMessage>}
 
-        <SubmitButton type="submit" disabled={!isValid}>
+        <Input
+          type="text"
+          placeholder="전화번호를 입력해주세요 (010-XXXX-XXXX)"
+          {...register("phoneNumber")}
+        />
+        {errors.phoneNumber && <ErrorMessage>{errors.phoneNumber.message}</ErrorMessage>}
+
+        <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
           회원가입
         </SubmitButton>
       </SignUpForm>
