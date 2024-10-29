@@ -71,11 +71,11 @@ const SignUpPage = () => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(signupSchema),
-    mode: "onChange", // 입력이 변경될 때마다 유효성 검사를 수행
+    mode: "onChange", 
   });
 
   const onSubmit = (data) => {
-    console.log(data); // 회원가입 성공 시 제출된 데이터가 { key: value } 형태로 출력됨
+    console.log(data); 
   };
 
   return (
