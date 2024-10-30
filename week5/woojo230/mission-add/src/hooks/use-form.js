@@ -1,13 +1,10 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { validateLogin } from "../utils/validate";
+import { useState, useEffect } from "react";
 
 function useForm({ initialValue, validate }) {
   const [values, setValues] = useState(initialValue);
-
   const [touched, setTouched] = useState({});
-
   const [errors, setErrors] = useState({});
+  const [isValid, setIsValid] = useState(false); // isValid 상태 추가
 
   const handleChangeInput = (name, value) => {
     setValues({
@@ -34,9 +31,28 @@ function useForm({ initialValue, validate }) {
   useEffect(() => {
     const newErrors = validate(values);
     setErrors(newErrors);
+
+    // errors 객체가 비어 있으면 isValid를 true로 설정
+    setIsValid(Object.keys(newErrors).length === 0);
+
+    // 디버깅을 위해 errors와 isValid를 로그로 출력
+    console.log("Errors:", newErrors);
+    console.log("isValid:", Object.keys(newErrors).length === 0);
   }, [validate, values]);
 
-  return { values, errors, touched, getTextInputProps };
+  return {
+    values,
+    errors,
+    touched,
+    isValid,
+    getTextInputProps,
+    handleSubmit: (callback) => (event) => {
+      event.preventDefault();
+      if (isValid) {
+        callback(values);
+      }
+    },
+  };
 }
 
 export default useForm;

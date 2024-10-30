@@ -54,7 +54,12 @@ const Button = styled.button`
   font-size: 1rem;
   font-weight: bold;
   color: white;
-  background-color: #ff4d78;
+  background-color: ${(props) => (props.disabled ? "gray" : "#ff4d78")};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+
+  &:hover {
+    background-color: ${(props) => (props.disabled ? "gray" : "#ff1c47")};
+  }
 `;
 
 const LoginPage = () => {
@@ -65,6 +70,7 @@ const LoginPage = () => {
       passwordCheck: "",
     },
     validate: validateLogin,
+    mode: "onChange",
   });
 
   const handlePressLogin = (event) => {
@@ -83,6 +89,7 @@ const LoginPage = () => {
           {...Login.getTextInputProps("email")}
         />
         {Login.touched.email && Login.errors.email && <ErrorText>{Login.errors.email}</ErrorText>}
+
         <Input
           error={Login.touched.password && Login.errors.password}
           type={"password"}
@@ -90,15 +97,18 @@ const LoginPage = () => {
           {...Login.getTextInputProps("password")}
         />
         {Login.touched.password && Login.errors.password && <ErrorText>{Login.errors.password}</ErrorText>}
+
         <Input
           error={Login.touched.passwordCheck && Login.errors.passwordCheck}
-          type={"passwordCheck"}
+          type={"password"}
           placeholder={"비밀번호 검증 또한 필수입니다"}
           {...Login.getTextInputProps("passwordCheck")}
         />
         {Login.touched.passwordCheck && Login.errors.passwordCheck && <ErrorText>{Login.errors.passwordCheck}</ErrorText>}
 
-        <Button onClick={handlePressLogin}>로그인</Button>
+        <Button onClick={handlePressLogin} disabled={!Login.isValid}>
+          로그인
+        </Button>
       </Form>
     </Container>
   );
