@@ -1,63 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+// 로그인 유효성 검사 스키마 정의
+const loginSchema = z.object({
+  email: z.string().email('올바른 이메일 형식이 아닙니다.').nonempty('이메일은 필수 항목입니다.'),
+  password: z.string()
+    .min(8, '비밀번호는 8자리 이상이어야 합니다.')
+    .max(16, '비밀번호는 16자리 이하이어야 합니다.')
+    .nonempty('비밀번호는 필수 항목입니다.'),
+});
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    mode: 'onBlur', // onBlur 모드 설정
+  });
 
-  const validateEmail = (value) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(value);
+  const onSubmit = (data) => {
+    console.log('로그인 정보:', data);
+    // 로그인 처리 로직 추가
   };
-
-  const validatePassword = (value) => {
-    return value.length >= 8 && value.length <= 16;
-  };
-
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    if (!validateEmail(value)) {
-      setEmailError('올바른 이메일 형식이 아닙니다.');
-    } else {
-      setEmailError('');
-    }
-  };
-
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    if (!validatePassword(value)) {
-      setPasswordError('비밀번호는 8자리 이상 16자리 이하이어야 합니다.');
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  const isFormValid = validateEmail(email) && validatePassword(password);
 
   return (
     <Container>
       <Title>로그인</Title>
-      <Input
-        type="email"
-        placeholder="이메일을 입력해 주세요!"
-        value={email}
-        onChange={handleEmailChange}
-        onFocus={() => setEmailError('')}
-      />
-      {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
-      <Input
-        type="password"
-        placeholder="비밀번호를 입력해 주세요!"
-        value={password}
-        onChange={handlePasswordChange}
-        onFocus={() => setPasswordError('')}
-      />
-      {passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
-      <LoginButton disabled={!isFormValid}>로그인</LoginButton>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          type="email"
+          placeholder="이메일을 입력해 주세요!"
+          {...register('email')}
+        />
+        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+        
+        <Input
+          type="password"
+          placeholder="비밀번호를 입력해 주세요!"
+          {...register('password')}
+        />
+        {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+        
+        <LoginButton type="submit" disabled={!isValid}>로그인</LoginButton>
+      </Form>
     </Container>
   );
 };
@@ -81,6 +71,12 @@ const Title = styled.h1`
   font-family: 'Inter', sans-serif;
 `;
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Input = styled.input`
   padding: 22px;
   margin: 15px 0;
@@ -93,7 +89,7 @@ const Input = styled.input`
 const ErrorMessage = styled.p`
   color: red;
   font-size: 14px;
-  margin-right: 20px;
+  margin-top: 5px;
 `;
 
 const LoginButton = styled.button`
