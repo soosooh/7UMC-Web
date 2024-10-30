@@ -1,13 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form'; // useForm 훅을 사용
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+// 로그인 유효성 검사 스키마 정의
+const loginSchema = z.object({
+  email: z.string().email('올바른 이메일 형식이 아닙니다.').nonempty('이메일은 필수 항목입니다.'),
+  password: z.string()
+    .min(8, '비밀번호는 8자리 이상이어야 합니다.')
+    .max(16, '비밀번호는 16자리 이하이어야 합니다.')
+    .nonempty('비밀번호는 필수 항목입니다.'),
+});
 
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({ mode: 'onBlur' }); // 'onBlur' 모드 설정으로 유효성 검사 트리거 설정
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    mode: 'onBlur', // onBlur 모드 설정
+  });
 
   const onSubmit = (data) => {
     console.log('로그인 정보:', data);
@@ -17,39 +31,23 @@ const LoginPage = () => {
   return (
     <Container>
       <Title>로그인</Title>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="email"
           placeholder="이메일을 입력해 주세요!"
-          {...register('email', {
-            required: '이메일은 필수 항목입니다.',
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: '올바른 이메일 형식이 아닙니다.',
-            },
-          })}
+          {...register('email')}
         />
         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         
         <Input
           type="password"
           placeholder="비밀번호를 입력해 주세요!"
-          {...register('password', {
-            required: '비밀번호는 필수 항목입니다.',
-            minLength: {
-              value: 8,
-              message: '비밀번호는 8자리 이상이어야 합니다.',
-            },
-            maxLength: {
-              value: 16,
-              message: '비밀번호는 16자리 이하이어야 합니다.',
-            },
-          })}
+          {...register('password')}
         />
         {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
         
         <LoginButton type="submit" disabled={!isValid}>로그인</LoginButton>
-      </form>
+      </Form>
     </Container>
   );
 };
@@ -73,6 +71,12 @@ const Title = styled.h1`
   font-family: 'Inter', sans-serif;
 `;
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Input = styled.input`
   padding: 22px;
   margin: 15px 0;
@@ -85,7 +89,7 @@ const Input = styled.input`
 const ErrorMessage = styled.p`
   color: red;
   font-size: 14px;
-  margin-right: 20px;
+  margin-top: 5px;
 `;
 
 const LoginButton = styled.button`
