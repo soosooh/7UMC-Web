@@ -15,9 +15,16 @@ import UpComing from "./Pages/MovieCategory/Up-coming.jsx";
 import MovieDetailPage from "./Pages/MovieDetailPage.jsx";
 
 const GlobalStyle = createGlobalStyle`
+  html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
   body {
     background-color: black;
-    margin: 0px;
+    color: white;
+    font-family: Arial, sans-serif;
   }
 `;
 
