@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import useForm from "../hooks/use-form";
-import { validateSignUp } from "../utils/validate";
-
+// import { validateSignUp } from "../utils/validate";
+import { validateSignUp } from "../utils/validateZod";
 const SignUpPage = () => {
   const signup = useForm({
     initialValues: {
