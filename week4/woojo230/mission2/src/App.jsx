@@ -43,23 +43,23 @@ const router = createBrowserRouter([
         element: <Search />,
       },
       {
-        path: "Movies",
+        path: "movies",
         element: <Movies />,
       },
       {
-        path: "NowPlaying",
+        path: "movies/NowPlaying",
         element: <NowPlaying />,
       },
       {
-        path: "Popular",
+        path: "movies/Popular",
         element: <Popular />,
       },
       {
-        path: "TopRated",
+        path: "movies/TopRated",
         element: <TopRated />,
       },
       {
-        path: "UpComing",
+        path: "movies/UpComing",
         element: <UpComing />,
       },
       {
