@@ -42,7 +42,7 @@ const SignUpPage = () => {
 
                 <Input
                     type="number"
-                    {...register("age")}
+                    {...register("age", { valueAsNumber: true })}
                     placeholder="나이를 입력해주세요"
                     onBlur={() => { trigger("age"); setIsVisibleAge(true); }}
                 />
