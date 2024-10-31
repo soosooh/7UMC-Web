@@ -60,7 +60,7 @@ const Signup = () => {
         }}>
             <div style={{ 
                 width: '400px',
-                marginTop: '-100px',
+                marginTop: '-40px',
                 textAlign: 'center'
             }}>
                 <h2 style={{
