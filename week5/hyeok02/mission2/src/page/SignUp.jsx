@@ -35,6 +35,18 @@ const styles = {
 
 const signUpSchema = z
   .object({
+    nickname: z
+      .string()
+      .min(2, { message: '닉네임은 2자리 이상이어야 합니다.' })
+      .max(8, { message: '닉네임은 8자리 이하로 입력하세요.' }),
+    birthDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, { message: '생년월일은 YYYY-MM-DD 형식으로 입력하세요.' })
+      .refine((date) => {
+        const [year, month, day] = date.split('-').map(Number);
+        const birthDate = new Date(year, month - 1, day);
+        return birthDate <= new Date();
+      }, { message: '올바른 생년월일을 입력하세요.' }),
     email: z.string().email({ message: '올바른 이메일 형식을 입력하세요.' }),
     password: z
       .string()
@@ -78,6 +90,8 @@ function SignUp() {
     <div style={styles.formContainer}>
       <h3 style={{ marginBottom: '20px' }}>회원가입</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <CustomInput label="닉네임" type="text" register={register('nickname')} error={errors.nickname} />
+        <CustomInput label="생년월일 (YYYY-MM-DD)" type="text" register={register('birthDate')} error={errors.birthDate} />
         <CustomInput label="이메일" type="email" register={register('email')} error={errors.email} />
         <CustomInput label="비밀번호" type="password" register={register('password')} error={errors.password} />
         <CustomInput label="비밀번호 확인" type="password" register={register('passwordConfirm')} error={errors.passwordConfirm} />
