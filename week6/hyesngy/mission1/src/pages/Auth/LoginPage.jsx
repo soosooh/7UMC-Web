@@ -30,7 +30,6 @@ const LoginPage = () => {
       localStorage.setItem('refreshToken', refreshToken);
       console.log("🚀 ~ onSubmit ~ refreshToken:", refreshToken)
       console.log("🚀 ~ onSubmit ~ accessToken:", accessToken)
-      console.log('로그인 성공');
       navigate('/');
     } catch (error) {
       console.log(error.message);

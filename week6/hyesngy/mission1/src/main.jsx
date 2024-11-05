@@ -1,7 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import TokenRefresher from './api/TokenRefresher'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <App />
+  <React.StrictMode>
+    <TokenRefresher>
+      <App />
+    </TokenRefresher>
+  </React.StrictMode>
 )

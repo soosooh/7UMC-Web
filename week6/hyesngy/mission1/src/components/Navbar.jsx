@@ -1,6 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import getUser from '../api/auth/getUser';
+
+const Navbar = () => {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  const accessToken = localStorage.getItem('accessToken');
+
+  const fetchUserData = async () => {
+    try {
+      const userData = await getUser();
+      const nickname = userData.email.slice(0, userData.email.indexOf('@'));
+      setUser({ ...userData, nickname });
+    } catch (error) {
+      setUser(null);
+    }
+  }
+
+  useEffect(() => {
+    fetchUserData();
+  }, [accessToken]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    setUser(null);
+    navigate('/login');
+  };
+
+  return (
+    <NavbarContainer>
+      <Logo to="/">HaenCHA</Logo>
+      <UserContainer>
+        {user ? (
+          <>
+            <NicknameSpan>{user.nickname}님 반갑습니다.</NicknameSpan>
+            <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+          </>
+        ) : (
+          <>
+            <LoginButton to="/login">로그인</LoginButton>
+            <SignUpButton to="/signup">회원가입</SignUpButton>
+          </>
+        )}
+      </UserContainer>
+    </NavbarContainer>
+  );
+};
+
+export default Navbar;
+
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -11,7 +62,6 @@ const NavbarContainer = styled.div`
   justify-content: space-between;
   padding: 0 2rem;
 `
-
 const Logo = styled(Link)`
   display: flex;
   color: #FF073D;
@@ -22,12 +72,10 @@ const Logo = styled(Link)`
   cursor: pointer;
   text-decoration: none;
 `
-
 const UserContainer = styled.div`
   display: flex;
   gap: 1.5rem;
 `
-
 const Button = styled(Link)`
   color: white;
   padding: 0.5rem 0.75rem;
@@ -42,13 +90,11 @@ const Button = styled(Link)`
   cursor: pointer;
   text-decoration: none;
 `
-
 const LoginButton = styled(Button)`
   &:hover {
     color: #f6f6f6;
   }
 `
-
 const SignUpButton = styled(Button)`
   background: #F82F62;
   border-radius: 4px;
@@ -58,17 +104,14 @@ const SignUpButton = styled(Button)`
     background: #e52958;
   }
 `
-
-const Navbar = () => {
-    return (
-        <NavbarContainer>
-            <Logo to="/">HaenCHA</Logo>
-            <UserContainer>
-                <LoginButton to="/login">로그인</LoginButton>
-                <SignUpButton to="signup">회원가입</SignUpButton>
-            </UserContainer>
-        </NavbarContainer>
-    );
-};
-
-export default Navbar;
+const LogoutButton = styled(Button)`
+  background: #000;
+  border-radius: 4px;
+`
+const NicknameSpan = styled.span`
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.94px;
+  align-self: center;
+`
