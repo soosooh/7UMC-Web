@@ -1,7 +1,11 @@
+// src/pages/auth/SignUpPage.jsx
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signupSchema } from "../../utils/validationSchema.js";
 import styled from "styled-components";
+import { registerUser } from "../../api/auth/userRegister"; // 회원가입 API 호출 함수 import
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const SignUpPageContainer = styled.div`
   width: 100%;
@@ -65,6 +69,8 @@ const SubmitButton = styled.button`
 `;
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const {
     register,
     handleSubmit,
@@ -74,8 +80,14 @@ const SignUpPage = () => {
     mode: "onChange", 
   });
 
-  const onSubmit = (data) => {
-    console.log(data); 
+  const onSubmit = async (data) => {
+    try {
+      await registerUser(data); 
+      alert("회원가입 완료! 🎉");
+      navigate("/login"); 
+    } catch (error) {
+      setError(error.message || "회원가입 중 오류가 발생했습니다.");
+    }
   };
 
   return (
@@ -103,6 +115,8 @@ const SignUpPage = () => {
           {...register("passwordCheck")}
         />
         {errors.passwordCheck && <ErrorMessage>{errors.passwordCheck.message}</ErrorMessage>}
+
+        {error && <ErrorMessage>{error}</ErrorMessage>}
 
         <SubmitButton type="submit" disabled={!isValid}>
           회원가입
