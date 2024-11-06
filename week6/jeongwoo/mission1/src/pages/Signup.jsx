@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import authApi from '../api/authApi';
 import Input from '../components/input';
 import {
   AuthContainer,
@@ -11,6 +13,7 @@ import {
 } from '../styles/auth';
 
 const Signup = () => {
+    const navigate = useNavigate();
     const schema = yup.object().shape({
         email: yup
             .string()
@@ -36,8 +39,19 @@ const Signup = () => {
         mode: 'onChange'
     });
 
-    const onSubmit = (data) => {
-        console.log('회원가입 데이터:', data);
+    const onSubmit = async (data) => {
+        try {
+            await authApi.signup({
+                email: data.email,
+                password: data.password,
+                passwordCheck: data.passwordCheck
+            });
+            alert('회원가입에 성공하셨습니다.');
+            navigate('/login');
+        } catch (error) {
+            alert('회원가입에 실패했습니다.');
+            console.error('Signup Error:', error);
+        }
     };
 
     return (
