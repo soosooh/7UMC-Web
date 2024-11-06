@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import OverView from "./overview";
 
 const ItemContainer = styled.div`
-    width: 100%;
+    width: 8.5vw;
     height: 18vw;
     display: flex;
     flex-direction: column;

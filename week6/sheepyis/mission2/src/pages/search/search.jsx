@@ -4,10 +4,11 @@ import ListMovie from "../../components/movies/list-movie";
 
 const SearchPage = () => {
     const [query, setQuery] = useState('');
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className="outletContainer">
-            <SearchInput setQuery={setQuery} />
+            <SearchInput setQuery={setQuery} setLoading={setLoading}/>
             
             {query && <ListMovie url={`/search/movie?query=${query}&include_adult=false&page=1`} query={query} />}
         </div>
