@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import useForm from "../../hooks/useForm";
 import { validateLogin } from "../../utils/validate";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { loginUser } from "../../api/auth/userLogin";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginPageContainer = styled.div`
   width: 100%;
@@ -64,16 +68,39 @@ const LoginButton = styled.button`
 `;
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth(); 
   const { errors, touched, isFormValid, getTextInputProps } = useForm(
     { email: "", password: "" },
     validateLogin
   );
+  const [error, setError] = useState(null);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const email = getTextInputProps("email").value;
+    const password = getTextInputProps("password").value;
+
+    try {
+      const { accessToken, refreshToken } = await loginUser({ email, password });
+
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      login(email.split("@")[0]);
+
+      alert("로그인 성공! 🎉");
+      navigate("/");
+    } catch (error) {
+      setError(error.response?.data?.message || "로그인 실패");
+    }
+  };
 
   return (
     <LoginPageContainer>
       <LoginForm>
         <Title>로그인</Title>
-        
+
         <Input
           type="email"
           placeholder="이메일을 입력해주세요!"
@@ -88,7 +115,11 @@ const LoginPage = () => {
         />
         {touched.password && errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
 
-        <LoginButton disabled={!isFormValid}>로그인</LoginButton>
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+
+        <LoginButton disabled={!isFormValid} onClick={handleLogin}>
+          로그인
+        </LoginButton>
       </LoginForm>
     </LoginPageContainer>
   );

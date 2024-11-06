@@ -9,7 +9,8 @@ import NowPlaying from "./pages/movies/NowPlaying";
 import Popular from "./pages/movies/Popular"; 
 import TopRated from "./pages/movies/TopRated"; 
 import Upcoming from "./pages/movies/Upcoming"; 
-import MovieDetailPage from './pages/movies/MovieDetailPage'; 
+import MovieDetailPage from './pages/movies/MovieDetailPage';
+import { AuthProvider } from "./context/AuthContext"; 
 
 const router = createBrowserRouter([
   {
@@ -58,10 +59,10 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <>
+    <AuthProvider> 
       <GlobalStyles />
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   );
 };
 

@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuth } from "../../context/AuthContext"; 
 
 const Nav = styled.nav`
   display: flex;
@@ -7,18 +8,18 @@ const Nav = styled.nav`
   align-items: center;
   background-color: #141517;
   color: white;
-  height: 4rem; 
+  height: 4rem;
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 1000; 
+  z-index: 1000;
 `;
 
 const Logo = styled(Link)`
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-weight: bold;
-  color: #FF073D; 
+  color: #FF073D;
   margin-left: 2rem;
   text-decoration: none;
 
@@ -38,17 +39,17 @@ const NavLinks = styled.div`
     font-size: 1rem;
 
     &:hover {
-      color: #ddd; 
+      color: #ddd;
     }
   }
 `;
 
 const SignUpButton = styled(Link)`
-  background-color: #FF073D; 
+  background-color: #FF073D;
   color: white;
-  padding: 0.5rem 1rem;  
-  border-radius: 0.5rem; 
-  font-size: 1rem; 
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   text-decoration: none;
 
   &:hover {
@@ -56,13 +57,48 @@ const SignUpButton = styled(Link)`
   }
 `;
 
+const LogoutButton = styled.button`
+  background-color: #4E5052;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  &:hover {
+    background-color: #26282A;
+  }
+`;
+
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn, userName, logout } = useAuth(); 
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    logout();
+    navigate("/login");
+  };
+
   return (
     <Nav>
       <Logo to="/">YONGCHA</Logo>
       <NavLinks>
-        <Link to="/login">로그인</Link>
-        <SignUpButton to="/signup">회원가입</SignUpButton>
+        {isLoggedIn ? (
+          <>
+            <span>{userName}님 반갑습니다</span>
+            <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+          </>
+        ) : (
+          <>
+            <Link to="/login">로그인</Link>
+            <SignUpButton to="/signup">회원가입</SignUpButton>
+          </>
+        )}
       </NavLinks>
     </Nav>
   );
