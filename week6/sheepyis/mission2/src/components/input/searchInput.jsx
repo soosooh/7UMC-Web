@@ -35,12 +35,13 @@ const SearchButton = styled.div`
     cursor: pointer;
 `;
 
-const SearchInput = ({ setQuery }) => {
+const SearchInput = ({ setQuery, setLoading }) => {
     const [input, setInput] = useState('');
 
     const debouncedSearch = useCallback(
         debounce((nextValue) => {
             setQuery(nextValue);
+            setLoading(true);
         }, 1000),
         []
     );
@@ -54,6 +55,7 @@ const SearchInput = ({ setQuery }) => {
     const handleSearch = () => {
         if (input.trim()) {
             setQuery(input);
+            setLoading(true);
         }
     };
 
