@@ -1,16 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import GlobalStyles from './styles/GlobalStyles';
-import RootLayout from "./layout/root-layout";
-import CategoryPage from './pages/category/CategoriesPage'; 
-import LoginPage from "./pages/auth/LoginPage";
+import GlobalStyles from './styles/GlobalStyles.js';
+import RootLayout from "./layout/root-layout.jsx";
+import CategoryPage from './pages/category/CategoriesPage.jsx'; 
+import LoginPage from "./pages/auth/LoginPage.jsx";
 import SignupPage from "./pages/auth/SignUpPage.jsx";
-import SearchPage from "./pages/search/SearchPage";
-import NowPlaying from "./pages/movies/NowPlaying";
-import Popular from "./pages/movies/Popular"; 
-import TopRated from "./pages/movies/TopRated"; 
-import Upcoming from "./pages/movies/Upcoming"; 
-import MovieDetailPage from './pages/movies/MovieDetailPage';
-import { AuthProvider } from "./context/AuthContext"; 
+import SearchPage from "./pages/search/SearchPage.jsx";
+import NowPlaying from "./pages/movies/NowPlaying.jsx";
+import Popular from "./pages/movies/Popular.jsx"; 
+import TopRated from "./pages/movies/TopRated.jsx"; 
+import Upcoming from "./pages/movies/UpComing.jsx"; 
+import MovieDetailPage from './pages/movies/MovieDetailPage.jsx';
+import { AuthProvider } from "./context/AuthContext.jsx"; 
 
 const router = createBrowserRouter([
   {
