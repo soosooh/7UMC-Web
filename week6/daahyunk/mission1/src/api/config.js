@@ -10,15 +10,23 @@ const api = axios.create({
   },
 });
 
-// accessToken 재발급 함수
+// 토큰 재발급 함수
 const refreshAccessToken = async () => {
   try {
     const refreshToken = localStorage.getItem("refreshToken");
-    const response = await axios.post(`${BASE_URL}/auth/refresh`, { token: refreshToken });
-    const newAccessToken = response.data.accessToken;
 
-    localStorage.setItem("accessToken", newAccessToken);
-    return newAccessToken;
+    // refreshToken을 Authorization 헤더에 Bearer 형태로 설정
+    const response = await axios.post(`${BASE_URL}/auth/token/access`, null, {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    });
+
+    const { accessToken, refreshToken: newRefreshToken } = response.data;
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", newRefreshToken);
+
+    return accessToken;
   } catch (error) {
     console.error("토큰 재발급 실패:", error);
     throw error;
@@ -43,7 +51,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // accessToken 만료 시
+    // accessToken 만료 시 재발급 시도
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
