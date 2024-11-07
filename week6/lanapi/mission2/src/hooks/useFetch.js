@@ -1,8 +1,7 @@
-// src/hooks/useFetch.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useFetch = (url) => {
+const useFetch = (url, token) => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -11,9 +10,9 @@ const useFetch = (url) => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const response = await axios.get(`https://api.themoviedb.org/3${url}`, {
+                const response = await axios.get(`https://api.themoviedb.org/3/${url}`, {
                     headers: {
-                        Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`, // .env 파일의 토큰 사용
+                        Authorization: token, 
                     },
                 });
                 setData(response.data);
@@ -23,8 +22,8 @@ const useFetch = (url) => {
                 setIsLoading(false);
             }
         };
-        if (url) fetchData();
-    }, [url]);
+        fetchData();
+    }, [url, token]);
 
     return { data, isLoading, isError };
 };

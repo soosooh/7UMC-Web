@@ -4,56 +4,77 @@
 //pages>login.jsx를 보면 idInput, passwordInput이 같은 스타일링이 적용되는데 따로 컴포넌트를 만드셨던데 굳이 싶어요. 
 //다른 비슷한 디자인들도 재사용하는 방식으로 수정해주세요!
 
+
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
+
+// 유효성 검사 스키마 설정
+const loginschema = yup.object({
+    email: yup.string().email('이메일이 올바르지 않습니다. 확인해주세요').required('이메일은 필수 입력 항목입니다.'),
+    password: yup.string().min(8, '비밀번호는 8자리 이상이어야 합니다.').max(16, '비밀번호는 16자리 이하로 입력해주세요.').required('비밀번호를 입력해주세요.')
+});
 
 const Login = () => {
-    const loginschema = yup.object({
-        email: yup.string().email('이메일이 올바르지 않습니다. 확인해주세요').required('이메일은 필수 입력 항목입니다.'),
-        password: yup.string().min(8, '비밀번호는 8자리 이상이어야 합니다.').max(16, '비밀번호는 16자리 이하로 입력해주세요.').required('비밀번호를 입력해주세요.')
-    });
-
     const { register, handleSubmit, formState: { errors, touchedFields, isValid } } = useForm({
         resolver: yupResolver(loginschema),
-        mode: 'all'
+        mode: 'all',
     });
-    
-    const LoginBox = (data) => {
-        console.log('로그인 시도:', data);
+
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
+
+    const handleLogin = async (data) => {
+        try {
+            const response = await axios.post('http://localhost:3000/auth/login', data);
+
+            localStorage.setItem('accessToken', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+
+            login();
+            navigate('/');
+        } catch (error) {
+            console.error("로그인 실패:", error);
+            alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        }
     };
 
     return (
         <Wrapper>
             <LoginText>로그인</LoginText>
-
-            <Form onSubmit={handleSubmit(LoginBox)}>
+            <Form onSubmit={handleSubmit(handleLogin)}>
                 <Field>
                     <Input
                         type="email"
                         placeholder="이메일 주소를 입력하세요."
                         {...register("email")}
                         isTouched={touchedFields.email}
-                        top="336px"
+                        top="300px" /* 위치 하드코딩 */
                         left="648px"
                     />
-                    <ErrorText>{touchedFields.email && errors.email?.message}</ErrorText>
+                    <ErrorText top="360px" left="648px">
+                        {touchedFields.email && errors.email?.message}
+                    </ErrorText>
                 </Field>
-
                 <Field>
                     <Input
                         type="password"
                         placeholder="비밀번호를 입력하세요."
                         {...register("password")}
                         isTouched={touchedFields.password}
-                        top="428px"
+                        top="380px" /* 위치 하드코딩 */
                         left="648px"
                     />
-                    <ErrorText>{touchedFields.password && errors.password?.message}</ErrorText>
+                    <ErrorText top="440px" left="648px">
+                        {touchedFields.password && errors.password?.message}
+                    </ErrorText>
                 </Field>
-
-                <LoginButton type="submit" disabled={!isValid}>로그인</LoginButton>
+                <LoginButton type="submit" disabled={!isValid} top="520px" left="648px">로그인</LoginButton>
             </Form>
         </Wrapper>
     );
@@ -61,6 +82,7 @@ const Login = () => {
 
 export default Login;
 
+// 스타일 컴포넌트 정의
 const Wrapper = styled.div`
     position: relative;
     width: 100%;
@@ -77,7 +99,6 @@ const LoginText = styled.h1`
     white-space: nowrap;
 `;
 
-
 const Form = styled.form`
     position: relative;
 `;
@@ -91,8 +112,8 @@ const Input = styled.input`
     width: 450px;
     height: 50px;
     position: absolute;
-    top: ${(props) => props.top};
-    left: ${(props) => props.left};
+    top: ${(props) => props.top || '0px'};
+    left: ${(props) => props.left || '0px'};
     border: 1px solid ${(props) => (props.isTouched ? '#FF073D' : '#000000')};
     border-radius: 10px;
     font-size: 16px;
@@ -100,10 +121,10 @@ const Input = styled.input`
     color: #000000;
     opacity: 1;
 
-     &:focus {
-         outline: none;
-         border-color: #FF073D;
-     }
+    &:focus {
+        outline: none;
+        border-color: #FF073D;
+    }
 `;
 
 const ErrorText = styled.p`
@@ -112,8 +133,8 @@ const ErrorText = styled.p`
     width: 450px;
     height: 14px;
     position: absolute;
-    top: ${(props) => props.top};
-    left: ${(props) => props.left};
+    top: ${(props) => props.top || '0px'};
+    left: ${(props) => props.left || '0px'};
     opacity: 1;
 `;
 
@@ -122,8 +143,8 @@ const LoginButton = styled.button`
     width: 474px;
     height: 50px;
     position: absolute;
-    top: 520px;
-    left: 648px;
+    top: ${(props) => props.top || '0px'};
+    left: ${(props) => props.left || '0px'};
     background-color: ${(props) => (props.disabled ? '#413F3F' : '#FF073D')};
     color: #FFFFFF;
     border: none;

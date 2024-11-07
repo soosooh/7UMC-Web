@@ -1,6 +1,5 @@
-
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 
 import HomePage from './pages/home/HomePage';
 import NotFound from './pages/notFound/NotFound';
@@ -12,7 +11,6 @@ import Popular from './pages/movies/category/Popular';
 import TopRated from './pages/movies/category/TopRated';
 import UpComing from './pages/movies/category/UpComing';
 import MovieDetailPage from './pages/movies/detail/MovieDetailPage';
-
 import RootLayout from './layout/RootLayout';
 import Category from './pages/movies/category/Category';
 
@@ -68,9 +66,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 
-
-export default App
+export default App; // default로 App 내보내기

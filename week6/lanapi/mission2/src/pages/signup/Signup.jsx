@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { signUp } from '../../api/apiClient';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const signupSchema = z
@@ -8,17 +10,6 @@ const signupSchema = z
     email: z.string().email('유효하지 않은 이메일 형식입니다.').nonempty('이메일은 필수 입력 사항입니다.'),
     password: z.string().min(8, '비밀번호는 8자리 이상이어야 합니다.').max(16, '비밀번호는 16자리 이하이어야 합니다.'),
     passwordCheck: z.string().nonempty('비밀번호 확인은 필수 입력 사항입니다.'),
-    gender: z.enum(['남성', '여성'], '성별을 선택해주세요'),
-    birthDate: z
-      .string()
-      .nonempty('생년월일은 필수 입력 사항입니다.')
-      .refine((val) => {
-        const selectedDate = new Date(val);
-        const limitDate = new Date('2015-01-01');
-        return selectedDate >= limitDate;
-      }, {
-        message: '2015년 1월 1일 이후로 태어난 사람만 회원가입이 가능합니다.',
-      }),
   })
   .superRefine(({ password, passwordCheck }, ctx) => {
     if (password !== passwordCheck) {
@@ -34,9 +25,24 @@ const SignUp = () => {
     resolver: zodResolver(signupSchema),
     mode: 'all'
   });
+  const navigate = useNavigate();
 
-  const SignupBox = (userData) => {
-    console.log('회원 데이터:', userData);
+  const SignupBox = async (userData) => {
+    try {
+      const response = await signUp({
+        email: userData.email,
+        password: userData.password,
+        passwordCheck: userData.passwordCheck,
+      });
+
+      if (response) {
+        alert("회원가입이 완료되었습니다!");
+        navigate("/login"); 
+      }
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다. 네트워크 연결을 확인해주세요.");
+    }
   };
 
   return (
@@ -71,26 +77,6 @@ const SignUp = () => {
             <ErrorText>{errors.passwordCheck?.message}</ErrorText>
           </FieldContainer>
 
-          {/* 성별 추가 */}
-          <FieldContainer>
-            <SelectInput {...register("gender")}>
-              <option value="">성별을 선택해주세요</option>
-              <option value="남성">남성</option>
-              <option value="여성">여성</option>
-            </SelectInput>
-            <ErrorText>{errors.gender?.message}</ErrorText>
-          </FieldContainer>
-
-          {/* 생년월일 추가 */}
-          <FieldContainer>
-            <TextInput 
-              type="date" 
-              placeholder="생년월일을 입력해주세요" 
-              {...register("birthDate")} 
-            />
-            <ErrorText>{errors.birthDate?.message}</ErrorText>
-          </FieldContainer>
-
           <SignupButton type="submit" value="회원가입" disabled={!isValid} />
         </Form>
       </FormContainer>
@@ -100,7 +86,7 @@ const SignUp = () => {
 
 export default SignUp;
 
-// 스타일 정의
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -120,14 +106,10 @@ const FormContainer = styled.div`
   background-color: #202832;
   border-radius: 10px; 
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
-  left: -160px; 
-  top: -100px; 
 `;
 
 const Title = styled.h1`
   color: white;
-  width: 100%;
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
@@ -152,14 +134,6 @@ const TextInput = styled.input`
   border-radius: 5px;
 `;
 
-const SelectInput = styled.select`
-  width: 105%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #000000;
-  border-radius: 5px;
-`;
-
 const ErrorText = styled.p`
   color: #FF073D; 
   font-size: 14px;
@@ -167,9 +141,8 @@ const ErrorText = styled.p`
 `;
 
 const SignupButton = styled.input`
-  width: 474px;
+  width: 100%;
   height: 50px;
-  padding: 10px;
   font-size: 16px;
   background-color: ${(props) => (props.disabled ? '#413F3F' : '#FF073D')}; 
   border: none;
