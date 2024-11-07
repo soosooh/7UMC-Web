@@ -2,19 +2,19 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import HomePage from './pages/HomePage';
-import NotFound from './pages/NotFound';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Search from './pages/Search';
-import NowPlaying from './pages/movies/NowPlaying';
-import Popular from './pages/movies/Popular';
-import TopRated from './pages/movies/TopRated';
-import UpComing from './pages/movies/UpComing';
-import MovieDetailPage from './pages/movies/MovieDetailPage';
+import HomePage from './pages/home/HomePage';
+import NotFound from './pages/notFound/NotFound';
+import Login from './pages/login/Login';
+import Signup from './pages/signup/Signup';
+import Search from './pages/search/Search';
+import NowPlaying from './pages/movies/category/NowPlaying';
+import Popular from './pages/movies/category/Popular';
+import TopRated from './pages/movies/category/TopRated';
+import UpComing from './pages/movies/category/UpComing';
+import MovieDetailPage from './pages/movies/detail/MovieDetailPage';
 
 import RootLayout from './layout/RootLayout';
-import Category from './pages/movies/Category';
+import Category from './pages/movies/category/Category';
 
 const router = createBrowserRouter([
   {
@@ -59,7 +59,6 @@ const router = createBrowserRouter([
         element: <UpComing />,
       },
       {
-        // movieId 파라미터를 포함한 경로 추가
         path: 'movies/:movieId', 
         element: <MovieDetailPage />,
       },
