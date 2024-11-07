@@ -23,8 +23,7 @@ const Overview = styled.p`
   line-height: 1.5;
 `;
 
-
-const MovieDetail = ({ title, overview }) => {
+const MovieDetail = ({ title, overview = '상세 설명이 없습니다.' }) => {
   return (
     <Detail>
       <Title>{title}</Title>
@@ -37,10 +36,5 @@ MovieDetail.propTypes = {
   title: PropTypes.string.isRequired,
   overview: PropTypes.string,
 };
-
-MovieDetail.defaultProps = {
-  overview: '상세 설명이 없습니다.',
-};
-
 
 export default MovieDetail;
