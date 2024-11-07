@@ -1,0 +1,52 @@
+body {
+    background-color: lavenderblush;
+    color: darkslateblue;
+}
+
+.cont {
+    display: flex;
+    width: 100%; /* 부모 요소가 페이지 전체 너비를 차지하도록 */
+    gap: 10px; /* 요소 간 간격 */
+}
+
+.writearea {
+    flex-grow: 1; 
+    justify-content: flex-end;
+    font: 1.3em sans-serif;
+    margin: 10px;
+    background: azure;
+    width: 20em;
+    height: 1.5em;
+    border-radius: 15px;
+}
+.writearea:hover {
+    background-color: lightblue;
+    color: azure;
+}
+
+
+.clickt button {
+    background-color: moccasin;
+    border:none;
+    color: blueviolet;
+    border-radius: 10px;
+    margin: 5px;
+    
+}
+
+.regis {
+    background-color: rgb(15, 78, 141);
+    color: aliceblue;
+    text-align: center;
+    font-size: 1.3em;
+    border-style: none;
+    border-radius: 10px;
+    width: 7em;
+    height: 2em;
+}
+
+@media screen and (max-width: 1920px){
+    .writearea {
+    
+    }
+}
