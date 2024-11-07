@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import useCustomFetch from "../../hooks/useCustomFetch";
-import SearchListData from "./searchListData";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import MovieItem from "../movie-item";
-import { useEffect } from "react";
+import { useEffect , useCallback} from "react";
+import Sckeleton from "./sckeletonCard";
+import _ from "lodash";
 
 const SearchComp = () => {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ const SearchComp = () => {
 
     const handleSearch = () => {
         if (mq === searchQuery) return;
+        setSearch(true);
         navigate(`/search?mq=${searchQuery}`)
     }
 
@@ -26,23 +28,24 @@ const SearchComp = () => {
 
     const handleChange = (e) => {
         setSearchQuery(e.target.value);
+        setSearch(false);
     }
+    const debounceQuery = useCallback(
+        _.debounce((query) => setDebouncedQuery(query), 500),
+        []
+    );
+
+    useEffect(() => {
+        debounceQuery(searchQuery);
+    }, [searchQuery, debounceQuery]);
+
     const [searchParams, setSearchParams] = useSearchParams({
-        mq:''
-    })
+        mq: ''
+    });
     
     
     const mq = searchParams.get('mq')
     console.log(mq, 'mq');
-
-    // if (isLoading) {
-    //     return (<div style={{color:'white'}}>로딩중입니다</div>)
-    // }
-    // if(isError) {
-    //     return(<div style={{color:'white'}}>에러!</div>)
-    // }
-    
-
      // movies 데이터 변경 시 콘솔에 출력
     useEffect(() => {
         console.log("Movies data:", movies);
@@ -56,14 +59,30 @@ const SearchComp = () => {
         onChange={handleChange}
         />
         <Button onClick={handleSearch}>검색</Button>
+        <br></br>
         
         
-        <MovieLi className="movieLi">
-                {movies.data?.results?.map((movie) => (
-                    <MovieItem key={movie.id} movie={movie} />
-                ))}
-            </MovieLi>
-            
+        {isLoading ? (
+                
+                <SkeletonWrapper>
+                    {Array.from({ length: 20 }).map((_, index) => (
+                        <Sckeleton key={index} />
+                    ))}
+                </SkeletonWrapper>
+            ) : (search && !isError && (
+                movies?.data?.results?.length > 0 ? (
+                    <MovieLi className="movieLi">
+                        {movies.data.results.map((movie) => (
+                            <MovieItem key={movie.id} movie={movie} />
+                        ))}
+                    </MovieLi>
+                ) : (
+                    <h1 style={{ color: 'white' }}>
+                        해당하는 검색어 '{searchQuery}'에 해당하는 <br /> 데이터가 없습니다.
+                    </h1>
+                )
+            )
+            )}
         </>
     )
 
@@ -103,4 +122,10 @@ const MovieLi = styled.ul `
 list-style: none;
 overflow-y: auto; /* 수직 스크롤 활성화 */
 `
+
+const SkeletonWrapper = styled.div`
+    
+    overflow-y: auto;
+    gap: 10px;
+`;
 export default SearchComp
