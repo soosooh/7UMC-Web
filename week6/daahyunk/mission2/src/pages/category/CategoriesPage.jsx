@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import nowPlayingImg from "../../assets/images/nowPlaying.jpeg";
+import nowPlayingImg from "../../assets/images/nowplaying.jpeg";
 import popularImg from "../../assets/images/popular.jpeg";
 import topRatedImg from "../../assets/images/toprated.jpeg";
 import upcomingImg from "../../assets/images/upcoming.jpeg";
