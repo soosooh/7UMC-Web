@@ -1,14 +1,12 @@
-// src/hooks/useMovies.jsx
 import { useState, useEffect, useRef } from 'react';
 
-const useMovies = (fetchFunction, params = null) => {  // params의 기본값을 null로 설정
-  const [data, setData] = useState([]);
+const useMovies = (fetchFunction, params = null) => {
+  const [data, setData] = useState(null);  // [] 대신 null로 초기값 변경
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const prevParamsRef = useRef();
 
   useEffect(() => {
-    // params가 필요한 경우(예: 검색)에만 params 비교
     if (params && JSON.stringify(prevParamsRef.current) === JSON.stringify(params)) {
       return;
     }
@@ -18,16 +16,20 @@ const useMovies = (fetchFunction, params = null) => {  // params의 기본값을
       setLoading(true);
       try {
         const response = await fetchFunction(params);
-        console.log('API Response:', response); // 응답 확인
+        console.log('API Response:', response);
+        
         if (!response.data) {
           throw new Error('데이터가 없습니다.');
         }
-        setData(response.data.results || []);
+
+        // 응답 데이터 구조에 따라 다르게 처리
+        const movieData = response.data.results ? response.data.results : response.data;
+        setData(movieData);
         setError(null);
       } catch (err) {
-        console.error('API Error:', err); // 에러 로깅
+        console.error('API Error:', err);
         setError(err.message || '데이터를 불러오는데 실패했습니다.');
-        setData([]);
+        setData(null);  // [] 대신 null로 변경
       } finally {
         setLoading(false);
       }
@@ -36,23 +38,20 @@ const useMovies = (fetchFunction, params = null) => {  // params의 기본값을
     fetchData();
   }, [fetchFunction, params]);
 
-  // 로딩 상태 컴포넌트
   if (loading) {
     return {
-      data: [],
+      data: null,  // [] 대신 null로 변경
       component: <div>로딩 중...</div>
     };
   }
 
-  // 에러 상태 컴포넌트
   if (error) {
     return {
-      data: [],
+      data: null,  // [] 대신 null로 변경
       component: <div>Error: {error}</div>
     };
   }
 
-  // 정상 데이터 반환
   return {
     data,
     component: null
