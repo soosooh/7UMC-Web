@@ -2,6 +2,13 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Input from '../components/input';
+import {
+  AuthContainer,
+  AuthWrapper,
+  AuthTitle,
+  AuthForm,
+  SubmitButton
+} from '../styles/auth';
 
 const Signup = () => {
     const schema = yup.object().shape({
@@ -34,31 +41,10 @@ const Signup = () => {
     };
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: 'calc(100vh - 60px)',
-            backgroundColor: '#141414',
-            width: '100%'
-        }}>
-            <div style={{ 
-                width: '400px',
-                marginTop: '-100px',
-                textAlign: 'center'
-            }}>
-                <h2 style={{
-                    color: 'white',
-                    fontSize: '32px',
-                    marginBottom: '32px',
-                    textAlign: 'center'
-                }}>회원가입</h2>
-                
-                <form onSubmit={handleSubmit(onSubmit)} style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '16px'
-                }}>
+        <AuthContainer>
+            <AuthWrapper>
+                <AuthTitle>회원가입</AuthTitle>
+                <AuthForm onSubmit={handleSubmit(onSubmit)}>
                     <Input
                         type="email"
                         placeholder="이메일을 입력해주세요!"
@@ -66,7 +52,6 @@ const Signup = () => {
                         id="email"
                         error={errors.email}
                     />
-
                     <Input
                         type="password"
                         placeholder="비밀번호를 입력해주세요!"
@@ -74,7 +59,6 @@ const Signup = () => {
                         id="password"
                         error={errors.password}
                     />
-
                     <Input
                         type="password"
                         placeholder="비밀번호를 다시 입력해주세요!"
@@ -82,37 +66,12 @@ const Signup = () => {
                         id="passwordCheck"
                         error={errors.passwordCheck}
                     />
-
-                    <button
-                        type="submit"
-                        style={{
-                            width: '100%',
-                            height: '52px',
-                            border: 'none',
-                            borderRadius: '4px',
-                            backgroundColor: isValid ? '#f93063' : '#666',
-                            color: 'white',
-                            fontSize: '16px',
-                            cursor: isValid ? 'pointer' : 'not-allowed',
-                            transition: 'background-color 0.3s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                            if (isValid) {
-                                e.target.style.backgroundColor = '#0350a8';
-                            }
-                        }}
-                        onMouseLeave={(e) => {
-                            if (isValid) {
-                                e.target.style.backgroundColor = '#f93063';
-                            }
-                        }}
-                        disabled={!isValid}
-                    >
-                        제출
-                    </button>
-                </form>
-            </div>
-        </div>
+                    <SubmitButton type="submit" isValid={isValid} disabled={!isValid}>
+                        회원가입
+                    </SubmitButton>
+                </AuthForm>
+            </AuthWrapper>
+        </AuthContainer>
     );
 };
 
