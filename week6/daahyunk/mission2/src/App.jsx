@@ -3,7 +3,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import RootLayout from "./layout/root-layout";
 import CategoryPage from './pages/category/CategoriesPage'; 
 import LoginPage from "./pages/auth/LoginPage";
-import SignupPage from "./pages/auth/SignupPage";
+import SignupPage from "./pages/auth/SignUpPage.jsx";
 import SearchPage from "./pages/search/SearchPage";
 import NowPlaying from "./pages/movies/NowPlaying";
 import Popular from "./pages/movies/Popular"; 
