@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react";
-import axiosInstance from "../api/axios";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const useFetch = (url) => {
+const useFetch = (url, token) => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -10,7 +10,11 @@ const useFetch = (url) => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const response = await axiosInstance.get(url);
+                const response = await axios.get(`https://api.themoviedb.org/3/${url}`, {
+                    headers: {
+                        Authorization: token, 
+                    },
+                });
                 setData(response.data);
             } catch (error) {
                 setIsError(true);
@@ -19,7 +23,7 @@ const useFetch = (url) => {
             }
         };
         fetchData();
-    }, [url]);
+    }, [url, token]);
 
     return { data, isLoading, isError };
 };
