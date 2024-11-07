@@ -1,5 +1,5 @@
 import React from 'react';
-import axiosInstance from '../utils/auth'; // auth.js에서 Axios 인스턴스 가져오기
+import axiosInstance from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
