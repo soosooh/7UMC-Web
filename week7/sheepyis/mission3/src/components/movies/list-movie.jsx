@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import styled from "styled-components";
 import ItemMovie from "./item-movie";
@@ -22,8 +23,54 @@ const ListContainer = styled.div`
     gap: 1rem;
 `;
 
+const PaginationContainer = styled.div`
+    display: flex;
+    gap: 1vw;
+    justify-content: center;
+    margin-top: 2rem;
+    align-items: center;
+`;
+
+const PaginationButton = styled.button`
+    padding: 0.5vw 1vw;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: ${colors.main};
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+    font-weight: 700;
+
+    &:disabled {
+        background-color: ${colors.navBackground};
+        cursor: not-allowed;
+    }
+`;
+
+const PageP = styled.p`
+    font-size: 1vw;
+    font-weight: 700;
+`
+
 const ListMovie = ({ url, query }) => {
-    const { data, loading, error } = useFetch(url);
+    const [page, setPage] = useState(1);
+    const { data, totalPages, loading, error } = useFetch(url, page);
+
+    const handleNextPage = () => {
+        if (page < totalPages) {
+            setPage((prevPage) => prevPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (page > 1) {
+            setPage((prevPage) => prevPage - 1);
+        }
+    };
 
     if (loading) {
         return (
@@ -44,24 +91,32 @@ const ListMovie = ({ url, query }) => {
     }
 
     return (
-        <ListContainer>
-            {data && data.length > 0 ? (
-                data.map(movie => (
-                    <ItemMovie
-                        key={movie.id}
-                        id={movie.id}
-                        title={movie.title}
-                        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                        date={movie.release_date}
-                        overview={movie.overview}
-                    />
-                ))
-            ) : (
-                <div className="outletContainer" style={{ whiteSpace: "nowrap", fontSize: "0.8vw", fontWeight: "bold" }}>
-                    {query ? `검색어 ${query}에 해당되는 데이터가 없습니다.` : ""}
-                </div>
-            )}
-        </ListContainer>
+        <>
+            <ListContainer>
+                {data && data.length > 0 ? (
+                    data.map(movie => (
+                        <ItemMovie
+                            key={movie.id}
+                            id={movie.id}
+                            title={movie.title}
+                            image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                            date={movie.release_date}
+                            overview={movie.overview}
+                        />
+                    ))
+                ) : (
+                    <div className="outletContainer" style={{ whiteSpace: "nowrap", fontSize: "0.8vw", fontWeight: "bold" }}>
+                        {query ? `검색어 ${query}에 해당되는 데이터가 없습니다.` : ""}
+                    </div>
+                )}
+            </ListContainer>
+
+            <PaginationContainer>
+                <PaginationButton onClick={handlePreviousPage} disabled={page === 1}>이전</PaginationButton>
+                <PageP>{page} 페이지</PageP>
+                <PaginationButton onClick={handleNextPage} disabled={page >= totalPages}>다음</PaginationButton>
+            </PaginationContainer>
+        </>
     );
 };
 

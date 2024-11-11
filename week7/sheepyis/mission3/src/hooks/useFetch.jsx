@@ -2,29 +2,27 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "../api/axios";
 import CategoryData from "../utils/categoryData";
 
-const useFetch = (url) => {
+const useFetch = (url, page = 1) => {
     const fetchData = async () => {
         if (url) {
-            const response = await API.get(url);
-            return response.data.results || response.data;
+            const response = await API.get(`${url}?page=${page}`);
+            return {
+                data: response.data.results || response.data,
+                totalPages: response.data.total_pages,
+            };
         } else {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(CategoryData);
-                }, 1000);
-            });
+            return { data: CategoryData };
         }
     };
 
-    // useQuery 변경
     const { data, isLoading: loading, error } = useQuery({
-        queryKey: ["fetchData", url],
+        queryKey: ["fetchData", url, page],
         queryFn: fetchData,
         enabled: !!url || !url,
         retry: 1,
     });
 
-    return { data, loading, error };
+    return { data: data?.data, totalPages: data?.totalPages, loading, error };
 };
 
 export default useFetch;
