@@ -7,27 +7,20 @@ const ListContainer = styled.div`
     grid-template-columns: repeat(10, 1fr);
     margin-top: 1vw;
     gap: 1vw;
-`
+`;
 
 const ListCredit = ({ movie }) => {
-    console.log(movie);
+    //console.log(movie.pages[0].credits.cast);
 
-    const combinedCredits = [
-        ...movie.credits.cast.map(castMember => ({
-            name: castMember.name,
-            profile_path: castMember.profile_path,
-            known_for_department: castMember.known_for_department,
-        })),
-        ...movie.credits.crew.map(crewMember => ({
-            name: crewMember.name,
-            profile_path: crewMember.profile_path,
-            known_for_department: crewMember.known_for_department,
-        }))
-    ];
+    const castMembers = movie.pages[0].credits.cast.map(castMember => ({
+        name: castMember.name,
+        profile_path: castMember.profile_path,
+        known_for_department: castMember.known_for_department,
+    }));
 
     return (
         <ListContainer>
-            {combinedCredits.map((credits, index) => (
+            {castMembers.map((credits, index) => (
                 <ItemCredit 
                     key={index}
                     name={credits.name}
@@ -37,6 +30,6 @@ const ListCredit = ({ movie }) => {
             ))}
         </ListContainer>
     );
-}
+};
 
 export default ListCredit;

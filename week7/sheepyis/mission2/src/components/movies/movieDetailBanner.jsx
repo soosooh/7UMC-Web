@@ -37,20 +37,20 @@ const BannerP = styled.p`
 `
 
 const MovieDetailBanner = ({ movie }) => {
-    //console.log(movie);
+    // console.log(movie.pages[0]);
 
-    const releaseYear = movie.release_date.split('-')[0];
+    const releaseYear = movie.pages[0].release_date.split('-')[0];
 
     return (
-        <BannerContainer background={movie.poster_path}>
+        <BannerContainer background={movie.pages[0].poster_path}>
             <BannerPContainer>
-                <BannerP fontSize="1.4vw">{movie.title}</BannerP>
+                <BannerP fontSize="1.4vw">{movie.pages[0].title}</BannerP>
                 <BannerP>
-                    평균 {movie.vote_average.toFixed(1)} <br />
+                    평균 {movie.pages[0].vote_average.toFixed(1)} <br />
                     {releaseYear} <br />
                     {movie.runtime}분
                 </BannerP>
-                <BannerP fontSize="1.4vw" fontStyle="italic">{movie.tagline}</BannerP>
+                <BannerP fontSize="1.4vw" fontStyle="italic">{movie.pages[0].tagline}</BannerP>
                 <BannerP>{movie.overview}</BannerP>
             </BannerPContainer>
         </BannerContainer>
