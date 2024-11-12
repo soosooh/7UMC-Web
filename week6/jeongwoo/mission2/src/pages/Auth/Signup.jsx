@@ -2,15 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import authApi from '../api/authApi';
-import Input from '../components/input';
+import authApi from '../../api/authApi';
+import Input from '../../components/input';
 import {
   AuthContainer,
   AuthWrapper,
   AuthTitle,
   AuthForm,
   SubmitButton
-} from '../styles/auth';
+} from '../../styles/auth';
 
 const Signup = () => {
     const navigate = useNavigate();

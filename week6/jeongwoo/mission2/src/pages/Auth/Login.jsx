@@ -1,16 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { useForm } from '../hooks/useForm';
-import { validateLogin } from '../utils/validate';
-import authApi from '../api/authApi';
-import tokenStorage from '../utils/tokenStorage';  // import 방식 변경
-import Input from '../components/input';
+import { useForm } from '../../hooks/useForm';
+import { validateLogin } from '../../utils/validate';
+import authApi from '../../api/authApi';
+import tokenStorage from '../../contexts/tokenStorage';  // import 방식 변경
+import Input from '../../components/input';
 import {
   AuthContainer,
   AuthWrapper,
   AuthTitle,
   AuthForm,
   SubmitButton
-} from '../styles/auth';
+} from '../../styles/auth';
 
 const Login = () => {
     const navigate = useNavigate();

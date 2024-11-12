@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tokenStorage from '../utils/tokenStorage';
+import tokenStorage from '../contexts/tokenStorage';
 
 const BASE_URL = 'http://localhost:3000';
 
