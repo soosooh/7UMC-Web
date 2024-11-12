@@ -5,7 +5,9 @@ import CategoryData from "../utils/categoryData";
 const useFetch = (url, page = 1) => {
     const fetchData = async () => {
         if (url) {
-            const response = await API.get(`${url}?page=${page}`);
+            const response = await API.get(url, {
+              params: { page: page },
+            });
             return {
                 data: response.data.results || response.data,
                 totalPages: response.data.total_pages,
