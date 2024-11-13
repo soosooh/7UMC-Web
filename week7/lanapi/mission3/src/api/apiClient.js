@@ -102,7 +102,6 @@ export const getUserInfo = async () => {
   }
 };
 
-// 로그아웃 처리 함수
 export const signOut = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');

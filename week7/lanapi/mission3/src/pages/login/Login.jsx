@@ -25,14 +25,13 @@ const Login = () => {
     });
 
     const navigate = useNavigate();
-    const credentials = { email: '', password: '' };
-    const { refetch, isLoading } = useAuth(credentials);
+    const { mutate, isLoading } = useAuth();
 
-    const handleLogin = async (data) => {
-        credentials.email = data.email;
-        credentials.password = data.password;
-        await refetch();
-        navigate('/');
+    const handleLogin = (data) => {
+        mutate(data, {
+            onSuccess: () => navigate('/'),
+            onError: () => alert("로그인에 실패했습니다. 다시 시도해주세요.")
+        });
     };
 
     return (
@@ -54,6 +53,7 @@ const Login = () => {
 
 export default Login;
 
+// 스타일 정의
 const Wrapper = styled.div`
     display: flex;
     align-items: center;
