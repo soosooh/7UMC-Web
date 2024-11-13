@@ -13,10 +13,17 @@ const MovieDetailContainer = styled.div`
 
   @media (max-width: 768px) {
     padding-top: 8rem;
+    padding-bottom: 10rem;
   }
 
   @media (max-width: 394px) {
     padding-top: 20rem;
+    padding-bottom: 10rem;
+  }
+
+  @media (max-width: 375px) {
+    padding-top: 40rem;
+    padding-bottom: 10rem;
   }
 `;
 
