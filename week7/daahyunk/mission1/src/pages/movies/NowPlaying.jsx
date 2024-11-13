@@ -1,5 +1,5 @@
 import MovieCard from '../../components/movies/MovieCard';
-import SkeletonCard from '../../components/movies/SkeletonCard'; // SkeletonCard import 추가
+import SkeletonCard from '../../components/movies/SkeletonCard'; 
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 
