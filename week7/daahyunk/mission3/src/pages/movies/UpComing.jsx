@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import MovieCard from '../../components/movies/MovieCard';
 import SkeletonCard from '../../components/movies/SkeletonCard';
+import Pagination from '../../components/common/Pagination';
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 const UpcomingContainer = styled.div`
-  width: 100%; 
+  width: 100%;
   height: 100%;
   padding: 2rem;
   box-sizing: border-box;
@@ -17,9 +19,9 @@ const MoviesContainer = styled.div`
   justify-content: center;
 `;
 
-const fetchUpcomingMovies = async () => {
+const fetchUpcomingMovies = async (page = 1) => {
   const token = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
-  const response = await fetch('https://api.themoviedb.org/3/movie/upcoming?language=ko-KR', {
+  const response = await fetch(`https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=${page}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json;charset=utf-8',
@@ -34,10 +36,16 @@ const fetchUpcomingMovies = async () => {
 };
 
 const Upcoming = () => {
+  const [page, setPage] = useState(1);
+
   const { data: movies, isLoading, error } = useQuery({
-    queryKey: ['upcomingMovies'],
-    queryFn: fetchUpcomingMovies,
+    queryKey: ['upcomingMovies', page],
+    queryFn: () => fetchUpcomingMovies(page),
+    keepPreviousData: true,
   });
+
+  const handleNextPage = () => setPage((prev) => prev + 1);
+  const handlePreviousPage = () => setPage((prev) => Math.max(prev - 1, 1));
 
   if (isLoading) {
     return (
@@ -66,6 +74,12 @@ const Upcoming = () => {
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </MoviesContainer>
+      <Pagination
+        page={page}
+        onPrevious={handlePreviousPage}
+        onNext={handleNextPage}
+        hasNextPage={!!movies.total_pages && page < movies.total_pages}
+      />
     </UpcomingContainer>
   );
 };
