@@ -4,13 +4,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
-    const { isLoggedIn, logout, user } = useContext(AuthContext);
+    const { isLoggedIn, logout, getNickname } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    const getNickname = (email) => {
-        if (!email) return '';
-        return email.split('@')[0];
-    };
 
     const handleLogout = () => {
         logout();
@@ -28,7 +23,7 @@ const Navbar = () => {
                 {isLoggedIn ? (
                     <>
                         <Nickname>
-                            {getNickname(user?.email)}님 환영합니다
+                            {getNickname()}님 환영합니다
                         </Nickname>
                         <StyledBtn 
                             color='red' 
