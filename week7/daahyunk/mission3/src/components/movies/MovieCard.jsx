@@ -13,12 +13,20 @@ const Card = styled.div`
   transition: transform 0.3s ease;
   overflow: hidden;
   border-radius: 0.5vw;
+
+  @media (max-width: 768px) {
+    width: 40vw;
+  }
 `;
 
 const Poster = styled.img`
   width: 100%;
   height: auto;
   border-radius: 0.5vw;
+
+  @media (max-width: 768px) {
+    border-radius: 1vw;
+  }
 `;
 
 const Info = styled.div`
@@ -26,27 +34,40 @@ const Info = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 20%; 
+  height: 20%;
   background-color: #383B64;
   padding: 1vh;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   color: white;
+
+  @media (max-width: 768px) {
+    height: 25%;
+    padding: 1vw;
+  }
 `;
 
 const Title = styled.h3`
   font-size: 1.8vh;
   margin: 0;
   padding-left: 1vw;
+
+  @media (max-width: 768px) {
+    font-size: 3vw;
+  }
 `;
 
 const ReleaseDate = styled.p`
   font-size: 1.5vh;
   margin: 0;
   padding-left: 1vw;
-  opacity: 0.8; 
+  opacity: 0.8;
+
+  @media (max-width: 768px) {
+    font-size: 2.5vw;
+  }
 `;
 
 const Overlay = styled.div`
@@ -66,10 +87,15 @@ const Overlay = styled.div`
   transition: opacity 0.3s ease;
   overflow-y: auto;
 
-  ${({ $isVisible }) => 
-    $isVisible && css`
+  ${({ $isVisible }) =>
+    $isVisible &&
+    css`
       opacity: 1;
     `}
+
+  @media (max-width: 768px) {
+    padding: 2vw;
+  }
 `;
 
 const MovieCard = ({ movie, isLoading }) => {

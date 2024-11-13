@@ -22,12 +22,25 @@ const LoginForm = styled.div`
   width: 28vw;
   padding: 2rem;
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    width: 80vw;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 90vw;
+  }
 `;
 
 const Title = styled.h1`
   margin-bottom: 2rem;
   color: white;
   font-size: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Input = styled.input`
@@ -38,6 +51,11 @@ const Input = styled.input`
   border: none;
   border-radius: 6px;
   outline: none;
+
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+  }
 `;
 
 const ErrorMessage = styled.span`
@@ -47,6 +65,10 @@ const ErrorMessage = styled.span`
   margin-top: 0.8rem;
   margin-bottom: 0.3rem;
   text-align: left;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const LoginButton = styled.button`
@@ -64,6 +86,11 @@ const LoginButton = styled.button`
 
   &:hover {
     background-color: ${(props) => (props.disabled ? "#555" : "#ff2a5f")};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -83,12 +110,9 @@ const LoginPage = () => {
 
     try {
       const { accessToken, refreshToken } = await loginUser({ email, password });
-
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-
       login(email.split("@")[0]);
-
       alert("로그인 성공! 🎉");
       navigate("/");
     } catch (error) {
@@ -100,23 +124,19 @@ const LoginPage = () => {
     <LoginPageContainer>
       <LoginForm>
         <Title>로그인</Title>
-
         <Input
           type="email"
           placeholder="이메일을 입력해주세요!"
           {...getTextInputProps("email")}
         />
         {touched.email && errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-
         <Input
           type="password"
           placeholder="비밀번호를 입력해주세요!"
           {...getTextInputProps("password")}
         />
         {touched.password && errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-
         {error && <ErrorMessage>{error}</ErrorMessage>}
-
         <LoginButton disabled={!isFormValid} onClick={handleLogin}>
           로그인
         </LoginButton>

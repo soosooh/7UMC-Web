@@ -10,6 +10,14 @@ const MovieDetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding-top: 8rem;
+  }
+
+  @media (max-width: 394px) {
+    padding-top: 20rem;
+  }
 `;
 
 const fetchMovieDetails = async (movieId) => {

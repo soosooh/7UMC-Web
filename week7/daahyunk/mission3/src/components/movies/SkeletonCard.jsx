@@ -18,6 +18,12 @@ const SkeletonCardContainer = styled.div`
   border-radius: 0.5vw;
   margin: 1vh;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 40vw;
+    height: 60vw;
+    border-radius: 1vw;
+  }
 `;
 
 const SkeletonPoster = styled.div`
@@ -31,6 +37,10 @@ const SkeletonPoster = styled.div`
   );
   background-size: 200% 100%;
   animation: ${shimmer} 1.5s infinite;
+
+  @media (max-width: 768px) {
+    height: 75%;
+  }
 `;
 
 const SkeletonText = styled.div`
@@ -39,6 +49,10 @@ const SkeletonText = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1vh;
+
+  @media (max-width: 768px) {
+    padding: 1vw;
+  }
 `;
 
 const SkeletonTitle = styled.div`
@@ -54,6 +68,11 @@ const SkeletonTitle = styled.div`
   animation: ${shimmer} 1.5s infinite;
   margin-bottom: 0.5vh;
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+    height: 2.5vw;
+    margin-bottom: 1vw;
+  }
 `;
 
 const SkeletonDate = styled.div`
@@ -68,6 +87,10 @@ const SkeletonDate = styled.div`
   background-size: 200% 100%;
   animation: ${shimmer} 1.5s infinite;
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+    height: 2vw;
+  }
 `;
 
 const SkeletonCard = () => {

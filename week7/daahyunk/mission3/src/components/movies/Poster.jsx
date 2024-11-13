@@ -3,10 +3,15 @@ import styled from 'styled-components';
 
 const PosterWrapper = styled.div`
   position: relative;
-  width: 80vw;  
-  height: 21rem;  
+  width: 80vw;
+  height: 21rem;
   overflow: hidden;
   border-radius: 1.25rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 15rem;
+  }
 `;
 
 const PosterImage = styled.img`
@@ -21,38 +26,80 @@ const MovieInfoOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);  
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding-left: 2rem;
+
+  @media (max-width: 768px) {
+    padding-left: 1rem;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 2rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 394px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Rating = styled.p`
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 394px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ReleaseDate = styled.p`
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+    
+  @media (max-width: 394px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Runtime = styled.p`
   font-size: 1.2rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+    
+  @media (max-width: 394px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Overview = styled.p`
   font-size: 1.1rem;
-  max-width: 80%;  
+  max-width: 80%;
   line-height: 1.5;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    max-width: 100%;
+  }
 `;
+
 
 const Poster = ({ movie }) => (
   <PosterWrapper>

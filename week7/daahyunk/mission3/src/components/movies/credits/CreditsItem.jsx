@@ -4,6 +4,10 @@ import styled from 'styled-components';
 const CastItem = styled.div`
   margin: 1rem;
   text-align: center;
+
+  @media (max-width: 768px) {
+    margin: 0.5rem;
+  }
 `;
 
 const CastImage = styled.img`
@@ -11,11 +15,20 @@ const CastImage = styled.img`
   width: 100px;
   height: 100px;
   object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 const CastName = styled.p`
   margin-top: 0.5rem;
   font-size: 0.9rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const DEFAULT_IMAGE = '/assets/images/default.png';

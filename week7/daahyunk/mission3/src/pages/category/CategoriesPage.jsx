@@ -9,21 +9,34 @@ const CategoryContainer = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 0.7rem;
-  width: 100%;]
+  width: 100%;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10rem;
+  }
 `;
 
-const CategoryCard = styled(Link)`  
+const CategoryCard = styled(Link)`
   margin-top: 1rem;
   text-decoration: none;
   color: white;
   position: relative;
   border-radius: 1rem;
+  transition: opacity 0.3s ease;
 
   img {
     width: 20rem;
     height: 8rem;
     object-fit: cover;
     border-radius: 10px;
+
+    @media (max-width: 768px) {
+      width: 20rem;
+      height: 10rem;
+    }
   }
 
   h3 {
@@ -42,10 +55,20 @@ const CategoryCard = styled(Link)`
 `;
 
 const CategoriesPageContainer = styled.div`
-  width: 100%; 
+  width: 100%;
   height: 100%;
-  padding: 2rem; 
+  padding: 2rem;
   color: white;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+  }
 `;
 
 const CategoriesPage = () => {
