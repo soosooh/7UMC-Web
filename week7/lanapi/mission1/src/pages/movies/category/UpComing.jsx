@@ -1,4 +1,4 @@
-// src/pages/movies/category/UpComing.jsx
+
 import React from 'react';
 import { useCategory } from '../../../hooks/useCategory';
 import CategoryList from '../../../components/category/CategoryList';
