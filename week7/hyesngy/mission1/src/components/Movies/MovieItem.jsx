@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import MovieDescription from './MovieDescription';
 
 const MovieItemContainer = styled.div`
   position: relative;
@@ -32,21 +33,6 @@ const MovieInfo = styled.div`
   box-sizing: border-box;
   padding: 0.5rem 0;
   gap: 0.25rem;
-`
-
-const MovieDescription = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  opacity: 0;
 `
 
 const MovieTitle = styled.p`
@@ -87,9 +73,7 @@ const MovieItem = ({ movie }) => {
       </MovieInfo>
 
       {isHovered && (
-        <MovieDescription className="movie-description">
-          <p>{movie.overview}</p>
-        </MovieDescription>
+        <MovieDescription overview={movie.overview} />
       )}
     </MovieItemContainer>
   );
