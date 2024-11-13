@@ -10,10 +10,6 @@ lerna-debug.log*
 # Dependency directories
 node_modules/
 
-# Distribution directories
-dist/
-dist-ssr/
-
 # Local environment and sensitive files
 *.local
 .env
