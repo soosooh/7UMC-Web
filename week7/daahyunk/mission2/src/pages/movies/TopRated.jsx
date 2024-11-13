@@ -1,6 +1,8 @@
+import { useRef, useEffect, useCallback } from 'react';
 import MovieCard from '../../components/movies/MovieCard';
 import SkeletonCard from '../../components/movies/SkeletonCard';
-import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '../../components/common/LoadingSpinner';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 const TopRatedContainer = styled.div`
@@ -17,9 +19,9 @@ const MoviesContainer = styled.div`
   justify-content: center;
 `;
 
-const fetchTopRatedMovies = async () => {
+const fetchTopRatedMovies = async ({ pageParam = 1 }) => {
   const token = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
-  const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=ko-KR', {
+  const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?language=ko-KR&page=${pageParam}`, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json;charset=utf-8',
@@ -34,10 +36,39 @@ const fetchTopRatedMovies = async () => {
 };
 
 const TopRated = () => {
-  const { data: movies, isLoading, error } = useQuery({
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ['topRatedMovies'],
     queryFn: fetchTopRatedMovies,
+    getNextPageParam: (lastPage) => lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined,
   });
+
+  const loadMoreRef = useRef();
+
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, { threshold: 1 });
+    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
+
+    return () => {
+      if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
+    };
+  }, [handleObserver]);
 
   if (isLoading) {
     return (
@@ -55,17 +86,15 @@ const TopRated = () => {
     return <TopRatedContainer>{error.message}</TopRatedContainer>;
   }
 
-  if (!movies || movies.results.length === 0) {
-    return <TopRatedContainer>영화 데이터가 없습니다.</TopRatedContainer>;
-  }
-
   return (
     <TopRatedContainer>
       <MoviesContainer>
-        {movies.results.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
+        {data.pages.flatMap((page) =>
+          page.results.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+        )}
       </MoviesContainer>
+      {isFetchingNextPage && <LoadingSpinner />}
+      <div ref={loadMoreRef} style={{ height: '1px' }}></div>
     </TopRatedContainer>
   );
 };
