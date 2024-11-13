@@ -18,6 +18,7 @@ import Upcoming from './pages/movies/up-coming.jsx';
 
 import MovieID from './pages/movies/movieId.jsx';
 import { AuthProvider } from './contexts/LoginContext.jsx';
+import styled from "styled-components";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -80,12 +81,28 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-      <GlobalStyle/>
-      <RouterProvider router={router}/>
-    </AuthProvider>
+      <Container>
+          <AuthProvider>
+          <GlobalStyle/>
+          <RouterProvider router={router}/>
+        </AuthProvider>
+      </Container>
+      
     </QueryClientProvider>   
   )
 }
+
+const Container = styled.div `
+  width: 100%;
+  
+  font-size: 1rem;
+
+  @media (max-width: 760px) {
+    
+    font-size: 0.875rem;
+    transform: scale(0.8);
+    transform-origin: top;
+  }
+`;
 
 export default App
