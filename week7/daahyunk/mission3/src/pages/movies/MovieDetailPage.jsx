@@ -10,19 +10,23 @@ const MovieDetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  padding-top: calc(2rem + env(safe-area-inset-top, 0)); /* Safe area insets 추가 */
+
+  /* 최소 높이 추가 */
+  min-height: 100vh;
 
   @media (max-width: 768px) {
-    padding-top: 8rem;
+    padding-top: calc(8rem + env(safe-area-inset-top, 0));
     padding-bottom: 10rem;
   }
 
   @media (max-width: 394px) {
-    padding-top: 20rem;
+    padding-top: calc(20rem + env(safe-area-inset-top, 0));
     padding-bottom: 10rem;
   }
 
   @media (max-width: 375px) {
-    padding-top: 40rem;
+    padding-top: calc(40rem + env(safe-area-inset-top, 0));
     padding-bottom: 10rem;
   }
 `;
