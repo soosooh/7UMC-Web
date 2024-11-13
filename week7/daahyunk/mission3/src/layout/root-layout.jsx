@@ -11,14 +11,19 @@ const MainContainer = styled.div`
 
 const ContentContainer = styled.div`
   flex-grow: 1;
-  margin-left: 11rem; 
-  padding-top: 4rem; 
+  margin-left: 11rem;
+  padding-top: 4rem;
   background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  overflow-y: auto; 
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    margin-left: 0; 
+    padding-top: 3rem; 
+  }
 `;
 
 

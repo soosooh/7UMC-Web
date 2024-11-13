@@ -6,7 +6,7 @@ import { MdLocalMovies } from 'react-icons/md';
 const SideNav = styled.nav`
   position: fixed;
   left: 0;
-  top: 3.75rem; 
+  top: 3.75rem;
   width: 11rem;
   height: 100vh;
   background-color: #141517;
@@ -14,12 +14,31 @@ const SideNav = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    top: auto;
+    bottom: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+    border-top: 1px solid #333;
+    z-index: 1000; 
+  }
 `;
+
 
 const NavList = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    justify-content: space-around;
+    width: auto;
+  }
 `;
 
 const NavItem = styled(Link)`
@@ -42,6 +61,17 @@ const NavItem = styled(Link)`
 
   svg {
     margin-right: 0.55rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    justify-content: center;
+    flex-direction: column;
+    svg {
+      margin-right: 0;
+      margin-bottom: 0.2rem;
+    }
   }
 `;
 

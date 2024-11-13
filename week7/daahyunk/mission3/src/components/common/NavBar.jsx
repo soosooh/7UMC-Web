@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAuth } from "../../context/AuthContext"; 
+import { useAuth } from "../../context/AuthContext";
 
 const Nav = styled.nav`
   display: flex;
@@ -14,6 +14,10 @@ const Nav = styled.nav`
   top: 0;
   left: 0;
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 `;
 
 const Logo = styled(Link)`
@@ -25,6 +29,11 @@ const Logo = styled(Link)`
 
   &:hover {
     color: #d02148;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin-left: 1rem;
   }
 `;
 
@@ -42,6 +51,13 @@ const NavLinks = styled.div`
       color: #ddd;
     }
   }
+
+  @media (max-width: 768px) {
+    a {
+      font-size: 0.9rem;
+      margin-right: 1rem;
+    }
+  }
 `;
 
 const SignUpButton = styled(Link)`
@@ -54,6 +70,11 @@ const SignUpButton = styled(Link)`
 
   &:hover {
     background-color: #d02148;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
   }
 `;
 
@@ -71,11 +92,18 @@ const LogoutButton = styled.button`
   &:hover {
     background-color: #26282A;
   }
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
 `;
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, userName, logout } = useAuth(); 
+  const { isLoggedIn, userName, logout } = useAuth();
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
