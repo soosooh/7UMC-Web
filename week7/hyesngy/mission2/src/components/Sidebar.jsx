@@ -13,6 +13,8 @@ const SidebarContainer = styled.div`
   padding: 1.5rem 1rem;
   gap: 1rem;
   flex-shrink: 0;
+  position: fixed;
+  left: 0;
 `
 
 const SidebarItem = styled.div`
@@ -27,18 +29,18 @@ const MenuName = styled(Link)`
 `
 
 const Sidebar = () => {
-    return (
-        <SidebarContainer>
-            <SidebarItem>
-                <IoSearch />
-                <MenuName to="/search">찾기</MenuName>
-            </SidebarItem>
-            <SidebarItem>
-                <MdMovie />
-                <MenuName to="/movies">영화</MenuName>
-            </SidebarItem>
-        </SidebarContainer>
-    );
+  return (
+    <SidebarContainer>
+      <SidebarItem>
+        <IoSearch />
+        <MenuName to="/search">찾기</MenuName>
+      </SidebarItem>
+      <SidebarItem>
+        <MdMovie />
+        <MenuName to="/movies">영화</MenuName>
+      </SidebarItem>
+    </SidebarContainer>
+  );
 };
 
 export default Sidebar;
