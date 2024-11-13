@@ -2,15 +2,15 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000', // 기본 URL 설정
+  baseURL: 'http://localhost:3000', 
 baseURL: '/auth',
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // 쿠키를 통한 인증 지원
+  withCredentials: true,
 });
 
-// 요청 인터셉터 설정
+
 apiClient.interceptors.request.use(
   async (config) => {
     const accessToken = localStorage.getItem('accessToken');
