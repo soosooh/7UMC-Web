@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import CastItem from "./CastItem";
+import CastItem from "./castitem";
+
 
 const CastList = ({ cast }) => {
     return (
