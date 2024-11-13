@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import MovieList from "../../components/MovieList";
-
+import MovieList from "../../components/movie/MovieList";
 const TopRated = () => {
   return (
     <>
