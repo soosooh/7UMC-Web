@@ -26,7 +26,7 @@ export default Sidebar;
 
 const SideContainer = styled.div`
     background-color: black;
-    width: 200px;
+    width: 60px;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -34,10 +34,10 @@ const SideContainer = styled.div`
 
 const SidebarDiv = styled.div`
     color: white;
-    height: 50px;
+    height: 70px;
     display: flex;
     align-items: center;
-    padding-left: 15px;
+    padding-left: 7px;
     cursor: pointer;
     &:hover {
         background-color: rgba(80, 80, 80, 1);
@@ -46,8 +46,8 @@ const SidebarDiv = styled.div`
 `
 
 const IconSpan = styled.span`
-    margin-right: 7px;
-    margin-top: 2.5px;
+    margin-right: 2px;
+    margin-top: 2px;
 `
 
 const StyledRouterLink = styled(Link)`

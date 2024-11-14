@@ -19,7 +19,6 @@ import MovieDetailPage from './pages/movies/detail/MovieDetailPage';
 import RootLayout from './layout/RootLayout';
 import Category from './pages/movies/category/Category';
 
-// QueryClient 인스턴스 생성
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([

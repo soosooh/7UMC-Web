@@ -56,6 +56,17 @@ const YongchaNav = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 20px;
+    }
 `;
 
 const LogoSpan = styled.span`
@@ -63,12 +74,16 @@ const LogoSpan = styled.span`
     font-size: 1.3em;
     font-weight: bold;
     padding: 5px;
+
+    @media (max-width: 768px) {
+        font-size: 1.1em;
+    }
 `;
 
 const StyledBtn = styled.button`
     background-color: ${props => props.color || 'black'};
     &:hover {
-        background-color: ${props => props.color2}
+        background-color: ${props => props.color2};
     };
     border: 1px solid grey;
     border-radius: 0.4em;
@@ -76,6 +91,12 @@ const StyledBtn = styled.button`
     cursor: pointer;
     color: white;
     margin-right: 15px;
+
+    @media (max-width: 768px) {
+        padding: 6px 10px;
+        font-size: 0.9em;
+        margin-right: 10px;
+    }
 `;
 
 const StyledRouterLink = styled(Link)`
@@ -88,4 +109,9 @@ const Nickname = styled.span`
     font-size: 1em;
     font-weight: bold;
     margin-right: 15px;
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+        margin-right: 10px;
+    }
 `;

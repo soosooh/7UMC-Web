@@ -20,7 +20,7 @@ const HomePage = () => {
                     page: page,
                 },
             });
-            setMovies(response.data.results.slice(0, 16)); // 한 페이지당 16개씩
+            setMovies(response.data.results.slice(0, 16)); 
         } catch (error) {
             console.error('영화 데이터를 가져오는데 실패했습니다:', error);
         }
@@ -67,8 +67,10 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #ffffffffffff;
+    background-color: #FFfffffFFFF;
     color: black;
+    overflow-x: hidden;
+      width: 100%;
 `;
 
 const MoviesGrid = styled.div`
@@ -82,34 +84,48 @@ const MoviesGrid = styled.div`
 
 const PaginationControls = styled.div`
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 10px;
-    position: fixed;
-    bottom: 50px;   
-    left: 50%;      
-    transform: translateX(-50%); 
-    background-color: #fffffffffff; 
+    margin-top: 20px;
     padding: 10px 20px;
+    background-color: #FFFFFF;
     border-radius: 8px;
-    z-index: 1000;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+        max-width: 90%; // 작은 화면에서 너비를 줄여 화면에 맞춤
+        gap: 5px; // 작은 화면에서 버튼 간격 조정
+        padding: 8px 15px;
+    }
 `;
 
 const Button = styled.button`
-    width: 227px;
+    flex-grow: 1;  // 버튼이 가능한 넓게 차지하도록 설정
+    min-width: 80px; // 최소 너비 설정
+    max-width: 150px; // 최대 너비 설정
     height: 35px;
     background: #FF073D;
     border: none;
-    border-radius: 10px 0px 0px 0px;
-    opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+    border-radius: 10px;
     color: #FFFFFF;
-    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+    cursor: pointer;
     font-size: 1rem;
     transition: opacity 0.3s;
 
     &:hover {
-        opacity: ${(props) => (props.disabled ? 0.5 : 0.8)};
+        opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.9rem;  // 작은 화면에서 폰트 크기 축소
+        padding: 8px; // 버튼 패딩 조정으로 크기 조절
     }
 `;
+
+
 
 const PageNumber = styled.span`
     font-size: 1rem;
