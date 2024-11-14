@@ -7,7 +7,6 @@ const Navbar = () => {
     const { isLoggedIn, logout, user } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // 이메일에서 @ 앞부분을 추출하는 함수
     const getNickname = (email) => {
         if (!email) return '';
         return email.split('@')[0];

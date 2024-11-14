@@ -1,4 +1,3 @@
-// components/common/Pagination.jsx
 import React from 'react';
 import styled from 'styled-components';
 
@@ -6,13 +5,20 @@ const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 0;
-  gap: 20px;
-  padding: 20px;
+  margin: 15px 0;
+  gap: 10px;
+  padding: 10px;
+  flex-wrap: wrap;
+
+  @media (min-width: 768px) {
+    margin: 20px 0;
+    gap: 20px;
+    padding: 20px;
+  }
 `;
 
 const PageButton = styled.button`
-  padding: 10px 20px;
+  padding: 6px 12px;
   border: none;
   border-radius: 4px;
   background-color: ${props => props.isActive ? '#e50914' : '#413f3f'};
@@ -20,7 +26,12 @@ const PageButton = styled.button`
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   opacity: ${props => props.disabled ? 0.5 : 1};
   transition: all 0.2s ease;
-  font-size: 14px;
+  font-size: 12px;
+
+  @media (min-width: 768px) {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
 
   &:hover:not(:disabled) {
     background-color: #f40612;
@@ -29,24 +40,36 @@ const PageButton = styled.button`
 
   &:disabled {
     background-color: #666;
-    cursor: not-allowed;
+    transform: none;
   }
 `;
 
 const PageNumbers = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    gap: 10px;
+  }
 `;
 
 const PageNumber = styled.button`
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: none;
   border-radius: 4px;
   background-color: ${props => props.isActive ? '#e50914' : 'transparent'};
   color: white;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-size: 12px;
+
+  @media (min-width: 768px) {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 
   &:hover:not(:disabled) {
     background-color: ${props => props.isActive ? '#e50914' : '#413f3f'};
@@ -55,13 +78,24 @@ const PageNumber = styled.button`
 
 const PageInfo = styled.span`
   color: white;
-  font-size: 14px;
-  margin: 0 15px;
+  font-size: 12px;
+  margin: 0 10px;
+
+  @media (min-width: 768px) {
+    font-size: 14px;
+    margin: 0 15px;
+  }
 `;
 
 const LoadingDots = styled.div`
   color: white;
-  margin-left: 10px;
+  margin-left: 5px;
+  font-size: 12px;
+
+  @media (min-width: 768px) {
+    margin-left: 10px;
+    font-size: 14px;
+  }
 `;
 
 const Pagination = ({ 
@@ -70,9 +104,8 @@ const Pagination = ({
   onPageChange,
   isFetching 
 }) => {
-  // 표시할 페이지 번호 범위 계산
   const getPageNumbers = () => {
-    const delta = 2; // 현재 페이지 기준 앞뒤로 보여줄 페이지 수
+    const delta = 1;
     const range = [];
     const rangeWithDots = [];
     let l;
