@@ -19,7 +19,6 @@ const PaginationContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
 `;
 
 const PageButton = styled.button`

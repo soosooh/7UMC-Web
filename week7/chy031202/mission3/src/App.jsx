@@ -93,16 +93,10 @@ function App() {
 }
 
 const Container = styled.div `
-  width: 100%;
+  
   
   font-size: 1rem;
 
-  @media (max-width: 760px) {
-    
-    font-size: 0.875rem;
-    transform: scale(0.8);
-    transform-origin: top;
-  }
 `;
 
 export default App

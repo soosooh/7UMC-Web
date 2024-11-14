@@ -8,17 +8,15 @@ const SidebarComponent =() =>{
     return (
         <Sidebar >
             <Search to='/search' onClick = {()=>navigate("/search")}>
-                <FaSearch /> 찾기
+                <FaSearch /> <span>찾기</span>
             </Search>
             <MovieContainer onClick = {()=>navigate("/category")}>
-                <MdMovie/> 영화
+                <MdMovie /> 영화
             </MovieContainer>
         </Sidebar>
     )
 }
 const Sidebar = styled.aside `
-    index:10;
-    position : fixed;
     top:60px;
     left:0;
     width : 180px;
@@ -29,6 +27,15 @@ const Sidebar = styled.aside `
     flex-direction: column; /* 세로 정렬 */
     gap: 20px;
     padding-left : 20px;
+    min-width:180px;
+    
+
+    @media (max-width: 760px) {
+    
+    font-size: 0.875rem;
+    min-width:30px;
+    transform-origin: top;
+}
     
 `
 const Search = styled.div `

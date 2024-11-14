@@ -99,7 +99,7 @@ width: 80%;
 height: 50px;
 left: 203px;
 top: 96px;
-
+min-width:499px;
 background: #FFFFFF;
 border-radius: 10px 0px 0px 10px;
 border:none;
