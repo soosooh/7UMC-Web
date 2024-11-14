@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
-import MovieCard from '../../components/MovieCard';
 import useMovies from '../../hooks/useMovies';
 import { searchMovies } from '../../api/movieApi';
+import SearchMovieList from './SearchMovieList';
 
 // 검색 컨테이너
 const SearchContainer = styled.div`
@@ -55,15 +55,6 @@ const SearchButton = styled.button`
   }
 `;
 
-// 영화 목록 그리드
-const MoviesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px 0;
-  position: relative;
-`;
-
 // 결과 없음 메시지
 const NoResults = styled.div`
   position: absolute;
@@ -105,6 +96,14 @@ const ErrorMessage = styled.div`
   color: #ff6b6b;
   padding: 20px;
   width: 100%;
+`;
+
+const MoviesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+  position: relative;
 `;
 
 const LoadingGrid = () => {
@@ -183,13 +182,7 @@ const Search = () => {
     }
 
     if (movies?.length > 0) {
-      return (
-        <MoviesGrid>
-          {movies.map(movie => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </MoviesGrid>
-      );
+      return <SearchMovieList movies={movies} />;
     }
 
     return null;
