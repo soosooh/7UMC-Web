@@ -48,12 +48,28 @@ const Card = styled.div`
     &:hover {
         transform: scale(1.05);
     }
+
+    @media (max-width: 768px) {
+        width: 140px;  // 작은 화면에서 카드 크기 축소
+    }
+
+    @media (max-width: 480px) {
+        width: 120px;  // 더 작은 화면에서 카드 크기 축소
+    }
 `;
 
 const Poster = styled.img`
     width: 100%;
     height: 231.56px;
     object-fit: cover;
+
+    @media (max-width: 768px) {
+        height: 200px;  // 작은 화면에서 포스터 높이 축소
+    }
+
+    @media (max-width: 480px) {
+        height: 180px;  // 더 작은 화면에서 포스터 높이 축소
+    }
 `;
 
 const Info = styled.div`
@@ -66,6 +82,14 @@ const Title = styled.h3`
     margin: 0;
     color: #FFFFFF;
     text-align: left;
+
+    @media (max-width: 768px) {
+        font-size: 12px;  // 작은 화면에서 텍스트 크기 축소
+    }
+
+    @media (max-width: 480px) {
+        font-size: 10px;  // 더 작은 화면에서 텍스트 크기 축소
+    }
 `;
 
 const ReleaseDate = styled.p`
@@ -73,4 +97,12 @@ const ReleaseDate = styled.p`
     margin: 5px 0 0 0;
     opacity: 0.8;
     text-align: left;
+
+    @media (max-width: 768px) {
+        font-size: 10px;  // 작은 화면에서 텍스트 크기 축소
+    }
+
+    @media (max-width: 480px) {
+        font-size: 9px;  // 더 작은 화면에서 텍스트 크기 축소
+    }
 `;

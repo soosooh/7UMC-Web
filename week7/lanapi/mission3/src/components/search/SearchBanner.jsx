@@ -40,17 +40,25 @@ const SearchBanner = ({ onSearch }) => {
 export default SearchBanner;
 
 const Container = styled.div`
-    position: absolute;
-    width: 1692px;
-    height: 50px;
-    top: 96px;
-    left: 203px;
     display: flex;
-    border-radius: 10px 0px 0px 0px;
+    align-items: center;
+    margin-left: 200px;
+    width: calc(100% - 200px); 
+    max-width: 400px;
+    padding-right: 10px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+        margin-left: 0;
+    }
 `;
 
 const SearchInputBox = styled.input`
-    width: 94%;
+    flex: 1;
+    flex-basis: 70%; // 기본 크기를 전체 컨테이너의 70%로 설정
+    max-width: 600px; // 검색창이 너무 커지지 않도록 제한
+    min-width: 1px; // 최소 너비 설정
     background-color: #ffffff;
     border: none;
     border-radius: 10px 0 0 10px;
@@ -59,24 +67,30 @@ const SearchInputBox = styled.input`
     box-sizing: border-box;
     font-weight: bold;
     color: #333;
+
+    @media (max-width: 768px) {
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 5px;
+    }
 `;
 
 const SearchButton = styled.button`
-    width: 6%;
+    padding: 12px 20px;
     background-color: #ff5a5f;
     color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border: none;
     border-radius: 0 10px 10px 0;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    flex-shrink: 0;
 
     &:hover {
         background-color: #e0474f;
     }
-`;
 
+    @media (max-width: 768px) {
+        border-radius: 0 0 10px 10px;
+    }
+`;

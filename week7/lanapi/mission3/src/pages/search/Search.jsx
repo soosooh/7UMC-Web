@@ -20,8 +20,6 @@ const MovieSearch = () => {
         <div>
             <SearchBanner onSearch={handleSearch} placeholder="영화를 검색하세요" />
 
-            {isError && <p>영화 검색 중 오류가 발생했습니다.</p>}
-
             <SearchList data={data} isLoading={isLoading} />
         </div>
     );
