@@ -7,6 +7,14 @@ import SkeletonCard from "../components/skeleton/skeleton-card";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 768px) {
+    position: static;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+  }
 `;
 const SearchContainer = styled.div`
   display: flex;
@@ -19,17 +27,31 @@ const StyledInput = styled.input`
   border: white;
   border-radius: 10px 0 0 10px;
   color: black;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const SearchButton = styled.button`
   background-color: #ff073d;
   width: 90px;
   border-radius: 0 10px 10px 0;
+
+  @media screen and (max-width: 768px) {
+    width: 20%;
+    font-size: 12px;
+  }
 `;
 const CardContainer = styled.div`
   display: flex;
   margin: 30px;
   justify-content: flex-start;
   flex-wrap: wrap;
+
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+    margin: 10px 0;
+  }
 `;
 const NoResultsMessage = styled.div`
   margin: 30px;

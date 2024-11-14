@@ -14,6 +14,10 @@ const Title = styled.h1`
 `;
 const CardContainer = styled.div`
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px;
 `;
 const ImageContainer = styled.div`
   position: relative;
@@ -21,7 +25,7 @@ const ImageContainer = styled.div`
   height: 171px;
   border-radius: 10px;
   overflow: hidden;
-  margin-left: 35px;
+  margin-left: 30px;
 
   img {
     height: 100%;

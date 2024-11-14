@@ -13,12 +13,24 @@ const SignUpContainer = styled.div`
   position: absolute;
   top: 17%;
   left: 40%;
+
+  @media screen and (max-width: 768px) {
+    position: static;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+  }
 `;
 
 const InputWrapper = styled.div`
   position: relative;
   width: 450px;
   margin-bottom: 30px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -32,6 +44,10 @@ const StyledInput = styled.input`
   border-radius: 8px;
   background-color: white;
   color: black;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledSubmit = styled.button`
@@ -43,12 +59,20 @@ const StyledSubmit = styled.button`
   background-color: #ff073d;
   border: #ff073d;
   border-radius: 8px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const ErrorText = styled.p`
   color: red;
   font-size: 12px;
   position: absolute;
   top: 55px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const SignUpPage = () => {

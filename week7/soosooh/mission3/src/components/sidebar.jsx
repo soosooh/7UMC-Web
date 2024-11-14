@@ -10,6 +10,9 @@ const SideContainer = styled.div`
   background-color: #413f3f;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (min-width: 768px) {
+  }
 `;
 const Search = styled.div`
   margin-top: 20px;
