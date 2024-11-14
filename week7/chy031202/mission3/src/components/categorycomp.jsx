@@ -38,7 +38,8 @@ return (
 const Container = styled.div`
     display: flex;  
     flex-direction: row;
-    gap: 20px;      
+    gap: 20px;
+    
 `;
 
 const Textbox = styled.span `

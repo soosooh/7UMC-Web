@@ -71,8 +71,9 @@ const Poster = styled.img`
 const Modata = styled.li`
     position: relative;
     float: left;
-    margin-right: 2vw;
-    margin-bottom: 3vw;
+    margin-right:20px;
+    margin-bottom:20px;
+    
 `;
 
 const Overview = styled.p`
@@ -82,9 +83,8 @@ overflow: hidden;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     width: 194px; 
-    max-height: 320px;
     margin-right: 2vw;
-    margin-bottom: 3vw;
+    
 `;
 
 export default MovieItem;

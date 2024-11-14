@@ -43,20 +43,36 @@ const PalyingComponent = () => {
     }
     const allMovies = movies?.results || [];
     return ( 
-        
-        <div>
-            <ListData movies={allMovies} />
+        <Wrapp>
+            <ScrollableList>
+                <ListData movies={allMovies} />
+            </ScrollableList>
             <Pagination
                 currentPage={currentPage}
                 onPrevPage={handlePrevPage}
                 onNextPage={handleNextPage}
                 maxPage={4} // 페이지의 최대값을 설정
             />
-        </div>
+        </Wrapp>
     );
 }
 
 
+const Wrapp = styled.div `
+display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center; /* 가로 가운데 정렬 */
+    height: 100vh; /* 화면 전체 높이 */
+    
+    
+`
 
+const ScrollableList = styled.div`
+    
+    flex-grow: 1;
+    width: 100%;
+    max-height:80%;
+    overflow-y: auto; /* 세로 스크롤 */
+`;
 
 export default PalyingComponent ;

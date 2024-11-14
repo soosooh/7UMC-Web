@@ -6,6 +6,7 @@ import styled from "styled-components";
 import React, { useState, useEffect } from 'react';
 import { useAuth } from "../contexts/LoginContext.jsx";
 import { useQuery } from "@tanstack/react-query";
+const SIDEBAR_WIDTH = '180px';
 
 
 const RootLayout = () => {
@@ -61,13 +62,13 @@ const RootLayout = () => {
         <LayoutContainer>
             {isLoggedIn ? <NavbarLog nickname={nickname} onLogout={logout} /> : <Navbar />} 
             
-            <Sidbar/>
-            <OutletContent>
-            <Outlet/>
-            </OutletContent>
-                
-            
-            
+            <UnderWrapp>
+                <Sidbar/>
+
+                <OutletContent sidebarWidth={SIDEBAR_WIDTH}>
+                    <Outlet/>
+                </OutletContent>
+            </UnderWrapp>
         </LayoutContainer>
     );
 };
@@ -75,26 +76,29 @@ const RootLayout = () => {
 const LayoutContainer = styled.div `
     display: flex;
     flex-direction: column;
-    height: 100vh; 
-    flex-direction: row; /* 슬라이드 바와 콘텐츠가 좌우로 배치 */
-`
+    background-color: #000000;  
+    height: 100vh;
 
+`
+const UnderWrapp = styled.div `
+display:flex;
+gap:10px;
+height: 100%;
+
+`
 
     
 const OutletContent = styled.div `
-    flex: 1;  // 남은 공간을 Outlet이 차지
-    margin-right:0;
-    margin-bottom:0;
-    margin-left: 180px;
-    margin-top : 40px;
-    padding-left: 20px;
+    flex-grow: 1;
+
     padding-top:20px;
-    width: calc(100% - 180px); /* 슬라이드 바 너비만큼 감소 */
-    
-    background-color: #000000;  
+
+    // @media (max-width: 760px) {
+    // width: 100%;
+    // }
+
     color: white;
     overflow: hidden;
-    
 `
 export default RootLayout;
 

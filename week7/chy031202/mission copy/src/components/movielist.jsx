@@ -26,8 +26,7 @@ const ListData = ({ movies }) => {
 
 const MovieLi = styled.ul `
 list-style: none;
-overflow-y: auto;
-overflow-y: auto; /* 수직 스크롤 활성화 */
+
 max-height: 80vh;
 `
 

@@ -1,6 +1,12 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+
+    body {
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    }
     .movieLi li .overview {
     display: none;
     color: white;

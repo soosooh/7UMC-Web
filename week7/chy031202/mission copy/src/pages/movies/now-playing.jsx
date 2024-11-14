@@ -14,35 +14,41 @@ const fetchMovies = async ({ pageParam = 1 }) => {
 const PalyingComponent = () => {
     const loadMoreRef = useRef();
     
-    const { data: movies, isLoading, isError ,fetchNextPage, hasNextPage,isFetchingNextPage, } = useInfiniteQuery({
-        queryKey: ['nowPlayingMovies'], // 쿼리 키 설정
-        queryFn: fetchMovies,  
-        getNextPageParam: (lastPage, allPages) =>
-        {
-            return allPages.length < 4 ? allPages.length + 1 : undefined;
+    const {
+        data: movies,
+        isLoading,
+        isError,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery({
+        queryKey: ['nowPlayingMovies'],
+        queryFn: fetchMovies,
+        getNextPageParam: (lastPage) => {
+            return lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined;
         },
-        retry: false, 
+        retry: false,
     });
 
     useEffect(() => {
         if (!hasNextPage) return;
-
+    
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting) {
+                if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
                     fetchNextPage();
                 }
             },
-            { threshold: 1.0 }
+            { threshold: 0.5 }
         );
-
-        
+    
         if (loadMoreRef.current) observer.observe(loadMoreRef.current);
-
+    
         return () => {
             if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
         };
-    }, [hasNextPage, fetchNextPage]);
+    }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
+
 
     console.log("Fetched data in Play:",movies);
     if (isLoading) {
@@ -53,14 +59,15 @@ const PalyingComponent = () => {
     }
     const allMovies = movies.pages.flatMap(page => page.results);
     return ( 
-        <div>
+        <ScrollableContainer>
+
             <ListData movies={allMovies} />
             {hasNextPage && (
-                <div ref={loadMoreRef} style={{ height: '50px', textAlign: 'center' }}>
-                    {isFetchingNextPage && <SckeletonWrapper />}
-                </div>
+                <div ref={loadMoreRef} style={{ height: '50px', textAlign: 'center', color: 'white', padding: '10px' }}>
+                {isFetchingNextPage ? <SckeletonWrapper/> : ''}
+            </div>
             )}
-        </div>
+        </ScrollableContainer>
     );
 }
 
@@ -69,6 +76,8 @@ const PalyingComponent = () => {
 const ScrollableContainer = styled.div`
     max-height: 80vh; /* 필요한 경우 높이 조절 */
     overflow-y: auto;
+    display:flex;
+    flex-direction: column;
 `;
 
 const PageButton = styled.button `
