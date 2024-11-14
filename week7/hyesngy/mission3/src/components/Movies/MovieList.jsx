@@ -12,6 +12,10 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;  
+
+  @media (max-width: 768px){
+    width: 100%;
+  }
 `
 const PageDiv = styled.div`
   display: flex;

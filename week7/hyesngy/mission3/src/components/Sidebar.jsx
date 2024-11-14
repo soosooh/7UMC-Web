@@ -15,6 +15,13 @@ const SidebarContainer = styled.div`
   flex-shrink: 0;
   position: fixed;
   left: 0;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    left: ${({ $isSidebarOpen }) => ($isSidebarOpen ? '0' : '-100%')};
+  }
+
+  z-index: 999;
 `
 
 const SidebarItem = styled.div`
@@ -28,14 +35,14 @@ const MenuName = styled(Link)`
   text-decoration: none;
 `
 
-const Sidebar = () => {
+const Sidebar = ({ $isSidebarOpen, toggleSidebar }) => {
   return (
-    <SidebarContainer>
-      <SidebarItem>
+    <SidebarContainer $isSidebarOpen={$isSidebarOpen}>
+      <SidebarItem onClick={toggleSidebar}>
         <IoSearch />
         <MenuName to="/search">찾기</MenuName>
       </SidebarItem>
-      <SidebarItem>
+      <SidebarItem onClick={toggleSidebar}>
         <MdMovie />
         <MenuName to="/movies">영화</MenuName>
       </SidebarItem>

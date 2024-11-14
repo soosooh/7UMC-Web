@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import getUser from '../api/auth/getUser';
 import { useQuery } from '@tanstack/react-query';
+import { FaBars } from 'react-icons/fa';
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
 
@@ -26,22 +27,26 @@ const Navbar = () => {
   };
 
   return (
-    <NavbarContainer>
-      <Logo to="/">HaenCHA</Logo>
-      <UserContainer>
-        {user ? (
-          <>
-            <NicknameSpan>{nickname}님 반갑습니다.</NicknameSpan>
-            <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
-          </>
-        ) : (
-          <>
-            <LoginButton to="/login">로그인</LoginButton>
-            <SignUpButton to="/signup">회원가입</SignUpButton>
-          </>
-        )}
-      </UserContainer>
-    </NavbarContainer>
+    <>
+      <NavbarContainer>
+        <HamburgerIcon onClick={toggleSidebar} />
+        <Logo to="/">HaenCHA</Logo>
+        <UserContainer>
+          {user ? (
+            <>
+              <NicknameSpan>{nickname}님 반갑습니다.</NicknameSpan>
+              <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+            </>
+          ) : (
+            <>
+              <LoginButton to="/login">로그인</LoginButton>
+              <SignUpButton to="/signup">회원가입</SignUpButton>
+            </>
+          )}
+        </UserContainer>
+      </NavbarContainer>
+    </>
+
   );
 };
 
@@ -60,6 +65,10 @@ const NavbarContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
 `
 const Logo = styled(Link)`
   display: flex;
@@ -113,4 +122,14 @@ const NicknameSpan = styled.span`
   font-weight: 700;
   line-height: 16.94px;
   align-self: center;
+`
+const HamburgerIcon = styled(FaBars)`
+  display: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  
+  @media (max-width: 768px) {
+    display: block;
+  }
 `
