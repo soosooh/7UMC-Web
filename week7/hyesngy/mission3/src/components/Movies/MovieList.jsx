@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MovieItem from './MovieItem';
 import useCustomFetch from '../../hooks/useCustomFetch';
 import SkeletonMovieItem from './SkeletonMovieItem';
+import Pagination from '../Pagination';
 
 const ListContainer = styled.div`
   width: calc(100vw - 180px);
@@ -15,25 +16,6 @@ const ListContainer = styled.div`
 
   @media (max-width: 768px){
     width: 100%;
-  }
-`
-const PageDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  gap: 2rem;
-  padding-bottom: 3rem;
-`
-const PageButton = styled.div`
-  padding: 0.5rem 1rem;
-  background: ${(props) => (props.disabled ? 'gray' : '#F82F62')};
-  color: #fff;
-  border-radius: 4px;
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-  
-  &:hover {
-    background: ${(props) => (props.disabled ? 'gray' : '#e52958')};
   }
 `
 
@@ -87,16 +69,13 @@ const MovieList = ({ listType, url }) => {
                     <MovieItem key={movie.id} movie={movie} />
                 ))}
             </ListContainer>
-            {listType !== "search" && (
-                <PageDiv>
-                    <PageButton onClick={handlePrev} disabled={page === 1}>이전</PageButton>
-                    <span>{page} 페이지</span>
-                    <PageButton onClick={handleNext}>다음</PageButton>
-                </PageDiv>
-            )}
+            <Pagination
+                listType={listType} page={page}
+                handlePrev={handlePrev} handleNext={handleNext}
+            />
         </>
     );
-};
+}
 
 MovieList.propTypes = {
     listType: PropTypes.string.isRequired,
