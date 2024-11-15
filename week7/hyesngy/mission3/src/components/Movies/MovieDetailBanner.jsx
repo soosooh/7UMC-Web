@@ -48,6 +48,10 @@ const OriginalTitleP = styled(DetailP)`
 `
 const OverviewP = styled(DetailP)`
   margin-top: auto;
+
+  @media (max-width:768px) {
+    display: none;
+  }
 `
 
 const MovieDetailBanner = ({ movie }) => {

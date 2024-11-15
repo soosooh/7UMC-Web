@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Input, SubmitBtn, ErrorMsg, FormContainer } from '../../styles/auth/authStyles';
+import { Input, SubmitBtn, ErrorMsg, FormContainer, InputWrapper } from '../../styles/auth/authStyles';
 import { useAuthForm } from '../../hooks/use-Form';
 import { useNavigate } from 'react-router-dom';
 import login from '../../api/auth/login';
@@ -14,6 +14,12 @@ const PageContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   padding: 10rem;
+
+  h1 {
+    display: inline;
+    white-space: nowrap;
+    text-align: center;
+  }
 `
 
 const LoginPage = () => {
@@ -40,22 +46,25 @@ const LoginPage = () => {
     <PageContainer>
       <h1>로그인</h1>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          type={"email"}
-          {...register("email")}
-          placeholder="이메일을 입력해주세요"
-          onBlur={() => { trigger("email"); setIsVisibleEmail(true); }}
-        />
-        {isVisibleEmail && <ErrorMsg>{errors.email?.message}</ErrorMsg>}
+        <InputWrapper>
+          <Input
+            type={"email"}
+            {...register("email")}
+            placeholder="이메일을 입력해주세요"
+            onBlur={() => { trigger("email"); setIsVisibleEmail(true); }}
+          />
+          {isVisibleEmail && <ErrorMsg>{errors.email?.message}</ErrorMsg>}
+        </InputWrapper>
 
-        <Input
-          type={"password"}
-          {...register("password")}
-          placeholder="비밀번호를 입력해주세요"
-          onBlur={() => { trigger("password"); setIsVisiblePwd(true); }}
-        />
-        {isVisiblePwd && <ErrorMsg>{errors.password?.message}</ErrorMsg>}
-
+        <InputWrapper>
+          <Input
+            type={"password"}
+            {...register("password")}
+            placeholder="비밀번호를 입력해주세요"
+            onBlur={() => { trigger("password"); setIsVisiblePwd(true); }}
+          />
+          {isVisiblePwd && <ErrorMsg>{errors.password?.message}</ErrorMsg>}
+        </InputWrapper>
         <SubmitBtn type={"submit"} disabled={!isValid}>로그인</SubmitBtn>
       </FormContainer>
     </PageContainer>

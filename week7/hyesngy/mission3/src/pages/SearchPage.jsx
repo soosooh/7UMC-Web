@@ -17,7 +17,7 @@ const PageContainer = styled.div`
 const SearchPage = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
-  const searchUrl = `/search/movie?query=${searchValue}&include_adult=false&language=ko-KR&page=1`;
+  const searchUrl = `/search/movie?query=${searchValue}&include_adult=false&language=ko-KR`;
 
   const handleSearch = (value) => {
     if (searchValue !== value) {
