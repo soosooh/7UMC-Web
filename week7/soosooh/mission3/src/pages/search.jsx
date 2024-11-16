@@ -39,7 +39,7 @@ const SearchButton = styled.button`
 
   @media screen and (max-width: 768px) {
     width: 20%;
-    font-size: 12px;
+    font-size: 11px;
   }
 `;
 const CardContainer = styled.div`

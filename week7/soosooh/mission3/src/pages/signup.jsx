@@ -45,6 +45,10 @@ const StyledInput = styled.input`
   background-color: white;
   color: black;
 
+  @media (max-width: 1200px) {
+    width: 400px;
+  }
+
   @media screen and (max-width: 768px) {
     width: 100%;
   }
@@ -60,8 +64,14 @@ const StyledSubmit = styled.button`
   border: #ff073d;
   border-radius: 8px;
 
+  @media (max-width: 1200px) {
+    width: 400px;
+    margin-right: 50px;
+  }
+
   @media screen and (max-width: 768px) {
     width: 100%;
+    margin-left: 50px;
   }
 `;
 const ErrorText = styled.p`

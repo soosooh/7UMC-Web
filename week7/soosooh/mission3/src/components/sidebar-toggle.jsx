@@ -21,7 +21,7 @@ const SidebarContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
+  min-height: 100vh;
   width: 180px;
   background-color: #413f3f;
   transform: ${({ open }) => (open ? "translateX(0)" : "translateX(-100%)")};

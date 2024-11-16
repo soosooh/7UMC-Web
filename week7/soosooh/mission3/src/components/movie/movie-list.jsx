@@ -5,6 +5,10 @@ import { axiosInstance } from "../../apis/axios-instance";
 import MovieCard from "./movie-card";
 import SkeletonCard from "../skeleton/skeleton-card";
 
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -18,9 +22,7 @@ const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  margin-top: 20px;
   width: 100%;
 `;
 
@@ -75,7 +77,7 @@ const MovieList = ({ category }) => {
   }
 
   return (
-    <>
+    <ListContainer>
       <Container>
         {data?.results.map((movie) => (
           <MovieCard
@@ -100,7 +102,7 @@ const MovieList = ({ category }) => {
           다음
         </PageButton>
       </PaginationContainer>
-    </>
+    </ListContainer>
   );
 };
 

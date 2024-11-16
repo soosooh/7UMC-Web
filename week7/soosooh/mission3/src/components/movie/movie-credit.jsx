@@ -7,6 +7,14 @@ const CreditTitle = styled.p`
   font-size: 2.5em;
   font-weight: bold;
   margin-left: 50px;
+
+  @media (max-width: 768px) {
+    font-size: 1.7em;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.3em;
+  }
 `;
 const CreditContainer = styled.div`
   display: flex;

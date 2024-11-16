@@ -14,6 +14,16 @@ const ProfileImage = styled.div`
   background-size: cover;
   background-position: center;
   border: 2px solid white;
+
+  @media (max-width: 768px) {
+    width: 110px;
+    height: 110px;
+  }
+
+  @media (max-width: 480px) {
+    width: 90px;
+    height: 90px;
+  }
 `;
 const PContainer = styled.div`
   flex-direction: column;
