@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
-import { PiFilmSlateBold } from "react-icons/pi";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
+import { PiFilmSlateBold } from 'react-icons/pi';
 // import { createGlobalStyle } from "styled-components";
 
 const Sidebar__container = styled.div`
@@ -12,7 +12,7 @@ const Sidebar__container = styled.div`
   flex-direction: column;
   position: relative;
 
-  @media (max-width: 870px) {
+  @media (max-width: 768px) {
     width: 100%;
     height: auto;
     flex-direction: row; /* 모바일에서는 가로로 배치 */
@@ -26,12 +26,12 @@ const Find__button = styled.div`
   align-items: center;
   color: white;
   font-weight: bold;
-  font-size: 20px;
+  // font-size: 1.2rem;
   padding: 0px 20px;
   gap: 10px;
 
   @media (max-width: 768px) {
-    font-size: 16px; /* 모바일에서는 폰트 크기 줄이기 */
+    font-size: 16px;
     padding: 0 10px;
   }
 `;
@@ -41,12 +41,12 @@ const Movie__button = styled.div`
   align-items: center;
   color: white;
   font-weight: bold;
-  font-size: 20px;
+  // font-size: 1.2rem;
   padding: 0px 20px;
   gap: 10px;
 
   @media (max-width: 768px) {
-    font-size: 16px; /* 모바일에서는 폰트 크기 줄이기 */
+    font-size: 16px;
     padding: 0 10px;
   }
 `;

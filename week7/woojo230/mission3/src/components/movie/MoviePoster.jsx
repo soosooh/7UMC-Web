@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const MainContainer = styled.div`
   position: relative;
-  width: 80vw; /* 부모 컨테이너 너비에 맞춤 */
+  width: 100%;
   max-width: 100vw; /* 화면을 넘어가지 않도록 제한 */
   height: 20vw;
   overflow: hidden;
@@ -43,33 +43,57 @@ const Title = styled.h1`
   font-size: 2rem;
   margin: 0;
   padding-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Rate = styled.p`
   font-size: 1rem;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const Years = styled.p`
   font-size: 1rem;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const RunTime = styled.p`
   font-size: 1rem;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const TagLine = styled.p`
   font-style: italic;
   font-size: 1.2rem;
   margin: 12px 0;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const OverView = styled.p`
   font-size: 0.9rem;
   line-height: 1.4;
   margin: 10px 0 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const MoviePoster = ({ moviesData }) => {
@@ -77,7 +101,12 @@ const MoviePoster = ({ moviesData }) => {
 
   return (
     <MainContainer>
-      {moviesData.backdrop_path && <PosterImg src={`https://image.tmdb.org/t/p/w500${moviesData.backdrop_path}`} alt={moviesData.title} />}
+      {moviesData.backdrop_path && (
+        <PosterImg
+          src={`https://image.tmdb.org/t/p/w500${moviesData.backdrop_path}`}
+          alt={moviesData.title}
+        />
+      )}
       <MovieText>
         <Title>{moviesData.title}</Title>
         <Rate>평균 {moviesData.vote_average}</Rate>

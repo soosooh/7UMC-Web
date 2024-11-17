@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import MovieCard from "./MovieCard";
-import styled from "styled-components";
-import useGetPagination from "../../hooks/queries/useGetPagenation";
-import { ClipLoader } from "react-spinners";
+import React, { useState } from 'react';
+import MovieCard from './MovieCard';
+import styled from 'styled-components';
+import useGetPagination from '../../hooks/queries/useGetPagenation';
+import { ClipLoader } from 'react-spinners';
 
 const Container = styled.div`
   margin-top: 15px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 20px;
-  justify-items: center; /* 그리드 아이템 중앙 정렬 */
+  justify-items: center;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -31,22 +31,19 @@ const SpinnerContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 10px 20px;
   border-radius: 10px;
-  z-index: 10;
+  margin-top: 30px; /* 페이지 하단에 여백 추가 */
 
   @media (max-width: 768px) {
     font-size: 14px;
     padding: 8px 16px;
-    min-width: 80px; /* 모바일에서 최소 너비 설정 */
+    min-width: 80px;
   }
 `;
 
@@ -62,7 +59,7 @@ const PaginationButton = styled.button`
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  white-space: nowrap;
   min-width: 100px;
 
   &:hover {
@@ -75,7 +72,7 @@ const PaginationButton = styled.button`
     opacity: 0.7;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 870px) {
     padding: 6px 12px;
     font-size: 12px;
     min-width: 80px;
@@ -87,16 +84,21 @@ const PageNumber = styled.span`
   font-size: 16px;
   font-weight: bold;
   margin: 0 15px;
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  white-space: nowrap;
 
   @media (max-width: 768px) {
-    font-size: 12px; /
+    font-size: 12px;
   }
 `;
 
 const MovieList = ({ categoryData }) => {
   const [page, setPage] = useState(1);
-  const { data: movies, isLoading, isError, isFetching } = useGetPagination(categoryData, page);
+  const {
+    data: movies,
+    isLoading,
+    isError,
+    isFetching,
+  } = useGetPagination(categoryData, page);
 
   const handlePrevPage = () => {
     if (page > 1) setPage((prev) => prev - 1);
@@ -115,7 +117,7 @@ const MovieList = ({ categoryData }) => {
   }
 
   if (isError) {
-    return <h1 style={{ color: "white" }}>에러 발생</h1>;
+    return <h1 style={{ color: 'white' }}>에러 발생</h1>;
   }
 
   return (
@@ -133,16 +135,19 @@ const MovieList = ({ categoryData }) => {
             />
           ))
         ) : (
-          <h2 style={{ color: "white" }}>영화 데이터가 없습니다.</h2>
+          <h2 style={{ color: 'white' }}>영화 데이터가 없습니다.</h2>
         )}
       </Container>
 
+      {/* 버튼을 페이지 하단에 배치 */}
       <ButtonContainer>
         <PaginationButton onClick={handlePrevPage} disabled={page === 1}>
           이전 페이지
         </PaginationButton>
         <PageNumber>Page {page}</PageNumber>
-        <PaginationButton onClick={handleNextPage}>다음 페이지</PaginationButton>
+        <PaginationButton onClick={handleNextPage}>
+          다음 페이지
+        </PaginationButton>
       </ButtonContainer>
     </>
   );
