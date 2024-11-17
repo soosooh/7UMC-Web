@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import MovieDescription from "./MovieDescription";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import MovieDescription from './MovieDescription';
+import { useNavigate } from 'react-router-dom';
 
 const CardContainer = styled.div`
   box-sizing: border-box;
-  width: 150px; /* 카드의 너비 */
-  height: 250px; /*카드의 높이*/
-  position: relative; /* 자식 요소를 위한 기준점 설정 */
+  width: 150px;
+  height: 250px;
+  position: relative;
 `;
 
 const ImgContainer = styled.img`
-  width: 100%; /* 포스터가 카드 너비에 맞게 */
-  height: 80%; /* 비율 유지 */
+  width: 100%;
+  height: 80%;
   border-radius: 6px;
 `;
 
@@ -41,7 +41,11 @@ const MovieCard = ({ id, title, poster_path, overview, release_date }) => {
   };
 
   return (
-    <CardContainer onMouseEnter={() => setHoverState(true)} onMouseLeave={() => setHoverState(false)} onClick={handleClick}>
+    <CardContainer
+      onMouseEnter={() => setHoverState(true)}
+      onMouseLeave={() => setHoverState(false)}
+      onClick={handleClick}
+    >
       <ImgContainer src={ImgUrl} alt={title} />
       <TextContainer>
         <Title>{title}</Title>

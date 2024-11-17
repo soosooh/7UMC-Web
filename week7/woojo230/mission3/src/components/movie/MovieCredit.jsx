@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import CastList from "../cast/CastList";
+import styled from 'styled-components';
+import CastList from '../cast/CastList';
 
 const Director = styled.h1`
   font-size: 2rem;
@@ -7,6 +7,7 @@ const Director = styled.h1`
   padding-bottom: 10px;
   color: white;
   margin-top: 20px;
+  margin-left: 10px;
 
   @media (max-width: 768px) {
     font-size: 1.5rem; /* 태블릿 크기에서는 글자 크기 줄이기 */

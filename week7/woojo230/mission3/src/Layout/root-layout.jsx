@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar.jsx";
-import Sidebar from "../components/Sidebar.jsx";
-import styled from "styled-components";
+import { Outlet } from 'react-router-dom';
+import Navbar from '../components/Navbar.jsx';
+import Sidebar from '../components/Sidebar.jsx';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
@@ -18,16 +18,20 @@ const MainContainer = styled.div`
   padding: 20px;
   overflow-y: auto;
   display: flex;
-  flex-direction: column; /* 모바일에서 세로 배치 */
+  flex-direction: column;
   overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const RootLayout = () => {
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
       <Container>
-        <Sidebar></Sidebar>
+        <Sidebar />
         <MainContainer>
           <Outlet />
         </MainContainer>

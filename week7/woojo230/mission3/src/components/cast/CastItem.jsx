@@ -1,5 +1,5 @@
 // CastItem.js
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const ListContainer = styled.div`
   display: flex;
@@ -10,20 +10,21 @@ const ListContainer = styled.div`
   margin: 10px;
   text-align: center;
   width: 8%;
+  margin-left: 30px;
 
   @media (max-width: 768px) {
-    width: 45%; /* 모바일에서 한 줄에 두 개씩 출력 */
+    width: 45%;
     min-width: 120px;
   }
 
   @media (max-width: 480px) {
-    width: 100%; /* 더 작은 화면에서는 한 줄에 한 개씩 */
+    width: 100%;
   }
 `;
 
 const CastImg = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 5rem; /* 100px -> 6.25rem */
+  height: 5rem;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid white;
@@ -48,7 +49,10 @@ const CastChar = styled.p`
 const CastItem = ({ profilePath, name, character }) => {
   return (
     <ListContainer>
-      <CastImg src={`https://image.tmdb.org/t/p/w200${profilePath}`} alt={name} />
+      <CastImg
+        src={`https://image.tmdb.org/t/p/w200${profilePath}`}
+        alt={name}
+      />
       <CastName>{name}</CastName>
       <CastChar>{character}</CastChar>
     </ListContainer>

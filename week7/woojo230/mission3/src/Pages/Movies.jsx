@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -25,14 +25,14 @@ const CategoryCard = styled.div`
 
 const Card1 = styled.div`
   background-color: red;
-  width: 300px; /* 카드의 너비 */
-  height: 150px; /* 카드의 높이 */
+  width: 300px;
+  height: 150px;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* 아래쪽으로 정렬 */
-  align-items: flex-start; /* 왼쪽으로 정렬 */
-  padding: 3px; /* 텍스트와 카드 가장자리 사이에 여백 */
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 3px;
 `;
 
 const Card2 = styled(Card1)`
