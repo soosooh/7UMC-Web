@@ -3,6 +3,8 @@ import Add from "../../components/Home/Add/Add";
 import Search from "../../components/Home/Search/Search";
 import ListTodo from "../../components/Home/Todo/list-todo";
 import useApi from "../../hooks/useApi";
+import Loading from "../../components/Home/Loading/Loading";
+import Error from "../../components/Home/Error/Error";
 
 const Home = () => {
     const { data, error, loading, get } = useApi();
@@ -25,6 +27,13 @@ const Home = () => {
             get("/");
         }
     };
+
+    if (loading) {
+        return <Loading />;
+    }
+    if (error) {
+        return <Error />;
+    }
 
     return (
         <div className="pageContainer">

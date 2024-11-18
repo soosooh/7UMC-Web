@@ -13,6 +13,9 @@ const useApi = () => {
             const response = await API[method](url, body);
             console.log(response.data);
             setData(response.data);
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
         } catch (err) {
             setError(err);
         } finally {

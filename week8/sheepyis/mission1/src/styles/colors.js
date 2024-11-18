@@ -3,6 +3,7 @@ const colors = {
     inputColor: "#A19D9D",
     buttonColor: "#EDEDED",
     buttonColor2: "#C0C3D8",
+    error: "#ED4141",
     black: "#000000",
     white: "#FFFFFF",
 };
