@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import useCustomFetch from "../hooks/useCustomFetch";
-import MoviePoster from "../components/MoviePoster";
-import MovieCredit from "../components/MovieCredit";
+import MoviePoster from "../components/movie/MoviePoster";
+import MovieCredit from "../components/movie/MovieCredit";
 
 const MovieDetail = styled.div`
   width: 100%;
@@ -15,12 +15,8 @@ const MovieDetailPage = () => {
   const { movieId } = useParams();
   console.log(movieId);
 
-  const { moviesData, isLoading, isError } = useCustomFetch(
-    `/movie/${movieId}?language=ko-KR&page=1`
-  );
-  const { moviesData: castData } = useCustomFetch(
-    `movie/${movieId}/credits?language=ko-KR`
-  );
+  const { moviesData, isLoading, isError } = useCustomFetch(`/movie/${movieId}?language=ko-KR&page=1`);
+  const { moviesData: castData } = useCustomFetch(`movie/${movieId}/credits?language=ko-KR`);
 
   if (isLoading) {
     return (

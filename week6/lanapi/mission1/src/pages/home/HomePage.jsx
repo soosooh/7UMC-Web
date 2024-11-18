@@ -7,8 +7,7 @@ const HomePage = () => {
     const [movies, setMovies] = useState([]);
 
     const API_URL = `https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1`;
-
-    const token = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYzEyOWZhOWFjYWM2OGVkYWVjOWVmMGNlNzQ5YTc3MiIsIm5iZiI6MTczMDkwNTg2NS40NzUwMjE4LCJzdWIiOiI2NzA2ODM4MmE4ODYxNGQ2YjA4YWY1MzIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0._3AS3CHlvEEV5zqSvRICnrlqX42z2tgjt3I6QHbkvWY';
+    // const token = '디버깅용';
 
  useEffect(() => {
         const fetchMovies = async () => {
