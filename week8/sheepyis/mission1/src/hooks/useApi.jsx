@@ -26,8 +26,8 @@ const useApi = () => {
         error,
         get: (url) => request("get", url),
         post: (url, body) => request("post", url, body),
-        patch: (url, body) => request("put", url, body),
-        delete: (url) => request("delete", url),
+        patch: (url, body) => request("patch", url, body),
+        del: (url, body) => request("delete", url, body),
     };
 };
 

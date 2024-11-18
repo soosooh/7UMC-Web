@@ -11,14 +11,16 @@ const ListContainer = styled.div`
 
 const ListTodo = ({ data }) => {
     // console.log(data);
-    
+
     return (
         <ListContainer>
-            {data.map((todo, index) => (
+            {data.map((todo) => (
                 <ItemTodo 
-                    key={index} 
+                    key={todo.id}
+                    id={todo.id}
                     title={todo.title} 
                     content={todo.content}
+                    checked={todo.checked}
                 />
             ))}
         </ListContainer>

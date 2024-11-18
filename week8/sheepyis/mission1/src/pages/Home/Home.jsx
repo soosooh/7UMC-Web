@@ -13,7 +13,7 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        if (Array.isArray(data[0])) {
+        if (Array.isArray(data) && Array.isArray(data[0])) {
             setFilteredData(data[0]);
         }
     }, [data]);

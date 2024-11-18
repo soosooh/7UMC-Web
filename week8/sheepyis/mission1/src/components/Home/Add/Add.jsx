@@ -22,6 +22,7 @@ const Add = () => {
 
     const todoAddData = { title, content };
     await post("/", todoAddData);
+    window.location.reload();
   };
 
   return (
