@@ -2,7 +2,7 @@ import { useState } from "react";
 import { API } from "../api/axios";
 
 const useApi = () => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
