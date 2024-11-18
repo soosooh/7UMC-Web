@@ -31,7 +31,7 @@ const Add = () => {
         <Input placeholder="내용을 입력해주세요." value={content} onChange={(e) => setContent(e.target.value)} />
       </InputContainer>
 
-      <Button text="ToDo 생성" margin="1.85vw 0 3.6vw 0" disabled={isDisabled} onClick={handleSubmit} />
+      <Button text="ToDo 생성" margin="1.85vw 0" disabled={isDisabled} onClick={handleSubmit} />
     </>
   );
 };
