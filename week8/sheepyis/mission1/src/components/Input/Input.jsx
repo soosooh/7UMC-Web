@@ -13,8 +13,8 @@ const InputContainer = styled.input`
     color: ${colors.inputColor};
 `;
 
-const Input = ({ width, height, ...props }) => {
-  return <InputContainer width={width} height={height} {...props} />;
+const Input = ({ width, height, value, ...props }) => {
+  return <InputContainer width={width} height={height} value={value} {...props} />;
 };
 
 export default Input;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../../styles/colors";
 import Button from "../../Button/Button";
@@ -66,6 +67,7 @@ const ItemTodo = ({ id, title, content, checked, onDelete }) => {
     const [newTitle, setNewTitle] = useState(title);
     const [newContent, setNewContent] = useState(content);
     const { patch, del } = useApi();
+    const navigate = useNavigate();
 
     const handleToggle = async () => {
         const updatedChecked = !isChecked;
@@ -91,8 +93,14 @@ const ItemTodo = ({ id, title, content, checked, onDelete }) => {
 
     const handleDeleteClick = async () => {
         await del(`/${id}`);
+        alert("할 일이 삭제되었습니다.");
         window.location.reload();
     };
+
+    const handleItemClick = () => {
+        // console.log(id);
+        navigate(`/${id}`);
+    }
 
 
     return (
@@ -107,7 +115,7 @@ const ItemTodo = ({ id, title, content, checked, onDelete }) => {
                         </>
                     ) : (
                         <>
-                            <TodoP>{newTitle}</TodoP>
+                            <TodoP onClick={handleItemClick} id={id} style={{cursor: "pointer"}}>{newTitle}</TodoP>
                             <TodoP>{newContent}</TodoP>
                         </>
                     )}
