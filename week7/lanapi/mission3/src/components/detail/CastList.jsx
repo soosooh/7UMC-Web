@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 import CastItem from './CastItem';
 
@@ -34,6 +33,10 @@ const CastTitle = styled.h2`
     text-align: left;
     color: white;
     font-family: 'Georgia', serif;
+
+    @media (max-width: 768px) {
+        font-size: 30px; // 모바일에서 제목 크기 줄이기
+    }
 `;
 
 const CreditWrapper = styled.div`
@@ -42,4 +45,16 @@ const CreditWrapper = styled.div`
     max-width: 100%;
     gap: 20px;
     justify-content: flex-start;
+
+    @media (max-width: 1024px) {
+        gap: 15px; // 태블릿 화면에서는 간격 줄이기
+    }
+
+    @media (max-width: 768px) {
+        gap: 10px; // 모바일 화면에서 간격 줄이기
+    }
+
+    @media (max-width: 480px) {
+        gap: 5px; // 더 작은 화면에서는 간격 최소화
+    }
 `;

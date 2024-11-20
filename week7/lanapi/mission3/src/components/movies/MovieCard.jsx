@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Overlay from './Overlay'; // Overlay 컴포넌트 import
+import Overlay from './Overlay'; 
 import styled from 'styled-components';
 
 const MovieCard = ({ movieId, posterPath, title, releaseDate, overview }) => {
@@ -34,7 +34,7 @@ const MovieCard = ({ movieId, posterPath, title, releaseDate, overview }) => {
 export default MovieCard;
 
 const Card = styled.div`
-    width: 170.65px;
+    width: 170px;
     height: auto;
     border-radius: 10px 0px 0px 0px;
     overflow: hidden;
@@ -44,65 +44,73 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 15px;
 
     &:hover {
         transform: scale(1.05);
     }
 
     @media (max-width: 768px) {
-        width: 140px;  // 작은 화면에서 카드 크기 축소
+        width: 140px;  
     }
 
     @media (max-width: 480px) {
-        width: 120px;  // 더 작은 화면에서 카드 크기 축소
+        width: 120px;  
     }
 `;
 
 const Poster = styled.img`
     width: 100%;
-    height: 231.56px;
+    height: 231px;
     object-fit: cover;
 
     @media (max-width: 768px) {
-        height: 200px;  // 작은 화면에서 포스터 높이 축소
+        height: 200px;  
     }
 
     @media (max-width: 480px) {
-        height: 180px;  // 더 작은 화면에서 포스터 높이 축소
+        height: 180px;  
     }
 `;
 
 const Info = styled.div`
     text-align: center;
     margin-top: 10px;
+    padding: 0 5px;
+
+    @media (max-width: 768px) {
+        padding: 0 3px; 
+    }
 `;
 
 const Title = styled.h3`
     font-size: 14px;
     margin: 0;
-    color: #FFFFFF;
-    text-align: left;
+    color: #ffffffff;
+    text-align: center;
 
     @media (max-width: 768px) {
-        font-size: 12px;  // 작은 화면에서 텍스트 크기 축소
+        font-size: 12px; 
     }
 
     @media (max-width: 480px) {
-        font-size: 10px;  // 더 작은 화면에서 텍스트 크기 축소
+        font-size: 10px; 
     }
 `;
 
 const ReleaseDate = styled.p`
     font-size: 12px;
+    color: #ffffffff;
     margin: 5px 0 0 0;
     opacity: 0.8;
-    text-align: left;
+    text-align: center;
 
     @media (max-width: 768px) {
-        font-size: 10px;  // 작은 화면에서 텍스트 크기 축소
+        font-size: 10px;  
     }
 
     @media (max-width: 480px) {
-        font-size: 9px;  // 더 작은 화면에서 텍스트 크기 축소
+        font-size: 9px;  
     }
 `;
+

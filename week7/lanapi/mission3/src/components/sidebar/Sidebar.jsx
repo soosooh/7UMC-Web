@@ -9,18 +9,18 @@ const Sidebar = () => {
             <StyledRouterLink to='/search'>
                 <SidebarDiv>
                     <IconSpan><IoSearch /></IconSpan>
-                    찾기
+                    <Text>찾기</Text>
                 </SidebarDiv>
             </StyledRouterLink>
             <StyledRouterLink to='/movies'>
                 <SidebarDiv>
                     <IconSpan><PiFilmSlateFill /></IconSpan>
-                    영화
+                    <Text>영화</Text>
                 </SidebarDiv>
             </StyledRouterLink>
         </SideContainer>
-    )
-}
+    );
+};
 
 export default Sidebar;
 
@@ -30,28 +30,69 @@ const SideContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-`
+
+    @media (max-width: 768px) {
+        width: 100%; 
+        height: 50px; 
+        flex-direction: row; 
+        align-items: center; 
+        justify-content: space-around; 
+        position: fixed; 
+        bottom: 0; 
+        left: 0;
+        z-index: 10; 
+    }
+`;
 
 const SidebarDiv = styled.div`
     color: white;
     height: 70px;
     display: flex;
     align-items: center;
-    padding-left: 7px;
+    justify-content: center; 
+    padding: 5px;
     cursor: pointer;
+
     &:hover {
         background-color: rgba(80, 80, 80, 1);
-    };
+    }
+
     border-radius: 10px;
-`
+
+    @media (max-width: 768px) {
+        height: auto; 
+        flex-direction: column; 
+        padding: 10px;
+        font-size: 0.9rem; 
+    }
+`;
 
 const IconSpan = styled.span`
-    margin-right: 2px;
+    margin-right: 5px; 
     margin-top: 2px;
-`
+
+    @media (max-width: 768px) {
+        margin-right: 0; 
+        margin-bottom: 5px; 
+    }
+`;
+
+const Text = styled.span`
+    font-size: 1rem;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+        font-size: 0.8rem;
+    }
+`;
 
 const StyledRouterLink = styled(Link)`
     text-decoration: none;
     color: inherit;
     margin: 5px;
-`
+
+    @media (max-width: 768px) {
+        margin: 0; 
+    }
+`;
+

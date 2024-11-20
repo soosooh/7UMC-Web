@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 
 const CastItem = ({ name, role, image }) => (
@@ -17,6 +16,18 @@ const CreditItem = styled.div`
     align-items: center;
     width: calc(10% - 40px);
     flex-basis: calc(10% - 40px);
+
+    @media (max-width: 1024px) {
+        width: calc(20% - 40px); 
+    }
+
+    @media (max-width: 768px) {
+        width: calc(33.33% - 40px); 
+    }
+
+    @media (max-width: 480px) {
+        width: calc(50% - 40px); 
+    }
 `;
 
 const CreditImage = styled.img`
@@ -28,6 +39,16 @@ const CreditImage = styled.img`
     display: block;
     border: 2px solid white;
     margin-bottom: 10px;
+
+    @media (max-width: 768px) {
+        width: 100px;
+        height: 100px; 
+    }
+
+    @media (max-width: 480px) {
+        width: 80px;
+        height: 80px; 
+    }
 `;
 
 const CreditName = styled.p`
@@ -35,6 +56,10 @@ const CreditName = styled.p`
     color: white;
     margin: 5px 0 3px 0;
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 12px; 
+    }
 `;
 
 const CreditRole = styled.p`
@@ -43,4 +68,9 @@ const CreditRole = styled.p`
     margin: 0;
     text-align: center;
     font-style: italic;
+
+    @media (max-width: 768px) {
+        font-size: 10px; 
+    }
 `;
+

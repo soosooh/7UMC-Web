@@ -1,16 +1,12 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
-    const { isLoggedIn, logout, user } = useContext(AuthContext);
+    const { isLoggedIn, logout, getNickname } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    const getNickname = (email) => {
-        if (!email) return '';
-        return email.split('@')[0];
-    };
 
     const handleLogout = () => {
         logout();
@@ -28,7 +24,7 @@ const Navbar = () => {
                 {isLoggedIn ? (
                     <>
                         <Nickname>
-                            {getNickname(user?.email)}님 환영합니다
+                            {getNickname()}님 환영합니다
                         </Nickname>
                         <StyledBtn 
                             color='red' 
@@ -61,6 +57,22 @@ const YongchaNav = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 20px;
+        align-items: flex-start;
+    }
+
+    @media (max-width: 480px) {
+        padding: 10px 15px; 
+    }
 `;
 
 const LogoSpan = styled.span`
@@ -68,19 +80,35 @@ const LogoSpan = styled.span`
     font-size: 1.3em;
     font-weight: bold;
     padding: 5px;
+
+    @media (max-width: 768px) {
+        font-size: 1.1em;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1em; 
+    }
 `;
 
 const StyledBtn = styled.button`
     background-color: ${props => props.color || 'black'};
-    &:hover {
-        background-color: ${props => props.color2}
-    };
     border: 1px solid grey;
     border-radius: 0.4em;
     padding: 8px 14px;
     cursor: pointer;
     color: white;
     margin-right: 15px;
+
+    @media (max-width: 768px) {
+        padding: 6px 10px;
+        font-size: 0.9em;
+        margin-right: 10px;
+        margin-bottom: 5px; 
+    }
+
+    @media (max-width: 480px) {
+        padding: 5px 8px; 
+    }
 `;
 
 const StyledRouterLink = styled(Link)`
@@ -93,4 +121,14 @@ const Nickname = styled.span`
     font-size: 1em;
     font-weight: bold;
     margin-right: 15px;
+
+    @media (max-width: 768px) {
+        font-size: 0.9em;
+        margin-right: 10px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 0.8em; 
+    }
 `;
+

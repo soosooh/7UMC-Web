@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { useContext } from 'react';
@@ -66,6 +67,11 @@ const YongchaNav = styled.nav`
         flex-direction: column;
         height: auto;
         padding: 10px 20px;
+        align-items: flex-start;
+    }
+
+    @media (max-width: 480px) {
+        padding: 10px 15px; 
     }
 `;
 
@@ -78,13 +84,14 @@ const LogoSpan = styled.span`
     @media (max-width: 768px) {
         font-size: 1.1em;
     }
+
+    @media (max-width: 480px) {
+        font-size: 1em; 
+    }
 `;
 
 const StyledBtn = styled.button`
     background-color: ${props => props.color || 'black'};
-    &:hover {
-        background-color: ${props => props.color2};
-    };
     border: 1px solid grey;
     border-radius: 0.4em;
     padding: 8px 14px;
@@ -96,6 +103,11 @@ const StyledBtn = styled.button`
         padding: 6px 10px;
         font-size: 0.9em;
         margin-right: 10px;
+        margin-bottom: 5px; 
+    }
+
+    @media (max-width: 480px) {
+        padding: 5px 8px; 
     }
 `;
 
@@ -114,4 +126,9 @@ const Nickname = styled.span`
         font-size: 0.9em;
         margin-right: 10px;
     }
+
+    @media (max-width: 480px) {
+        font-size: 0.8em; 
+    }
 `;
+

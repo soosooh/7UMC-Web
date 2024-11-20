@@ -1,4 +1,3 @@
-
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
@@ -29,6 +28,19 @@ const SkeletonWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: flex-start;
+
+    @media (max-width: 1024px) {
+        gap: 15px; // 태블릿 화면에서 간격 줄이기
+    }
+
+    @media (max-width: 768px) {
+        gap: 10px; // 모바일 화면에서 간격 더 줄이기
+    }
+
+    @media (max-width: 480px) {
+        gap: 5px; // 더 작은 화면에서는 간격 최소화
+    }
 `;
 
 const SkeletonCastItem = styled.div`
@@ -36,6 +48,18 @@ const SkeletonCastItem = styled.div`
     flex-direction: column;
     align-items: center;
     width: calc(20% - 20px);
+
+    @media (max-width: 1024px) {
+        width: calc(25% - 15px); // 태블릿 화면에서는 너비 줄이기
+    }
+
+    @media (max-width: 768px) {
+        width: calc(33.33% - 10px); // 모바일 화면에서 한 줄에 3개씩
+    }
+
+    @media (max-width: 480px) {
+        width: calc(50% - 5px); // 더 작은 화면에서는 한 줄에 2개씩
+    }
 `;
 
 const SkeletonImage = styled.div`
@@ -46,6 +70,16 @@ const SkeletonImage = styled.div`
     animation: ${loadingAnimation} 1.5s infinite;
     border-radius: 50%;
     margin-bottom: 10px;
+
+    @media (max-width: 768px) {
+        width: 100px;
+        height: 100px; // 모바일 화면에서 이미지 크기 줄이기
+    }
+
+    @media (max-width: 480px) {
+        width: 80px;
+        height: 80px; // 더 작은 화면에서 이미지 크기 더 줄이기
+    }
 `;
 
 const SkeletonName = styled.div`
@@ -56,6 +90,14 @@ const SkeletonName = styled.div`
     animation: ${loadingAnimation} 1.5s infinite;
     border-radius: 4px;
     margin-bottom: 6px;
+
+    @media (max-width: 768px) {
+        width: 60%; // 모바일 화면에서 이름 너비 줄이기
+    }
+
+    @media (max-width: 480px) {
+        width: 50%; // 더 작은 화면에서 이름 너비 더 줄이기
+    }
 `;
 
 const SkeletonRole = styled.div`
@@ -65,4 +107,13 @@ const SkeletonRole = styled.div`
     background-size: 400% 100%;
     animation: ${loadingAnimation} 1.5s infinite;
     border-radius: 4px;
+
+    @media (max-width: 768px) {
+        width: 45%; // 모바일 화면에서 역할 너비 줄이기
+    }
+
+    @media (max-width: 480px) {
+        width: 40%; // 더 작은 화면에서 역할 너비 더 줄이기
+    }
 `;
+
