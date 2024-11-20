@@ -16,6 +16,19 @@ const MoviesItem = styled.div`
     text-align: center;
     border-radius: 8px;
     margin: 10px;
+    box-sizing: border-box;
+
+    @media (max-width: 1024px) {
+        width: 160px; // 태블릿 화면에서 카드 크기 축소
+    }
+
+    @media (max-width: 768px) {
+        width: 140px; // 모바일 화면에서 카드 크기 축소
+    }
+
+    @media (max-width: 480px) {
+        width: 120px; // 더 작은 화면에서 카드 크기 축소
+    }
 `;
 
 const MovieImage = styled.img`
@@ -28,6 +41,18 @@ const MovieImage = styled.img`
         filter: brightness(0.5);
         transform: scale(1.05);
     }
+
+    @media (max-width: 1024px) {
+        width: 160px; // 태블릿 화면에서 이미지 크기 줄이기
+    }
+
+    @media (max-width: 768px) {
+        width: 140px; // 모바일 화면에서 이미지 크기 줄이기
+    }
+
+    @media (max-width: 480px) {
+        width: 120px; // 더 작은 화면에서 이미지 크기 줄이기
+    }
 `;
 
 const MovieItem = ({ posterPath, title, releaseDate }) => {
@@ -38,10 +63,11 @@ const MovieItem = ({ posterPath, title, releaseDate }) => {
                 alt={title}
             />
             <h3>{title}</h3>
-            <p>{releaseDate}</p>
+            <ReleaseDate>{releaseDate}</ReleaseDate> {/* 개봉일 텍스트 추가 */}
         </MoviesItem>
     );
 };
 
 export default MovieItem;
+
 

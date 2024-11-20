@@ -42,23 +42,20 @@ export default SearchBanner;
 const Container = styled.div`
     display: flex;
     align-items: center;
-    margin-left: 200px;
-    width: calc(100% - 200px); 
-    max-width: 400px;
-    padding-right: 10px;
+    justify-content: center; // 중앙 정렬
+    margin: 0 auto; // 가운데 정렬
+    width: 100%;
+    max-width: 800px; // 최대 너비 설정
+    padding: 10px;
 
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: stretch;
-        margin-left: 0;
     }
 `;
 
 const SearchInputBox = styled.input`
     flex: 1;
-    flex-basis: 70%; // 기본 크기를 전체 컨테이너의 70%로 설정
-    max-width: 600px; // 검색창이 너무 커지지 않도록 제한
-    min-width: 1px; // 최소 너비 설정
     background-color: #ffffff;
     border: none;
     border-radius: 10px 0 0 10px;
@@ -68,9 +65,14 @@ const SearchInputBox = styled.input`
     font-weight: bold;
     color: #333;
 
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
     @media (max-width: 768px) {
-        border-radius: 10px 10px 0 0;
-        margin-bottom: 5px;
+        border-radius: 10px;
+        margin-bottom: 10px;
     }
 `;
 
@@ -91,6 +93,7 @@ const SearchButton = styled.button`
     }
 
     @media (max-width: 768px) {
-        border-radius: 0 0 10px 10px;
+        border-radius: 10px;
     }
 `;
+

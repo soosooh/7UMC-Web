@@ -1,49 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// isTouched를 DOM 요소에 전달하지 않고 스타일링에만 사용하도록 설정
-const Input = styled.input.withConfig({
-    shouldForwardProp: (prop) => prop !== 'isTouched',
-})`
-    width: 100%;
-    padding: 12px;
-    border: 1px solid ${(props) => (props.isTouched ? '#FF073D' : '#444')};
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: #FFFFFF;
-    color: #000;
-    transition: border-color 0.3s;
-
-    &:focus {
-        outline: none;
-        border-color: #FF073D;
-    }
-`;
-
-const LoginItem = ({ type, placeholder, register, isTouched, error }) => (
-    <Field>
-        <Input
-            type={type}
-            placeholder={placeholder}
-            {...register}
-            isTouched={isTouched} // 스타일에만 사용되며 DOM으로는 전달되지 않음
-        />
-        {error && <ErrorText>{error}</ErrorText>}
-    </Field>
+const LoginItem = ({ type, placeholder, register, error }) => (
+  <FieldContainer>
+    <TextInput 
+      type={type} 
+      placeholder={placeholder} 
+      {...register}
+    />
+    <ErrorText>{error}</ErrorText>
+  </FieldContainer>
 );
 
 export default LoginItem;
 
-const Field = styled.div`
-    width: 100%;
-    margin-bottom: 2rem;
-    position: relative;
+const FieldContainer = styled.div`
+  margin-bottom: 15px;
+  width: 100%;
+`;
+
+const TextInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
 
 const ErrorText = styled.p`
-    color: #FF073D;
-    font-size: 1rem;
-    position: absolute;
-    bottom: -40px;
-    left: 0;
+  color: #FF073D; 
+  font-size: 14px;
+  margin-top: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
