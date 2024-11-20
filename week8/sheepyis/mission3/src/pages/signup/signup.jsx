@@ -3,6 +3,7 @@ import useForm from "../../hooks/useForm";
 import { InputContainer, InputBox, ErrorP } from "../../styles/auth";
 import { API } from '../../api/authAxios';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -19,19 +20,24 @@ const SignUpPage = () => {
 
     const { register, handleSubmit, formState: { errors, isValid } } = useForm(schema);
 
-    const onSubmit = async (data) => {
-        try {
-            const response = await API.post("/auth/register", {
-                email: data.email,
-                password: data.password,
-                passwordCheck: data.passwordCheck
-            });
+
+    const signUpMutation = useMutation({
+        mutationFn: (userData) => API.post("/auth/register", userData),
+        onSuccess: () => {
             alert("회원가입이 완료되었습니다.");
-            console.log('회원가입 성공: ', response.data);
             navigate('/login');
-        } catch (error) {
+        },
+        onError: (error) => {
             console.error('회원가입 오류: ', error.response?.data || error.message);
-        }
+        },
+    });
+
+    const onSubmit = (data) => {
+        signUpMutation.mutate({
+            email: data.email,
+            password: data.password,
+            passwordCheck: data.passwordCheck,
+        });
     };
 
     return (
@@ -54,7 +60,7 @@ const SignUpPage = () => {
                     <ErrorP>{errors.passwordCheck?.message}</ErrorP>
                 </InputContainer>
 
-                <InputBox type={'submit'} value="회원가입" disabled={!isValid}/>
+                <InputBox type={'submit'} value="회원가입" disabled={!isValid || signUpMutation.isLoading} />
             </form>
         </div>
     );
