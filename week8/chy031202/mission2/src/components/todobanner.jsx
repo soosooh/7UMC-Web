@@ -8,84 +8,78 @@ import ErrorComp from "./states/error";
 import LoadingComp from "./states/loading";
 
 
+import { useQuery, useMutation,  useQueryClient } from '@tanstack/react-query';
+
+
+const fetchTodos = async ({ queryKey }) => {
+    const [_key, { title }] = queryKey; // queryKey로부터 title 분리
+    const response = await axios.get('http://localhost:3000/todo', {
+        params: { title },
+    });
+    console.log("서버에서 가져온 데이터:", response.data);
+    return response.data[0]; // 응답 데이터 반환
+};
+
 const Todobanner = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [todos, setTodos] = useState([]); // 리스트 상태
+    //const [todos, setTodos] = useState([]); // 리스트 상태
     const [selectedTodo, setSelectedTodo] = useState(null);
     const [tempSearchTitle, setTempSearchTitle] = useState("");
     const [searchTitle, setSearchTitle] = useState(""); // 검색할 제목
     const isButtonDisabled = !title || !content;
     const navigate = useNavigate();
 
-    // Custom Fetch Hook 사용
-    const { data: initialTodos, loading, error, refetch } = useCustomFetch(
-        "http://localhost:3000/todo",
-        { params: { title: searchTitle } }
-    );
 
-   // 전체 todo
-    useEffect(() => {
-    if (initialTodos) {
-        setTodos(initialTodos); // useCustomFetch로 가져온 데이터를 로컬 상태로 복사
-    }
-}, [initialTodos]);
+    const queryClient = useQueryClient();
+    const {
+        data: todos = [],
+        isLoading,
+        isError,
+        refetch,
+    } = useQuery({
+        queryKey: ['todos', { title: tempSearchTitle.trim() }], // 항상 검색 상태 기반으로 작동
+        queryFn: fetchTodos,
+        onSuccess: (data) => {
+            console.log('Todos 로드 성공:', data); // 데이터 로드 성공 로그
+        },
+        onError: (error) => {
+            console.error('Todos 로드 실패:', error);
+        },
+        enabled: true, // 기본적으로 데이터를 가져오도록 설정
+    });
 
 
-// useEffect(() => {
-//     const timeout = setTimeout(() => {
-//         if (tempSearchTitle.trim() !== "") {
-//             setSearchTitle(tempSearchTitle); // 1초 후 검색어 업데이트
-//         }
-//     }, 500); // 500ms 디바운스
+    if (isLoading) return <LoadingComp />;
+    if (isError) return <ErrorComp />;
 
-//     return () => clearTimeout(timeout); // 이전 타이머 정리
-// }, [tempSearchTitle]);
 
-    // const fetchTodos = async (titleQuery = "") => {
+    // const handleSearch = async () => {
+    //     const trimmedTitle = tempSearchTitle.trim();
+    //     setSearchTitle(trimmedTitle); // 검색 상태 업데이트
     //     try {
     //         const response = await axios.get("http://localhost:3000/todo", {
-    //             params: { title: titleQuery },
+    //             params: { title: trimmedTitle },
     //         });
-    //         setTodos(response.data[0]); // 첫 번째 배열에 리스트 데이터가 있음
-    //         console.log("Todo 데이터 로드 성공:", response.data[0]);
+    //         setTodos(response.data); // 검색 결과 업데이트
     //     } catch (error) {
-    //         console.error("Todo 데이터 로드 실패:", error);
+    //         console.error("검색 실패:", error);
+    //         alert("검색에 실패했습니다.");
     //     }
     // };
 
-    // const handleSearch = () => {
-    //     setSearchTitle(tempSearchTitle); // 검색어 상태 업데이트
-    //     // refetch(); // API 요청 실행
-    // };
-
-    const handleSearch = async () => {
-        const trimmedTitle = tempSearchTitle.trim();
-        setSearchTitle(trimmedTitle); // 검색 상태 업데이트
-        try {
-            const response = await axios.get("http://localhost:3000/todo", {
-                params: { title: trimmedTitle },
-            });
-            setTodos(response.data); // 검색 결과 업데이트
-        } catch (error) {
-            console.error("검색 실패:", error);
-            alert("검색에 실패했습니다.");
-        }
+    const handleSearch = () => {
+        refetch({ queryKey: ['todos', { title: tempSearchTitle.trim() }] }); // Manually fetch data when search is triggered
     };
 
 
-    // useEffect(() => {
-    //     if (searchTitle.trim() !== "") {
-            
-    //     }
-    // }, [searchTitle]);
 
     const toggleChecked = async (id) => {
         const todo = todos.find((t) => t.id === id);
         if (!todo) return;
-    
+
         const updatedChecked = !todo.checked;
-    
+
         // 서버와 동기화
         try {
             await axios.patch(`http://localhost:3000/todo/${id}`, { checked: updatedChecked });
@@ -101,65 +95,100 @@ const Todobanner = () => {
         }
     };
 
-        const createTodo = async () => {
-            if (isButtonDisabled) return;
-        
+
+    //useMutation 
+    const createmutation = useMutation({
+        mutationFn: async (data) => {
             try {
-                const response = await axios.post("http://localhost:3000/todo", {
-                    title,
-                    content,
-                });
-        
-                alert("ToDo가 성공적으로 생성되었습니다!");
-                setTodos([...todos, response.data]);
-                // 입력 필드 초기화
-                setTitle("");
-                setContent("");
-        
-                // 데이터 재로딩
+                const response = await axios.post("http://localhost:3000/todo", data);
+                return response.data; // Axios는 이미 JSON 형태로 반환
             } catch (error) {
                 console.error("ToDo 생성 실패:", error);
                 alert("ToDo 생성에 실패했습니다.");
+                throw error; // React Query가 에러를 인식하도록 던짐
             }
-        };
-    
+        },
+        onSuccess: (data) => {
+            alert("ToDo가 성공적으로 생성되었습니다!");
+            queryClient.setQueryData(['todos'], (oldTodos = []) => [...oldTodos, data]);
+        },
+        onError: (error) => {
+            console.error("Mutation 에러 발생:", error);
+        },
+    });
 
-    const deleteTodo = async (id) => {
-        try {
-            await axios.delete(`http://localhost:3000/todo/${id}`); // DELETE 요청
+    const deleteMutation = useMutation({
+        mutationFn: async (id) => {
+            try {
+                const response = await axios.delete(`http://localhost:3000/todo/${id}`);
+                return response.data; // 서버에서 반환된 데이터 (필요 시)
+            } catch (error) {
+                console.error(`Todo ID ${id} 삭제 실패:`, error);
+                alert("Todo 삭제에 실패했습니다.");
+                throw error; // React Query가 에러를 감지하도록 예외 던짐
+            }
+        },
+        onSuccess: (_, id) => {
             alert(`Todo ID ${id} 삭제 성공`);
-            setTodos(todos.filter((todo) => todo.id !== id));
-        } catch (error) {
-            console.error(`Todo ID ${id} 삭제 실패:`, error);
-            alert("Todo 삭제에 실패했습니다.");
-        }
-    };
-
-    const updateTodo = async (id, updatedData) => {
-        try {
-            const response = await axios.patch(`http://localhost:3000/todo/${id}`, updatedData);
+            // 삭제된 항목을 캐시에서 제거
+            queryClient.setQueryData(['todos'], (oldTodos = []) =>
+                oldTodos.filter((todo) => todo.id !== id)
+            );
+        },
+        onError: (error) => {
+            console.error("삭제 Mutation 에러 발생:", error);
+        },
+    });
+    
+    const updateMutation = useMutation({
+        mutationFn: async ({ id, updatedData }) => {
+            try {
+                const response = await axios.patch(`http://localhost:3000/todo/${id}`, updatedData);
+                return { id, updatedData: response.data }; // ID와 업데이트된 데이터 반환
+            } catch (error) {
+                console.error(`Todo ID ${id} 수정 실패:`, error);
+                alert("Todo 수정에 실패했습니다.");
+                throw error; // React Query가 에러를 인식하도록 예외 던짐
+            }
+        },
+        onSuccess: ({ id, updatedData }) => {
             alert(`Todo ID ${id} 수정 성공`);
-            // 서버에서 반환된 데이터로 상태 업데이트
-            setTodos((prevTodos) =>
-                prevTodos.map((todo) =>
+            // 캐시 데이터를 업데이트하여 UI 동기화
+            queryClient.setQueryData(['todos'], (oldTodos = []) =>
+                oldTodos.map((todo) =>
                     todo.id === id ? { ...todo, ...updatedData } : todo
                 )
             );
-        } catch (error) {
-            console.error(`Todo ID ${id} 수정 실패:`, error);
-            alert("Todo 수정에 실패했습니다.");
-        }
-    };
-
-    if (loading) return <LoadingComp />;
-    if (error) return <ErrorComp />;
-
+        },
+        onError: (error) => {
+            console.error("수정 Mutation 에러 발생:", error);
+        },
+    });
     
+
+    // const updateTodo = async (id, updatedData) => {
+    //     try {
+    //         const response = await axios.patch(`http://localhost:3000/todo/${id}`, updatedData);
+    //         alert(`Todo ID ${id} 수정 성공`);
+    //         // 서버에서 반환된 데이터로 상태 업데이트
+    //         setTodos((prevTodos) =>
+    //             prevTodos.map((todo) =>
+    //                 todo.id === id ? { ...todo, ...updatedData } : todo
+    //             )
+    //         );
+    //     } catch (error) {
+    //         console.error(`Todo ID ${id} 수정 실패:`, error);
+    //         alert("Todo 수정에 실패했습니다.");
+    //     }
+        
+    // };
+
+
 
     return (
         <Wrapp>
             <span className="logo" onClick={() => navigate("/")} >⚡ UMC ToDoList ⚡</span>
-            
+
             <Input placeholder="제목을 입력해주세요"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -168,37 +197,48 @@ const Todobanner = () => {
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
             />
-            <MakeButton 
-            onClick={createTodo} disabled={isButtonDisabled}
-            isButtonDisabled={isButtonDisabled}
-            >ToDo 생성</MakeButton>
+            <MakeButton
+                onClick={() => {
+                    if (isButtonDisabled) return; // 버튼 비활성화 상태라면 실행하지 않음
+                    createmutation.mutate({ title, content }); // mutation 호출
+                    setTitle(''); // 입력 필드 초기화
+                    setContent('');
+                }}
+                disabled={isButtonDisabled} // 버튼 활성/비활성 상태
+                isButtonDisabled={isButtonDisabled}
+            >ToDo 생성
+            </MakeButton>
 
-            <SearchButton onClick={handleSearch}>
-                검색
-            </SearchButton>
+                <SearchButton onClick={handleSearch}>
+                    검색
+                </SearchButton>
 
-            <Input
-    placeholder="제목으로 검색해보세요."
-    value={tempSearchTitle} // 검색어 입력 상태를 tempSearchTitle로 설정
-    onChange={(e) => setTempSearchTitle(e.target.value)} // 검색어 입력 상태 업데이트
-/>
+                <Input
+                    placeholder="제목으로 검색해보세요."
+                    value={tempSearchTitle} // 검색어 입력 상태를 tempSearchTitle로 설정
+                    onChange={(e) => setTempSearchTitle(e.target.value)} // 검색어 입력 상태 업데이트
+                />
 
-            {/* 리스트 렌더링 */}
-            <TodoList>
-                {todos.map((todo, index) => (
-                    <ListItem
-                        key={index}
-                        id={todo.id}
-                        title={todo.title}
-                        content={todo.content}
-                        checked={todo.checked}
-                        
-                        deleteTodo={deleteTodo}
-                        updateTodo={updateTodo}
-                        toggleChecked={toggleChecked}
-                    />
-                ))}
-            </TodoList>
+                {/* 리스트 렌더링 */}
+                <TodoList>
+                    {todos.map((todo, index) => {
+                        console.log("현재 todo 데이터:", todo);
+                        return (
+                            <ListItem
+                                key={index}
+                                id={todo.id}
+                                title={todo.title}
+                                content={todo.content}
+                                checked={todo.checked}
+                                deleteTodo={() => deleteMutation.mutate(todo.id)}
+                                updateTodo={(updatedData) =>
+                                    updateMutation.mutate({ id: todo.id, updatedData }) // Mutation 호출
+                                }
+                                toggleChecked={toggleChecked}
+                            />
+                        );
+                    })}
+                </TodoList>
 
         </Wrapp>
     )
