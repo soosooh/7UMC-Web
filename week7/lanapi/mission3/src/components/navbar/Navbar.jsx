@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import { useContext } from 'react';
@@ -91,9 +92,6 @@ const LogoSpan = styled.span`
 
 const StyledBtn = styled.button`
     background-color: ${props => props.color || 'black'};
-    &:hover {
-        background-color: ${props => props.color2};
-    };
     border: 1px solid grey;
     border-radius: 0.4em;
     padding: 8px 14px;
