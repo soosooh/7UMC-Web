@@ -1,3 +1,5 @@
+//반응형 1차 수정 완료
+
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
@@ -9,7 +11,6 @@ const CategoryCardSkeleton = () => {
         </SkeletonContainer>
     );
 };
-
 
 export default CategoryCardSkeleton;
 
@@ -30,6 +31,17 @@ const SkeletonContainer = styled.div`
     background-color: #f0f0f0;
     position: relative;
     margin-bottom: 15px;
+    transition: width 0.3s, height 0.3s;
+
+    @media (max-width: 768px) {
+        width: 90%; 
+        height: 180px; 
+        margin: 10px auto; 
+    }
+
+    @media (max-width: 480px) {
+        height: 150px; 
+    }
 `;
 
 const SkeletonImage = styled.div`
@@ -51,4 +63,12 @@ const SkeletonTitle = styled.div`
     background-size: 400% 100%;
     animation: ${loading} 1.5s infinite;
     border-radius: 0.3em;
+
+    @media (max-width: 768px) {
+        width: 50%; 
+    }
+
+    @media (max-width: 480px) {
+        width: 40%; 
+    }
 `;

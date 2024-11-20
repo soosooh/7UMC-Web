@@ -1,4 +1,4 @@
-
+// 반응형 1차 수정 완료
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
@@ -30,6 +30,10 @@ const SkeletonWrapper = styled.div`
     position: relative;
     background-color: #333;
     overflow: hidden;
+
+    @media (max-width: 768px) {
+        height: 300px;  // 모바일에서는 배경 크기를 줄여줌
+    }
 `;
 
 const SkeletonOverlay = styled.div`
@@ -38,6 +42,10 @@ const SkeletonOverlay = styled.div`
     flex-direction: column;
     justify-content: center;
     height: 100%;
+
+    @media (max-width: 768px) {
+        padding-left: 20px;  // 모바일에서는 여백을 줄여줌
+    }
 `;
 
 const SkeletonTitle = styled.div`
@@ -48,6 +56,10 @@ const SkeletonTitle = styled.div`
     animation: ${loadingAnimation} 1.5s infinite;
     margin-bottom: 16px;
     border-radius: 4px;
+
+    @media (max-width: 768px) {
+        width: 50%;  // 모바일에서 제목 크기 줄이기
+    }
 `;
 
 const SkeletonRate = styled.div`
@@ -58,6 +70,10 @@ const SkeletonRate = styled.div`
     animation: ${loadingAnimation} 1.5s infinite;
     margin-bottom: 12px;
     border-radius: 4px;
+
+    @media (max-width: 768px) {
+        width: 40%;  // 모바일에서 평점 크기 줄이기
+    }
 `;
 
 const SkeletonSubtitle = styled.div`
@@ -68,6 +84,10 @@ const SkeletonSubtitle = styled.div`
     animation: ${loadingAnimation} 1.5s infinite;
     margin-bottom: 12px;
     border-radius: 4px;
+
+    @media (max-width: 768px) {
+        width: 50%;  // 모바일에서 부제목 크기 줄이기
+    }
 `;
 
 const SkeletonOverview = styled.div`
@@ -78,4 +98,9 @@ const SkeletonOverview = styled.div`
     animation: ${loadingAnimation} 1.5s infinite;
     margin-top: 16px;
     border-radius: 4px;
+
+    @media (max-width: 768px) {
+        width: 70%;  // 모바일에서 개요 크기 줄이기
+    }
 `;
+
