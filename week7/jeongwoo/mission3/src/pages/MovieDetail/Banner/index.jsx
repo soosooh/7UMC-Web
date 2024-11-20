@@ -5,13 +5,13 @@ const MovieHeader = styled.div`
  width: 100%;
  height: 200px;
  position: relative;
- margin-bottom: 20px;
  border-radius: 8px;
  overflow: hidden;
+ margin-top: -56px;
+ padding-top: 56px;
 
  @media (min-width: 768px) {
    height: 300px;
-   margin-bottom: 40px;
    border-radius: 10px;
  }
 `;

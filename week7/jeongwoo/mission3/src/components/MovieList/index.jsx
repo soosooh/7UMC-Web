@@ -6,9 +6,11 @@ import Pagination from '../common/Pagination';
 
 const MovieContainer = styled.div`
  padding: 10px;
- min-height: calc(100vh - 120px);
+ min-height: calc(100vh - 56px);
  display: flex;
  flex-direction: column;
+ margin-top: -56px;
+ padding-top: 56px;
  
  @media (min-width: 768px) {
    padding: 20px;
