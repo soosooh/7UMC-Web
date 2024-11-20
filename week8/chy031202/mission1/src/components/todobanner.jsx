@@ -32,15 +32,15 @@ const Todobanner = () => {
 }, [initialTodos]);
 
 
-useEffect(() => {
-    const timeout = setTimeout(() => {
-        if (tempSearchTitle.trim() !== "") {
-            setSearchTitle(tempSearchTitle); // 1초 후 검색어 업데이트
-        }
-    }, 500); // 500ms 디바운스
+// useEffect(() => {
+//     const timeout = setTimeout(() => {
+//         if (tempSearchTitle.trim() !== "") {
+//             setSearchTitle(tempSearchTitle); // 1초 후 검색어 업데이트
+//         }
+//     }, 500); // 500ms 디바운스
 
-    return () => clearTimeout(timeout); // 이전 타이머 정리
-}, [tempSearchTitle]);
+//     return () => clearTimeout(timeout); // 이전 타이머 정리
+// }, [tempSearchTitle]);
 
     // const fetchTodos = async (titleQuery = "") => {
     //     try {
@@ -55,9 +55,14 @@ useEffect(() => {
     // };
 
     const handleSearch = () => {
-        setSearchTitle(tempSearchTitle); // 검색 버튼 클릭 시 즉시 업데이트
+        setSearchTitle(tempSearchTitle); // 검색어 상태 업데이트
         refetch(); // API 요청 실행
     };
+    useEffect(() => {
+        if (searchTitle.trim() !== "") {
+            refetch(); // 검색어 변경 시 데이터를 다시 가져옴
+        }
+    }, [searchTitle]);
 
 
     //특정 id 가져오기
@@ -118,40 +123,12 @@ useEffect(() => {
         setTodos((todos) =>
             todos.map((todo) => (todo.id === id ? { ...todo, task: text } : todo))
         );
-        setEditingId('');
     };
 
     if (loading) return <LoadingComp />;
     if (error) return <ErrorComp />;
 
-    // const createTodo = async () => {
-    //     if (isButtonDisabled) return;
-
-    //     // 새로운 ToDo 추가
-    //     const newTodo = { title, content };
-    //     setTodos([...todos, newTodo]);
-
-    //     // 입력 필드 초기화
-    //     setTitle("");
-    //     setContent("");
-
-    //     try {
-    //         const response = await axios.post("http://localhost:3000/todo", {
-    //             title,
-    //             content,
-    //         });
-    //         console.log("ToDo 생성 성공:", response.data);
-    //         alert("ToDo가 성공적으로 생성되었습니다!");
-
-    //         // 새로운 Todo를 todos 상태에 추가
-    //         setTodos([...todos, response.data]);
-    //         setTitle(""); // 입력 필드 초기화
-    //         setContent("");
-    //     } catch (error) {
-    //         console.error("ToDo 생성 실패:", error);
-    //         alert("ToDo 생성에 실패했습니다.");
-    //     }
-    // };
+    
 
     return (
         <Wrapp>
@@ -173,21 +150,23 @@ useEffect(() => {
             <SearchButton onClick={handleSearch}>
                 검색
             </SearchButton>
-            <Input placeholder="제목으로 검색해보세요."
-            value={searchTitle}
-            onChange={handleSearch}
-            />
+
+            <Input
+    placeholder="제목으로 검색해보세요."
+    value={tempSearchTitle} // 검색어 입력 상태를 tempSearchTitle로 설정
+    onChange={(e) => setTempSearchTitle(e.target.value)} // 검색어 입력 상태 업데이트
+/>
 
             {/* 리스트 렌더링 */}
             <TodoList>
                 {todos.map((todo, index) => (
                     <ListItem
                         key={index}
-                        onClick={() => navigate(`/todo/${todo.id}`)}
                         id={todo.id}
                         title={todo.title}
                         content={todo.content}
                         checked={todo.checked}
+                        
                         deleteTodo={deleteTodo}
                         updateTodo={updateTodo}
                         toggleChecked={toggleChecked}
@@ -196,7 +175,7 @@ useEffect(() => {
             </TodoList>
 
             {/* Todo 상세보기 */}
-            {selectedTodo && (
+            {/* {selectedTodo && (
                 <TodoDetail>
                     <h3>Todo 상세보기</h3>
                     <p><strong>ID:</strong> {selectedTodo.id}</p>
@@ -205,7 +184,7 @@ useEffect(() => {
                     <p><strong>체크 상태:</strong> {selectedTodo.checked ? "완료" : "미완료"}</p>
                     <CloseButton onClick={() => setSelectedTodo(null)}>닫기</CloseButton>
                 </TodoDetail>
-            )}
+            )} */}
 
         </Wrapp>
     )

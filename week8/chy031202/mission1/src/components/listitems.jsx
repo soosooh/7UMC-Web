@@ -1,8 +1,16 @@
 import styled from "styled-components";
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 
 const ListItem = ({ id, title, content, checked , deleteTodo , updateTodo, toggleChecked}) => {
+    const navigate = useNavigate();
+
+    const handleTitleClick = () => {
+        navigate(`/todo/${id}`); // 해당 id의 상세 페이지로 이동
+    };
+
+    
     return (
         <TodoItem>
             <Checkbox 
@@ -11,8 +19,8 @@ const ListItem = ({ id, title, content, checked , deleteTodo , updateTodo, toggl
             onChange={() => toggleChecked(id)}
             />
             <div>
-                <p>{title}</p>
-                <p>{content}</p>
+                <Input value={title} onClick={handleTitleClick} style={{ cursor: "pointer" }} />
+                <Input value={content}/>
             </div>
             <ButtonWrapp>
             <Button onClick={()=>updateTodo(id)}>   수정</Button>
@@ -22,6 +30,12 @@ const ListItem = ({ id, title, content, checked , deleteTodo , updateTodo, toggl
         </TodoItem>
         );
 };
+
+const Input = styled.input`
+border:none;
+width:100%;
+
+`
 
 const ButtonWrapp = styled.div`
 display:flex;
