@@ -2,7 +2,6 @@
 //app.jsx에서 movies도 / 처럼 children 사용해서 경로 설정해주세요!
 
 import React from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 
@@ -11,17 +10,15 @@ import NotFound from './pages/notFound/NotFound';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import Search from './pages/search/Search';
+import RootLayout from './layout/RootLayout';
+import Category from './pages/movies/category/Category';
 import NowPlaying from './pages/movies/category/NowPlaying';
 import Popular from './pages/movies/category/Popular';
 import TopRated from './pages/movies/category/TopRated';
 import UpComing from './pages/movies/category/UpComing';
 import MovieDetailPage from './pages/movies/detail/MovieDetailPage';
-import RootLayout from './layout/RootLayout';
-import Category from './pages/movies/category/Category';
 
-// QueryClient 인스턴스 생성
-const queryClient = new QueryClient();
-
+// 라우터 설정
 const router = createBrowserRouter([
   {
     path: '/',
@@ -46,39 +43,41 @@ const router = createBrowserRouter([
       },
       {
         path: 'movies',
-        element: <Category />,
+        element: <Category />, // 카테고리 메인 페이지
       },
       {
         path: 'movies/now-playing',
-        element: <NowPlaying />,
+        element: <NowPlaying />, // 현재 상영 중인 영화 페이지
       },
       {
         path: 'movies/popular',
-        element: <Popular />,
+        element: <Popular />, // 인기 영화 페이지
       },
       {
         path: 'movies/top-rated',
-        element: <TopRated />,
+        element: <TopRated />, // 높은 평가를 받은 영화 페이지
       },
       {
         path: 'movies/up-coming',
-        element: <UpComing />,
+        element: <UpComing />, // 개봉 예정 영화 페이지
       },
       {
         path: 'movies/:movieId',
-        element: <MovieDetailPage />,
+        element: <MovieDetailPage />, // 영화 상세 페이지
       },
     ],
   },
-]);
+], {
+  future: {
+    v7_partialHydration: true,
+  },
+});
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </QueryClientProvider>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 

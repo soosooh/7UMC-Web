@@ -21,13 +21,11 @@ const fetchCategoryMovies = async (category, page = 1) => {
 };
 
 const Popular = () => {
-    // useQuery로 첫 번째 페이지 데이터 로드
     const { data: initialData, isLoading: isInitialLoading, isError: isInitialError } = useQuery({
         queryKey: ['category', 'popular', 1],
         queryFn: () => fetchCategoryMovies('popular', 1),
     });
 
-    // useInfiniteQuery로 추가 페이지 데이터 로드 설정
     const {
         data: moviesData,
         fetchNextPage,
