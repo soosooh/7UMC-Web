@@ -4,57 +4,59 @@ import axios from "axios";
 import ListItem from "./listitems";
 import { useNavigate } from "react-router-dom";
 import useCustomFetch from "../hooks/useCustomFetch";
+import ErrorComp from "./states/error";
+import LoadingComp from "./states/loading";
+
 
 const Todobanner = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [todos, setTodos] = useState([]); // 리스트 상태
-    const [debounceTimeout, setDebounceTimeout] = useState(null);
     const [selectedTodo, setSelectedTodo] = useState(null);
+    const [tempSearchTitle, setTempSearchTitle] = useState("");
     const [searchTitle, setSearchTitle] = useState(""); // 검색할 제목
     const isButtonDisabled = !title || !content;
     const navigate = useNavigate();
 
     // Custom Fetch Hook 사용
-    // const { data: todos, loading, error } = useCustomFetch(
-    //     `http://localhost:3000/todo`,
-    //     { params: { title: searchTitle } }
-    // );
+    const { data: initialTodos, loading, error, refetch } = useCustomFetch(
+        "http://localhost:3000/todo",
+        { params: { title: searchTitle } }
+    );
 
    // 전체 todo
     useEffect(() => {
-        fetchTodos(); // searchTitle 없이 모든 데이터를 로드
-    }, []);
+    if (initialTodos) {
+        setTodos(initialTodos); // useCustomFetch로 가져온 데이터를 로컬 상태로 복사
+    }
+}, [initialTodos]);
 
 
-    useEffect(() => {
-        //debounce
-        if (debounceTimeout) clearTimeout(debounceTimeout);
-
-        const timeout = setTimeout(() =>{
-            fetchTodos(searchTitle);
-        }, 500);
-
-        setDebounceTimeout(timeout);
-        
-        return() => clearTimeout(timeout);
-        
-    }, [searchTitle]);
-
-    const fetchTodos = async (titleQuery = "") => {
-        try {
-            const response = await axios.get("http://localhost:3000/todo", {
-                params: { title: titleQuery },
-            });
-            setTodos(response.data[0]); // 첫 번째 배열에 리스트 데이터가 있음
-            console.log("Todo 데이터 로드 성공:", response.data[0]);
-        } catch (error) {
-            console.error("Todo 데이터 로드 실패:", error);
+useEffect(() => {
+    const timeout = setTimeout(() => {
+        if (tempSearchTitle.trim() !== "") {
+            setSearchTitle(tempSearchTitle); // 1초 후 검색어 업데이트
         }
-    };
+    }, 500); // 500ms 디바운스
+
+    return () => clearTimeout(timeout); // 이전 타이머 정리
+}, [tempSearchTitle]);
+
+    // const fetchTodos = async (titleQuery = "") => {
+    //     try {
+    //         const response = await axios.get("http://localhost:3000/todo", {
+    //             params: { title: titleQuery },
+    //         });
+    //         setTodos(response.data[0]); // 첫 번째 배열에 리스트 데이터가 있음
+    //         console.log("Todo 데이터 로드 성공:", response.data[0]);
+    //     } catch (error) {
+    //         console.error("Todo 데이터 로드 실패:", error);
+    //     }
+    // };
 
     const handleSearch = () => {
-        fetchTodos(searchTitle); // 검색어에 따라 데이터 다시 로드
+        setSearchTitle(tempSearchTitle); // 검색 버튼 클릭 시 즉시 업데이트
+        refetch(); // API 요청 실행
     };
 
 
@@ -77,18 +79,40 @@ const Todobanner = () => {
             )
             );
         };
+
+        const createTodo = async () => {
+            if (isButtonDisabled) return;
+        
+            try {
+                const response = await axios.post("http://localhost:3000/todo", {
+                    title,
+                    content,
+                });
+        
+                alert("ToDo가 성공적으로 생성되었습니다!");
+                setTodos([...todos, response.data]);
+                // 입력 필드 초기화
+                setTitle("");
+                setContent("");
+        
+                // 데이터 재로딩
+            } catch (error) {
+                console.error("ToDo 생성 실패:", error);
+                alert("ToDo 생성에 실패했습니다.");
+            }
+        };
     
 
     const deleteTodo = async (id) => {
         try {
             await axios.delete(`http://localhost:3000/todo/${id}`); // DELETE 요청
-            setTodos(todos.filter((todo) => todo.id !== id)); // 성공 시 UI 업데이트
-            console.log(`Todo ID ${id} 삭제 성공`);
+            alert(`Todo ID ${id} 삭제 성공`);
+            setTodos(todos.filter((todo) => todo.id !== id));
         } catch (error) {
             console.error(`Todo ID ${id} 삭제 실패:`, error);
             alert("Todo 삭제에 실패했습니다.");
         }
-    }
+    };
 
     const updateTodo = (id, text) => {
         setTodos((todos) =>
@@ -97,54 +121,38 @@ const Todobanner = () => {
         setEditingId('');
     };
 
-    const createTodo = async () => {
-        if (isButtonDisabled) return;
-
-        // 새로운 ToDo 추가
-        const newTodo = { title, content };
-        setTodos([...todos, newTodo]);
-
-        // 입력 필드 초기화
-        setTitle("");
-        setContent("");
-
-        try {
-            const response = await axios.post("http://localhost:3000/todo", {
-                title,
-                content,
-            });
-            console.log("ToDo 생성 성공:", response.data);
-            alert("ToDo가 성공적으로 생성되었습니다!");
-
-            // 새로운 Todo를 todos 상태에 추가
-            setTodos([...todos, response.data]);
-
-
-
-            setTitle(""); // 입력 필드 초기화
-            setContent("");
-        } catch (error) {
-            console.error("ToDo 생성 실패:", error);
-            alert("ToDo 생성에 실패했습니다.");
-        }
-    };
-
+    if (loading) return <LoadingComp />;
+    if (error) return <ErrorComp />;
 
     // const createTodo = async () => {
     //     if (isButtonDisabled) return;
+
+    //     // 새로운 ToDo 추가
+    //     const newTodo = { title, content };
+    //     setTodos([...todos, newTodo]);
+
+    //     // 입력 필드 초기화
+    //     setTitle("");
+    //     setContent("");
 
     //     try {
     //         const response = await axios.post("http://localhost:3000/todo", {
     //             title,
     //             content,
     //         });
+    //         console.log("ToDo 생성 성공:", response.data);
     //         alert("ToDo가 성공적으로 생성되었습니다!");
-    //         setTitle("");
+
+    //         // 새로운 Todo를 todos 상태에 추가
+    //         setTodos([...todos, response.data]);
+    //         setTitle(""); // 입력 필드 초기화
     //         setContent("");
     //     } catch (error) {
+    //         console.error("ToDo 생성 실패:", error);
     //         alert("ToDo 생성에 실패했습니다.");
     //     }
     // };
+
     return (
         <Wrapp>
             <span className="logo">⚡ UMC ToDoList ⚡</span>
@@ -165,10 +173,10 @@ const Todobanner = () => {
             <SearchButton onClick={handleSearch}>
                 검색
             </SearchButton>
-            {/* <Input placeholder="제목으로 검색해보세요."
+            <Input placeholder="제목으로 검색해보세요."
             value={searchTitle}
-            onChange={(e) => setSearchTitle(e.target.value)}
-            /> */}
+            onChange={handleSearch}
+            />
 
             {/* 리스트 렌더링 */}
             <TodoList>

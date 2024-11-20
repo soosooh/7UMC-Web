@@ -4,37 +4,70 @@ import styled from 'styled-components';
 import { yupResolver } from '@hookform/resolvers/yup'
 import useFormCo from '../../utils/use-form';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from "@tanstack/react-query";
 
 const SignUpPage = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, errors, isValid} = useFormCo();
+    //const { register, handleSubmit, formState: {errors, isValid}} = useFormCo();
 
-    const onSubmit = async (data) => {
-        try {
+
+    // useMutation 설정
+    const mutaion = useMutation({
+        mutationFn: async (data) => {
             const response = await fetch('http://localhost:3000/auth/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: data.email,
-                    password: data.password,
-                    passwordCheck: data.passwordCheck,
-                }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
             });
-
-            if (response.ok) {
-                alert("회원가입이 완료되었습니다!");
-                navigate('/login');
-            } else {
+            if (!response.ok) {
                 const errorData = await response.json();
-                alert(`회원가입 실패: ${errorData.message}`);
+                throw new Error(errorData.message || "회원가입 실패");
             }
-        } catch (error) {
-            console.error("회원가입 중 오류 발생:", error);
-            alert("회원가입 중 문제가 발생했습니다. 다시 시도해주세요.");
-        }
-    };
+
+            return response.json();
+        },
+            onSuccess: () => {
+                alert("회원가입이 완료되었습니다!");
+                navigate("/login");
+            },
+            onError: (error) => {
+                alert(`회원가입 실패: ${error.message}`);
+            },
+        
+    })
+
+    const onSubmit = (data) => {
+        mutaion.mutate(data);
+    }
+
+
+    // const onSubmit = async (data) => {
+    //     try {
+    //         const response = await fetch('http://localhost:3000/auth/register', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 email: data.email,
+    //                 password: data.password,
+    //                 passwordCheck: data.passwordCheck,
+    //             }),
+    //         });
+
+    //         if (response.ok) {
+    //             alert("회원가입이 완료되었습니다!");
+    //             navigate('/login');
+    //         } else {
+    //             const errorData = await response.json();
+    //             alert(`회원가입 실패: ${errorData.message}`);
+    //         }
+    //     } catch (error) {
+    //         console.error("회원가입 중 오류 발생:", error);
+    //         alert("회원가입 중 문제가 발생했습니다. 다시 시도해주세요.");
+    //     }
+    // };
     return (
         <MainWrapp>
             <h1 style={{marginTop:'257px'}}>회원가입</h1>

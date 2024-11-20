@@ -3,41 +3,44 @@ import styled from 'styled-components';
 import useLogin from '../../utils/use-login';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/LoginContext';
+import { useMutation } from '@tanstack/react-query';
 
 const Loginuseform = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, errors, isValid} = useLogin();
     const { login } = useAuth();
 
-    const onSubmit = async (data) => {
-        try {
+    const mutaion = useMutation({
+        mutationFn: async(data) =>{
             const response = await fetch('http://localhost:3000/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: data.email,
-                    password: data.password,
-                }),
-            });
-
-            if (response.ok) {
-                const responseData = await response.json(); 
-
-                localStorage.setItem('accessToken', responseData.accessToken);
-                localStorage.setItem('refreshToken', responseData.refreshToken);
-                login();
-                alert("로그인이 완료되었습니다!");
-                navigate('/');
-            } else {
-                const errorData = await response.json();
-                alert(`로그인 실패: ${errorData.message}`);
-            }
-        } catch (error) {
-            console.error("로그인 중 오류 발생:", error);
-            alert("로그인 중 문제가 발생했습니다. 다시 시도해주세요.");
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data),
+        });
+        if(!response.ok) {
+            const errorData = await response.json();
+            alert(`로그인 실패: ${errorData.message}`);
         }
+        return response.json();
+    },
+    onSuccess: (responseData) => {
+        // 서버에서 받은 데이터를 로컬 스토리지에 저장
+        localStorage.setItem('accessToken', responseData.accessToken);
+        localStorage.setItem('refreshToken', responseData.refreshToken);
+
+        // 로그인 상태를 업데이트
+        login();
+        alert('로그인이 완료되었습니다!');
+        navigate('/');
+    },
+    onError:(error) =>{
+        console.error("로그인 중 오류 발생:", error);
+            alert("로그인 중 문제가 발생했습니다. 다시 시도해주세요.");
+    },
+})
+
+    const onSubmit = (data) => {
+        mutaion.mutate(data);
     };
 
     return (
