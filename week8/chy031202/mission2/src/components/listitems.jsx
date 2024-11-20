@@ -7,6 +7,7 @@ import axios from "axios";
 const ListItem = ({ id, title, content, checked , deleteTodo , updateTodo, toggleChecked}) => {
     const navigate = useNavigate();
 
+    console.log("받은 데이터:", { id, title, content, checked });
     const [isEditing, setIsEditing] = useState(false); // 수정 모드 상태
     const [editedTitle, setEditedTitle] = useState(title); // 제목 상태
     const [editedContent, setEditedContent] = useState(content); // 내용 상태
