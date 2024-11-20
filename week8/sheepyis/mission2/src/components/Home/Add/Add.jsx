@@ -22,7 +22,9 @@ const Add = () => {
             console.log(data);
             queryClient.invalidateQueries({
                 queryKey: ["todos"],
-            })
+            });
+            setTitle("");
+            setContent("");
         },
         onError: (error) => {
             console.log(error);
