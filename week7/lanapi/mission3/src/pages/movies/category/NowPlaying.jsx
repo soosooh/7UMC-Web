@@ -79,18 +79,17 @@ const NowPlaying = () => {
 
 export default NowPlaying;
 
-// 스타일 정의
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center; /* 수직 정렬 */
+    align-items: center; 
     padding: 20px;
     width: 100%;
 `;
 
 const PaginationWrapper = styled.div`
     display: flex;
-    justify-content: center; /* 수평 정렬 */
+    justify-content: center; 
     width: 100%;
-    margin-top: 20px; /* 리스트와 간격 추가 */
+    margin-top: 20px; 
 `;

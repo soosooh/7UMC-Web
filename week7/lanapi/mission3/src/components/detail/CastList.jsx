@@ -35,7 +35,7 @@ const CastTitle = styled.h2`
     font-family: 'Georgia', serif;
 
     @media (max-width: 768px) {
-        font-size: 30px; // 모바일에서 제목 크기 줄이기
+        font-size: 30px; 
     }
 `;
 
@@ -47,14 +47,14 @@ const CreditWrapper = styled.div`
     justify-content: flex-start;
 
     @media (max-width: 1024px) {
-        gap: 15px; // 태블릿 화면에서는 간격 줄이기
+        gap: 15px; 
     }
 
     @media (max-width: 768px) {
-        gap: 10px; // 모바일 화면에서 간격 줄이기
+        gap: 10px; 
     }
 
     @media (max-width: 480px) {
-        gap: 5px; // 더 작은 화면에서는 간격 최소화
+        gap: 5px; 
     }
 `;

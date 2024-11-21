@@ -31,7 +31,7 @@ const PaginationControls = styled.div`
     align-items: center;
     gap: 5px;
     padding: 5px 10px;
-    background-color: rgba(0, 0, 0, 0.3); // 배경색을 투명하게 설정
+    background-color: rgba(0, 0, 0, 0.3); 
     border-radius: 8px;
     width: 100%;
     max-width: 300px;
@@ -40,19 +40,19 @@ const PaginationControls = styled.div`
     z-index: 5;
 
     @media (max-width: 768px) {
-        position: fixed; // 작은 화면에서는 고정
-        bottom: 80px; // 네비게이션 바 위로 위치 조정
+        position: fixed; 
+        bottom: 80px; 
         left: 50%;
-        transform: translateX(-50%); // 중앙 정렬
+        transform: translateX(-50%); 
         margin-top: 0;
         max-width: 90%;
     }
 `;
 
 const Button = styled.button`
-    width: 40px; // 버튼 크기 축소
-    height: 25px; // 버튼 높이 축소
-    font-size: 0.8rem; // 텍스트 크기 축소
+    width: 40px; 
+    height: 25px; 
+    font-size: 0.8rem; 
     background: ${(props) => (props.disabled ? '#d3d3d3' : '#ff073d')}; // 비활성화 시 회색
     border: none;
     border-radius: 10px;
@@ -65,13 +65,13 @@ const Button = styled.button`
     }
 
     @media (max-width: 768px) {
-        font-size: 0.7rem; // 작은 화면에서 텍스트 크기 더 축소
+        font-size: 0.7rem; 
         padding: 5px;
     }
 `;
 
 const PageNumber = styled.span`
-    font-size: 0.8rem; // 페이지 번호 크기 축소
+    font-size: 0.8rem; 
     font-weight: bold;
     color: white;
 `;

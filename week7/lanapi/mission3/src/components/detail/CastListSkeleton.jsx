@@ -50,15 +50,15 @@ const SkeletonCastItem = styled.div`
     width: calc(20% - 20px);
 
     @media (max-width: 1024px) {
-        width: calc(25% - 15px); // 태블릿 화면에서는 너비 줄이기
+        width: calc(25% - 15px); 
     }
 
     @media (max-width: 768px) {
-        width: calc(33.33% - 10px); // 모바일 화면에서 한 줄에 3개씩
+        width: calc(33.33% - 10px); 
     }
 
     @media (max-width: 480px) {
-        width: calc(50% - 5px); // 더 작은 화면에서는 한 줄에 2개씩
+        width: calc(50% - 5px); 
     }
 `;
 
@@ -73,12 +73,12 @@ const SkeletonImage = styled.div`
 
     @media (max-width: 768px) {
         width: 100px;
-        height: 100px; // 모바일 화면에서 이미지 크기 줄이기
+        height: 100px; 
     }
 
     @media (max-width: 480px) {
         width: 80px;
-        height: 80px; // 더 작은 화면에서 이미지 크기 더 줄이기
+        height: 80px; 
     }
 `;
 
@@ -92,11 +92,11 @@ const SkeletonName = styled.div`
     margin-bottom: 6px;
 
     @media (max-width: 768px) {
-        width: 60%; // 모바일 화면에서 이름 너비 줄이기
+        width: 60%; 
     }
 
     @media (max-width: 480px) {
-        width: 50%; // 더 작은 화면에서 이름 너비 더 줄이기
+        width: 50%; 
     }
 `;
 
@@ -109,11 +109,11 @@ const SkeletonRole = styled.div`
     border-radius: 4px;
 
     @media (max-width: 768px) {
-        width: 45%; // 모바일 화면에서 역할 너비 줄이기
+        width: 45%; 
     }
 
     @media (max-width: 480px) {
-        width: 40%; // 더 작은 화면에서 역할 너비 더 줄이기
+        width: 40%; 
     }
 `;
 
