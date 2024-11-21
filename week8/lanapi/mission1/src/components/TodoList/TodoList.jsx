@@ -3,11 +3,14 @@ import { TodoContext } from '../../contexts/TodoContext';
 import TodoForm from './TodoForm';
 import TodoSearch from './TodoSearch';
 import TodoItem from '../TodoItem/TodoItem';
+import ErrorScreen from '../animation/ErrorScreen';
+import LoadingScreen from '../animation/LoadingScreen';
 
 function TodoList() {
   const { todos, addTodo, loading, error } = useContext(TodoContext);
   const [query, setQuery] = useState('');
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
 
   useEffect(() => {
     if (query.trim() === '') {
@@ -20,6 +23,17 @@ function TodoList() {
       setFilteredTodos(filtered);
     }
   }, [query, todos]);
+
+  useEffect(() => {
+    if (error) {
+      setIsErrorVisible(true);
+      // 3초 후 에러 애니메이션이 사라지고 원래 상태로 돌아옴
+      const timeout = setTimeout(() => {
+        setIsErrorVisible(false);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
 
   const handleAddTodo = ({ title, content }) => {
     const newTodo = {
@@ -34,17 +48,26 @@ function TodoList() {
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ fontSize: '32px', fontWeight: 'bold', textAlign: 'center', marginBottom: '24px' }}>
+      <h1
+        style={{
+          fontSize: '32px',
+          fontWeight: 'bold',
+          textAlign: 'center',
+          marginBottom: '24px',
+        }}
+      >
         Todo List
       </h1>
       <TodoForm onAddTodo={handleAddTodo} />
       <TodoSearch query={query} onSearchChange={setQuery} />
       {loading ? (
-        <p>로딩 중...</p>
-      ) : error ? (
-        <p style={{ color: 'red' }}>{error}</p>
+        <LoadingScreen /> // 로딩 애니메이션 표시
+      ) : isErrorVisible ? (
+        <ErrorScreen /> // 에러 애니메이션 표시
       ) : filteredTodos.length === 0 ? (
-        <p style={{ textAlign: 'center', color: '#9ca3af' }}>검색된 Todo가 없습니다.</p>
+        <p style={{ textAlign: 'center', color: '#9ca3af' }}>
+          검색된 Todo가 없습니다.
+        </p>
       ) : (
         filteredTodos.map((todo, index) => (
           <TodoItem key={todo.id || index} todo={todo} />
