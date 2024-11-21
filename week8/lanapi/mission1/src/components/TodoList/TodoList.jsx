@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { TodoContext } from '../contexts/TodoContext';
+import { TodoContext } from '../../contexts/TodoContext';
 import TodoForm from './TodoForm';
 import TodoSearch from './TodoSearch';
-import TodoItem from '../components/TodoItem';
+import TodoItem from '../TodoItem/TodoItem';
 
 function TodoList() {
   const { todos, addTodo, loading, error } = useContext(TodoContext);
   const [query, setQuery] = useState('');
   const [filteredTodos, setFilteredTodos] = useState([]);
 
-  // 검색 필터링 로직
   useEffect(() => {
     if (query.trim() === '') {
       setFilteredTodos(todos);
@@ -22,7 +21,6 @@ function TodoList() {
     }
   }, [query, todos]);
 
-  // Todo 추가 핸들러
   const handleAddTodo = ({ title, content }) => {
     const newTodo = {
       id: `${Date.now()}-${Math.random()}`,
