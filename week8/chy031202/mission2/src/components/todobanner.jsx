@@ -14,7 +14,7 @@ import { useQuery, useMutation,  useQueryClient } from '@tanstack/react-query';
 const fetchTodos = async ({ queryKey }) => {
     const [_key, { title }] = queryKey; // queryKey로부터 title 분리
     const response = await axios.get('http://localhost:3000/todo', {
-        params: { title },
+        params: title ? { title } : {},
     });
     console.log("서버에서 가져온 데이터:", response.data);
     return response.data[0]; // 응답 데이터 반환
@@ -32,22 +32,78 @@ const Todobanner = () => {
 
 
     const queryClient = useQueryClient();
-    const {
-        data: todos = [],
-        isLoading,
-        isError,
-        refetch,
-    } = useQuery({
-        queryKey: ['todos', { title: tempSearchTitle.trim() }], // 항상 검색 상태 기반으로 작동
+    const { data: todos = [], isLoading, isError } = useQuery({
+        queryKey: ["todos", { title: tempSearchTitle.trim() }], // 검색 상태에 따라 queryKey 설정
         queryFn: fetchTodos,
+        keepPreviousData: true,
         onSuccess: (data) => {
-            console.log('Todos 로드 성공:', data); // 데이터 로드 성공 로그
+            console.log("Todos 로드 성공:", data);
         },
         onError: (error) => {
-            console.error('Todos 로드 실패:', error);
+            console.error("Todos 로드 실패:", error);
         },
-        enabled: true, // 기본적으로 데이터를 가져오도록 설정
     });
+
+    //useMutation 
+    const createmutation = useMutation({
+        mutationFn: async (data) => {
+            const response = await axios.post("http://localhost:3000/todo", data);
+            return response.data;
+        },
+        onSuccess: (data) => {
+            alert("ToDo가 성공적으로 생성되었습니다!");
+            queryClient.invalidateQueries(["todos"]); // 캐시 무효화
+        },
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: async (id) => {
+            await axios.delete(`http://localhost:3000/todo/${id}`);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["todos"]); // 캐시 무효화
+        },
+    });
+    
+    const updateMutation = useMutation({
+        mutationFn: async ({ id, updatedData }) => {
+            const response = await axios.patch(`http://localhost:3000/todo/${id}`, updatedData);
+            return { id, updatedData: response.data };
+        },
+        onSuccess: ({ id, updatedData }) => {
+            alert(`Todo ID ${id} 수정 성공`);
+            // 캐시 데이터를 업데이트하여 UI 동기화
+            queryClient.setQueryData(['todos'], (oldTodos = []) =>
+                oldTodos.map((todo) =>
+                    todo.id === id ? { ...todo, ...updatedData } : todo
+                )
+            );
+        },
+        onError: (error) => {
+            console.error("수정 Mutation 에러 발생:", error);
+        },
+    });
+    
+
+
+    // const queryClient = useQueryClient();
+    // const {
+    //     data: todos = [],
+    //     isLoading,
+    //     isError,
+    //     refetch,
+    // } = useQuery({
+    //     queryKey: ['todos', { title: tempSearchTitle.trim() }], // 항상 검색 상태 기반으로 작동
+    //     queryFn: fetchTodos,
+    //     keepPreviousData: true,
+    //     onSuccess: (data) => {
+    //         console.log('Todos 로드 성공:', data); // 데이터 로드 성공 로그
+    //     },
+    //     onError: (error) => {
+    //         console.error('Todos 로드 실패:', error);
+    //     },
+    //     enabled: true, // 기본적으로 데이터를 가져오도록 설정
+    // });
 
 
     if (isLoading) return <LoadingComp />;
@@ -69,7 +125,7 @@ const Todobanner = () => {
     // };
 
     const handleSearch = () => {
-        refetch({ queryKey: ['todos', { title: tempSearchTitle.trim() }] }); // Manually fetch data when search is triggered
+        refetch(); // 기존 queryKey를 기준으로 데이터를 다시 가져옵니다.
     };
 
 
@@ -96,74 +152,6 @@ const Todobanner = () => {
     };
 
 
-    //useMutation 
-    const createmutation = useMutation({
-        mutationFn: async (data) => {
-            try {
-                const response = await axios.post("http://localhost:3000/todo", data);
-                return response.data; // Axios는 이미 JSON 형태로 반환
-            } catch (error) {
-                console.error("ToDo 생성 실패:", error);
-                alert("ToDo 생성에 실패했습니다.");
-                throw error; // React Query가 에러를 인식하도록 던짐
-            }
-        },
-        onSuccess: (data) => {
-            alert("ToDo가 성공적으로 생성되었습니다!");
-            queryClient.setQueryData(['todos'], (oldTodos = []) => [...oldTodos, data]);
-        },
-        onError: (error) => {
-            console.error("Mutation 에러 발생:", error);
-        },
-    });
-
-    const deleteMutation = useMutation({
-        mutationFn: async (id) => {
-            try {
-                const response = await axios.delete(`http://localhost:3000/todo/${id}`);
-                return response.data; // 서버에서 반환된 데이터 (필요 시)
-            } catch (error) {
-                console.error(`Todo ID ${id} 삭제 실패:`, error);
-                alert("Todo 삭제에 실패했습니다.");
-                throw error; // React Query가 에러를 감지하도록 예외 던짐
-            }
-        },
-        onSuccess: (_, id) => {
-            alert(`Todo ID ${id} 삭제 성공`);
-            // 삭제된 항목을 캐시에서 제거
-            queryClient.setQueryData(['todos'], (oldTodos = []) =>
-                oldTodos.filter((todo) => todo.id !== id)
-            );
-        },
-        onError: (error) => {
-            console.error("삭제 Mutation 에러 발생:", error);
-        },
-    });
-    
-    const updateMutation = useMutation({
-        mutationFn: async ({ id, updatedData }) => {
-            try {
-                const response = await axios.patch(`http://localhost:3000/todo/${id}`, updatedData);
-                return { id, updatedData: response.data }; // ID와 업데이트된 데이터 반환
-            } catch (error) {
-                console.error(`Todo ID ${id} 수정 실패:`, error);
-                alert("Todo 수정에 실패했습니다.");
-                throw error; // React Query가 에러를 인식하도록 예외 던짐
-            }
-        },
-        onSuccess: ({ id, updatedData }) => {
-            alert(`Todo ID ${id} 수정 성공`);
-            // 캐시 데이터를 업데이트하여 UI 동기화
-            queryClient.setQueryData(['todos'], (oldTodos = []) =>
-                oldTodos.map((todo) =>
-                    todo.id === id ? { ...todo, ...updatedData } : todo
-                )
-            );
-        },
-        onError: (error) => {
-            console.error("수정 Mutation 에러 발생:", error);
-        },
-    });
     
 
     // const updateTodo = async (id, updatedData) => {
