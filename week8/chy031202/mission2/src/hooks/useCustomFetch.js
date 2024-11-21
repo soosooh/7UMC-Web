@@ -15,7 +15,7 @@ const useCustomFetch = (baseUrl, defaultOptions = {}) => {
         try {
             setLoading(true); // 로딩 시작
             const response = await axios.get(url, options);
-            setData(response.data[0]); // 데이터 저장
+            setData(response.data); // 데이터 저장
             console.log("데이터 로드 성공:", response.data);
         } catch (err) {
             setError(err); // 에러 저장
