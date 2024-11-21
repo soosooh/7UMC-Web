@@ -1,53 +1,116 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { TodoContext } from '../../contexts/TodoContext';
+import React, { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import TodoForm from './TodoForm';
 import TodoSearch from './TodoSearch';
 import TodoItem from '../TodoItem/TodoItem';
+import ErrorScreen from '../animation/ErrorScreen';
+import LoadingScreen from '../animation/LoadingScreen';
 
 function TodoList() {
-  const { todos, addTodo, loading, error } = useContext(TodoContext);
   const [query, setQuery] = useState('');
-  const [filteredTodos, setFilteredTodos] = useState([]);
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (query.trim() === '') {
-      setFilteredTodos(todos);
-    } else {
-      const filtered = todos.filter(
-        (todo) =>
-          todo.title && todo.title.toLowerCase().includes(query.trim().toLowerCase())
-      );
-      setFilteredTodos(filtered);
+  // GET 요청: Todo 데이터 가져오기
+  const { data: todos = [], isLoading, isError } = useQuery({
+    queryKey: ['todos', query],
+    queryFn: async () => {
+      const response = await axios.get('/api/todos', {
+        params: { title: query || '' }, // 검색어를 query parameter로 전달
+      });
+      return response.data;
+    },
+    refetchOnWindowFocus: false, // 포커스 시 리패치 방지
+  });
+
+  // POST 요청: Todo 생성
+  const addTodoMutation = useMutation(
+    async (newTodo) => {
+      const response = await axios.post('/api/todos', newTodo);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['todos']); // 데이터 리패치
+      },
     }
-  }, [query, todos]);
+  );
+
+  // DELETE 요청: Todo 삭제
+  const deleteTodoMutation = useMutation(
+    async (id) => {
+      await axios.delete(`/api/todos/${id}`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['todos']); // 데이터 리패치
+      },
+    }
+  );
+
+  // PATCH 요청: Todo 업데이트
+  const updateTodoMutation = useMutation(
+    async ({ id, updatedData }) => {
+      const response = await axios.patch(`/api/todos/${id}`, updatedData);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['todos']); // 데이터 리패치
+      },
+    }
+  );
 
   const handleAddTodo = ({ title, content }) => {
     const newTodo = {
-      id: `${Date.now()}-${Math.random()}`,
       title: title.trim(),
       content: content.trim(),
       checked: false,
     };
-    addTodo(newTodo.title, newTodo.content);
-    setFilteredTodos((prev) => [...prev, newTodo]);
+    addTodoMutation.mutate(newTodo); // Todo 추가 요청
   };
+
+  const handleDeleteTodo = (id) => {
+    deleteTodoMutation.mutate(id); // Todo 삭제 요청
+  };
+
+  const handleUpdateTodo = (id, updatedData) => {
+    updateTodoMutation.mutate({ id, updatedData }); // Todo 업데이트 요청
+  };
+
+  if (isLoading) return <LoadingScreen />; // 로딩 애니메이션 표시
+  if (isError || isErrorVisible) {
+    setTimeout(() => setIsErrorVisible(false), 3000);
+    return <ErrorScreen />; // 에러 애니메이션 표시
+  }
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ fontSize: '32px', fontWeight: 'bold', textAlign: 'center', marginBottom: '24px' }}>
+      <h1
+        style={{
+          fontSize: '32px',
+          fontWeight: 'bold',
+          textAlign: 'center',
+          marginBottom: '24px',
+        }}
+      >
         Todo List
       </h1>
       <TodoForm onAddTodo={handleAddTodo} />
       <TodoSearch query={query} onSearchChange={setQuery} />
-      {loading ? (
-        <p>로딩 중...</p>
-      ) : error ? (
-        <p style={{ color: 'red' }}>{error}</p>
-      ) : filteredTodos.length === 0 ? (
-        <p style={{ textAlign: 'center', color: '#9ca3af' }}>검색된 Todo가 없습니다.</p>
+      {todos.length === 0 ? (
+        <p style={{ textAlign: 'center', color: '#9ca3af' }}>
+          검색된 Todo가 없습니다.
+        </p>
       ) : (
-        filteredTodos.map((todo, index) => (
-          <TodoItem key={todo.id || index} todo={todo} />
+        todos.map((todo) => (
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onDelete={() => handleDeleteTodo(todo.id)}
+            onUpdate={(updatedData) => handleUpdateTodo(todo.id, updatedData)}
+          />
         ))
       )}
     </div>
