@@ -14,6 +14,7 @@ const Todobanner = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [todos, setTodos] = useState([]); // 리스트 상태
+    const [filteredTodos, setFilteredTodos] = useState([]); // 필터링된 리스트
     const [tempSearchTitle, setTempSearchTitle] = useState("");
     const isButtonDisabled = !title || !content;
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Todobanner = () => {
     useEffect(() => {
     if (initialTodos) {
         setTodos(initialTodos[0]); // useCustomFetch로 가져온 데이터를 로컬 상태로 복사
+        setFilteredTodos(initialTodos[0]);
     }
     }, [initialTodos]);
 
@@ -51,11 +53,14 @@ const Todobanner = () => {
         if (debouncedSearchTitle) {
             setSearchParams({ search: debouncedSearchTitle }); // Query Parameter 설정
             setOptions({ params: { title: debouncedSearchTitle } }); // API 호출
+            // 필터링 로직 추가
+            setFilteredTodos(todos.filter((todo) => todo.title.includes(debouncedSearchTitle)));
         } else {
             setSearchParams({});
             setOptions({ params: {} }); // 검색어 없으면 전체 데이터 요청
+            setFilteredTodos(todos); // 전체 데이터 표시
         }
-    }, [debouncedSearchTitle, setSearchParams, setOptions]);
+    }, [debouncedSearchTitle, todos, setSearchParams, setOptions]);
 
     const handleSearchInput = (e) => {
         const value = e.target.value;
@@ -167,7 +172,7 @@ const Todobanner = () => {
             />
 
             {/* 리스트 렌더링 */}
-            <TodoList>
+            {/* <TodoList>
                 {todos.map((todo, index) => (
                     <ListItem
                         key={index}
@@ -179,6 +184,17 @@ const Todobanner = () => {
                         deleteTodo={deleteTodo}
                         updateTodo={updateTodo}
                         toggleChecked={toggleChecked}
+                    />
+                ))}
+            </TodoList> */}
+            <TodoList>
+                {filteredTodos.map((todo, index) => (
+                    <ListItem
+                        key={index}
+                        id={todo.id}
+                        title={todo.title}
+                        content={todo.content}
+                        checked={todo.checked}
                     />
                 ))}
             </TodoList>
