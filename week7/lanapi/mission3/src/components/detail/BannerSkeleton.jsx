@@ -32,7 +32,7 @@ const SkeletonWrapper = styled.div`
     overflow: hidden;
 
     @media (max-width: 768px) {
-        height: 300px;  // 모바일에서는 배경 크기를 줄여줌
+        height: 300px;  
     }
 `;
 
@@ -44,7 +44,7 @@ const SkeletonOverlay = styled.div`
     height: 100%;
 
     @media (max-width: 768px) {
-        padding-left: 20px;  // 모바일에서는 여백을 줄여줌
+        padding-left: 20px; 
     }
 `;
 
@@ -58,7 +58,7 @@ const SkeletonTitle = styled.div`
     border-radius: 4px;
 
     @media (max-width: 768px) {
-        width: 50%;  // 모바일에서 제목 크기 줄이기
+        width: 50%;  
     }
 `;
 
@@ -72,7 +72,7 @@ const SkeletonRate = styled.div`
     border-radius: 4px;
 
     @media (max-width: 768px) {
-        width: 40%;  // 모바일에서 평점 크기 줄이기
+        width: 40%;  
     }
 `;
 
@@ -86,7 +86,7 @@ const SkeletonSubtitle = styled.div`
     border-radius: 4px;
 
     @media (max-width: 768px) {
-        width: 50%;  // 모바일에서 부제목 크기 줄이기
+        width: 50%;  
     }
 `;
 
@@ -100,7 +100,7 @@ const SkeletonOverview = styled.div`
     border-radius: 4px;
 
     @media (max-width: 768px) {
-        width: 70%;  // 모바일에서 개요 크기 줄이기
+        width: 70%;  
     }
 `;
 

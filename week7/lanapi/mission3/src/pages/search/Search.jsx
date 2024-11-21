@@ -1,6 +1,6 @@
 // MovieSearch.jsx
 import React, { useState } from 'react';
-import useFetch from '../../hooks/UseFetch';
+import useFetch from '../../hooks/useFetch';
 import SearchBanner from '../../components/search/SearchBanner';
 import SearchList from '../../components/search/SearchList';  // SearchList 컴포넌트 위치
 

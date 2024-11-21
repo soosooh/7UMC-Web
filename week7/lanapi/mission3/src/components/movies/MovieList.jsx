@@ -11,17 +11,17 @@ const MoviesContainer = styled.div`
     box-sizing: border-box;
 
     @media (max-width: 1024px) {
-        gap: 15px; // 태블릿 화면에서 간격 줄이기
+        gap: 15px; 
     }
 
     @media (max-width: 768px) {
-        gap: 10px; // 모바일 화면에서 간격 더 줄이기
-        padding: 15px; // 모바일에서는 여백을 줄여줌
+        gap: 10px; 
+        padding: 15px; 
     }
 
     @media (max-width: 480px) {
-        gap: 5px; // 더 작은 화면에서는 간격 최소화
-        padding: 10px; // 더 작은 화면에서는 여백을 더 줄임
+        gap: 5px; 
+        padding: 10px; 
     }
 `;
 

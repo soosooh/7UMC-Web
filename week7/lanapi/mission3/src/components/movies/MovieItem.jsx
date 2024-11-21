@@ -4,7 +4,6 @@
 //movieDetailBanner.jsx 파일도 필요 없어보여요!
 
 //⇒ link 삭제했습니다. 
-//⇒ 또한, movieList와 movieItem을 병합했습니다.
 //⇒ movieDetailBanner은 삭제했지만 banner, CastItem, CastList로 분리했습니다. 
 //유지 보수의 어려움으로 인해 분리했습니다.
 
@@ -19,15 +18,15 @@ const MoviesItem = styled.div`
     box-sizing: border-box;
 
     @media (max-width: 1024px) {
-        width: 160px; // 태블릿 화면에서 카드 크기 축소
+        width: 160px; 
     }
 
     @media (max-width: 768px) {
-        width: 140px; // 모바일 화면에서 카드 크기 축소
+        width: 140px; 
     }
 
     @media (max-width: 480px) {
-        width: 120px; // 더 작은 화면에서 카드 크기 축소
+        width: 120px; 
     }
 `;
 
@@ -43,15 +42,15 @@ const MovieImage = styled.img`
     }
 
     @media (max-width: 1024px) {
-        width: 160px; // 태블릿 화면에서 이미지 크기 줄이기
+        width: 160px; 
     }
 
     @media (max-width: 768px) {
-        width: 140px; // 모바일 화면에서 이미지 크기 줄이기
+        width: 140px; 
     }
 
     @media (max-width: 480px) {
-        width: 120px; // 더 작은 화면에서 이미지 크기 줄이기
+        width: 120px; 
     }
 `;
 

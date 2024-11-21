@@ -31,7 +31,7 @@ const MovieImageWrapper = styled.div`
     overflow: hidden;
 
     @media (max-width: 768px) {
-        height: 300px; // 모바일에서는 배경 이미지 높이 줄이기
+        height: 300px; 
     }
 `;
 
@@ -48,7 +48,7 @@ const Overlay = styled.div`
     padding-left: 40px;
 
     @media (max-width: 768px) {
-        padding-left: 20px; // 모바일에서는 여백을 줄여줌
+        padding-left: 20px; 
     }
 `;
 
@@ -60,7 +60,7 @@ const BannerContent = styled.div`
     max-width: 500px;
 
     @media (max-width: 768px) {
-        max-width: 80%; // 모바일에서는 콘텐츠 너비를 줄여줌
+        max-width: 80%; 
     }
 `;
 
@@ -70,7 +70,7 @@ const Title = styled.h2`
     text-align: left;
 
     @media (max-width: 768px) {
-        font-size: 30px; // 모바일에서 제목 크기 줄이기
+        font-size: 30px; 
     }
 `;
 
@@ -79,7 +79,7 @@ const Rate = styled.p`
     margin-bottom: 8px;
 
     @media (max-width: 768px) {
-        font-size: 16px; // 모바일에서 텍스트 크기 줄이기
+        font-size: 16px; 
     }
 `;
 
@@ -88,7 +88,7 @@ const YearAndRuntime = styled.p`
     margin-bottom: 8px;
 
     @media (max-width: 768px) {
-        font-size: 13px; // 모바일에서 텍스트 크기 줄이기
+        font-size: 13px; 
     }
 `;
 
@@ -98,7 +98,7 @@ const Slogan = styled.p`
     margin-bottom: 16px;
 
     @media (max-width: 768px) {
-        font-size: 18px; // 모바일에서 텍스트 크기 줄이기
+        font-size: 18px; 
     }
 `;
 
@@ -108,6 +108,6 @@ const Overview = styled.p`
     text-align: left;
 
     @media (max-width: 768px) {
-        font-size: 12px; // 모바일에서 텍스트 크기 줄이기
+        font-size: 12px; 
     }
 `;
