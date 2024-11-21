@@ -6,79 +6,62 @@ import { useNavigate } from "react-router-dom";
 import useCustomFetch from "../hooks/useCustomFetch";
 import ErrorComp from "./states/error";
 import LoadingComp from "./states/loading";
+import useDebounce from "../hooks/useDebounce";
+import { useSearchParams } from "react-router-dom";
 
 
 const Todobanner = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [todos, setTodos] = useState([]); // 리스트 상태
-    const [selectedTodo, setSelectedTodo] = useState(null);
     const [tempSearchTitle, setTempSearchTitle] = useState("");
-    const [searchTitle, setSearchTitle] = useState(""); // 검색할 제목
     const isButtonDisabled = !title || !content;
     const navigate = useNavigate();
+    const [searchTitle, setSearchTitle] = useState("");
 
     // Custom Fetch Hook 사용
-    const { data: initialTodos, loading, error, refetch } = useCustomFetch(
+    const { data: initialTodos, loading, error,  refetch, setUrl, setOptions} = useCustomFetch(
         "http://localhost:3000/todo",
-        { params: { title: searchTitle } }
+        { params: {} }
     );
+
+    //const debouncedSearchTitle = useDebounce(tempSearchTitle, 500);
 
    // 전체 todo
     useEffect(() => {
     if (initialTodos) {
-        setTodos(initialTodos); // useCustomFetch로 가져온 데이터를 로컬 상태로 복사
+        setTodos(initialTodos[0]); // useCustomFetch로 가져온 데이터를 로컬 상태로 복사
     }
-}, [initialTodos]);
+    }, [initialTodos]);
 
+    const [searchParams, setSearchParams] = useSearchParams();
 
-// useEffect(() => {
-//     const timeout = setTimeout(() => {
-//         if (tempSearchTitle.trim() !== "") {
-//             setSearchTitle(tempSearchTitle); // 1초 후 검색어 업데이트
-//         }
-//     }, 500); // 500ms 디바운스
+    const debouncedSearchTitle = useDebounce(tempSearchTitle, 500);
 
-//     return () => clearTimeout(timeout); // 이전 타이머 정리
-// }, [tempSearchTitle]);
-
-    // const fetchTodos = async (titleQuery = "") => {
-    //     try {
-    //         const response = await axios.get("http://localhost:3000/todo", {
-    //             params: { title: titleQuery },
-    //         });
-    //         setTodos(response.data[0]); // 첫 번째 배열에 리스트 데이터가 있음
-    //         console.log("Todo 데이터 로드 성공:", response.data[0]);
-    //     } catch (error) {
-    //         console.error("Todo 데이터 로드 실패:", error);
-    //     }
-    // };
-
-    // const handleSearch = () => {
-    //     setSearchTitle(tempSearchTitle); // 검색어 상태 업데이트
-    //     // refetch(); // API 요청 실행
-    // };
-
-    const handleSearch = async () => {
-        const trimmedTitle = tempSearchTitle.trim();
-        setSearchTitle(trimmedTitle); // 검색 상태 업데이트
-        try {
-            const response = await axios.get("http://localhost:3000/todo", {
-                params: { title: trimmedTitle },
-            });
-            setTodos(response.data); // 검색 결과 업데이트
-        } catch (error) {
-            console.error("검색 실패:", error);
-            alert("검색에 실패했습니다.");
+    // const search = searchParams.get('search')
+    // console.log(search, 'search');
+    useEffect(() => {
+        const searchQuery = searchParams.get("search") || ""; 
+        if (searchQuery !== tempSearchTitle) {
+            setTempSearchTitle(searchQuery); // Query Parameter와 상태를 동기화
         }
+    }, [searchParams]);
+
+    useEffect(() => {
+        if (debouncedSearchTitle) {
+            setSearchParams({ search: debouncedSearchTitle }); // Query Parameter 설정
+            setOptions({ params: { title: debouncedSearchTitle } }); // API 호출
+        } else {
+            setSearchParams({});
+            setOptions({ params: {} }); // 검색어 없으면 전체 데이터 요청
+        }
+    }, [debouncedSearchTitle, setSearchParams, setOptions]);
+
+    const handleSearchInput = (e) => {
+        const value = e.target.value;
+        setTempSearchTitle(value); // 입력값 업데이트
     };
 
-
-    // useEffect(() => {
-    //     if (searchTitle.trim() !== "") {
-            
-    //     }
-    // }, [searchTitle]);
 
     const toggleChecked = async (id) => {
         const todo = todos.find((t) => t.id === id);
@@ -173,15 +156,15 @@ const Todobanner = () => {
             isButtonDisabled={isButtonDisabled}
             >ToDo 생성</MakeButton>
 
-            <SearchButton onClick={handleSearch}>
+            <SearchButton readOnly>
                 검색
-            </SearchButton>
+            </SearchButton >
 
             <Input
-    placeholder="제목으로 검색해보세요."
-    value={tempSearchTitle} // 검색어 입력 상태를 tempSearchTitle로 설정
-    onChange={(e) => setTempSearchTitle(e.target.value)} // 검색어 입력 상태 업데이트
-/>
+            placeholder="제목으로 검색해보세요."// 검색어 입력 상태 업데이트
+            value={tempSearchTitle}
+            onChange={handleSearchInput}
+            />
 
             {/* 리스트 렌더링 */}
             <TodoList>
@@ -212,7 +195,7 @@ margin-top: 20px;
 `;
 
 
-const SearchButton = styled.button`
+const SearchButton = styled.div`
 width: 120px;
 height: 40px;
 
