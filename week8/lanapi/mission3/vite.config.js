@@ -9,12 +9,13 @@ export default defineConfig({
         target: 'http://localhost:3000', // 백엔드 서버
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/auth/, ''), // /auth 제거
+        rewrite: (path) => path.replace(/^\/auth/, '/auth'), // /auth 제거
       },
       '/user': {
         target: 'http://localhost:3000', // 백엔드 서버
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/auth/, '/auth'), // /auth 제거
       },
     },
   },

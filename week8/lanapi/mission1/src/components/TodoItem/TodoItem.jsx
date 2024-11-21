@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { TodoContext } from '../contexts/TodoContext';
+import { TodoContext } from '../../contexts/TodoContext';
 import { useNavigate } from 'react-router-dom';
-import Button from './Button';
+import Button from '../Button/Button';
 
 function TodoItem({ todo }) {
   const { updateTodo, deleteTodo } = useContext(TodoContext);
@@ -70,7 +70,6 @@ function TodoItem({ todo }) {
       </button>
       {isEditing ? (
         <>
-          {/* 수정 모드: 제목 및 내용 입력 */}
           <input
             type="text"
             value={editTitle}
