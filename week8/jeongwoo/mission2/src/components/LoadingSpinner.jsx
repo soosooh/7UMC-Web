@@ -35,7 +35,7 @@ const Dot = styled.div`
   background-color: #e9ecef;
   border-radius: 50%;
   animation: ${bounce} 1.4s infinite ease-in-out;
-  animation-delay: ${props => props.delay}s;
+  animation-delay: ${props => props.$delay}s;
 `;
 
 const LoadingSpinner = ({ text = '계시물을 불러오는 중입니다.' }) => {
@@ -44,7 +44,7 @@ const LoadingSpinner = ({ text = '계시물을 불러오는 중입니다.' }) =>
       <LoadingText>{text}</LoadingText>
       <DotsContainer>
         {[...Array(5)].map((_, index) => (
-          <Dot key={index} delay={index * 0.12} />
+          <Dot key={index} $delay={index * 0.12} />
         ))}
       </DotsContainer>
     </LoadingContainer>

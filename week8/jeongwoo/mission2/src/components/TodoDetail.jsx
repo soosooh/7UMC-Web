@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useTodoApi } from '../hooks/useTodoApi';
+import { useTodoById, useUpdateTodo, useDeleteTodo } from '../hooks/useTodoQuery';
 import LoadingSpinner from './LoadingSpinner';
 
 const Container = styled.div`
@@ -30,6 +30,7 @@ const Title = styled(Link)`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  margin-bottom: 1rem;
 
   &:hover {
     color: #495057;
@@ -44,8 +45,7 @@ const StatusRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  margin: 1rem 0;
+  gap: 1rem;
 `;
 
 const Status = styled.div`
@@ -157,29 +157,27 @@ const LoadingContainer = styled.div`
 const TodoDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { loading, error, getTodoById, updateTodo, deleteTodo } = useTodoApi();
-  const [todo, setTodo] = useState(null);
   const [editedTodo, setEditedTodo] = useState({ title: '', content: '' });
 
-  useEffect(() => {
-    fetchTodo();
-  }, [id]);
+  // React Query hooks
+  const { data: todo, isLoading, error } = useTodoById(id);
+  const updateMutation = useUpdateTodo();
+  const deleteMutation = useDeleteTodo();
 
-  const fetchTodo = async () => {
-    try {
-      const data = await getTodoById(id);
-      setTodo(data);
-      setEditedTodo({ title: data.title, content: data.content });
-    } catch (err) {
-      console.error('Failed to fetch todo:', err);
+  useEffect(() => {
+    if (todo) {
+      setEditedTodo({ title: todo.title, content: todo.content });
     }
-  };
+  }, [todo]);
 
   const handleUpdate = async () => {
     if (!editedTodo.title.trim() || !editedTodo.content.trim()) return;
     
     try {
-      await updateTodo(id, editedTodo);
+      await updateMutation.mutateAsync({
+        id,
+        ...editedTodo
+      });
       navigate('/');
     } catch (err) {
       console.error('Failed to update todo:', err);
@@ -189,7 +187,7 @@ const TodoDetail = () => {
   const handleDelete = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-        await deleteTodo(id);
+        await deleteMutation.mutateAsync(id);
         navigate('/');
       } catch (err) {
         console.error('Failed to delete todo:', err);
@@ -197,16 +195,30 @@ const TodoDetail = () => {
     }
   };
 
-  if (!todo) return null;
+  if (isLoading) {
+    return (
+      <LoadingContainer>
+        <LoadingSpinner />
+      </LoadingContainer>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <ErrorMessage>데이터를 불러오는데 실패했습니다.</ErrorMessage>
+      </Container>
+    );
+  }
+
+  if (!todo) {
+    return null;
+  }
+
+  const isFormValid = editedTodo.title.trim() && editedTodo.content.trim();
 
   return (
     <Container>
-      {loading && (
-        <LoadingContainer>
-          <LoadingSpinner />
-        </LoadingContainer>
-      )}
-
       <Header>
         <Title to="/">
           <span>⚡</span>
@@ -228,8 +240,6 @@ const TodoDetail = () => {
       </Header>
 
       <ContentContainer>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-
         <InputGroup>
           <Label>제목</Label>
           <StyledInput
@@ -252,11 +262,15 @@ const TodoDetail = () => {
           <Button
             variant="submit"
             onClick={handleUpdate}
-            disabled={!editedTodo.title.trim() || !editedTodo.content.trim()}
+            disabled={!isFormValid || updateMutation.isPending}
           >
             수정완료
           </Button>
-          <Button variant="delete" onClick={handleDelete}>
+          <Button
+            variant="delete"
+            onClick={handleDelete}
+            disabled={deleteMutation.isPending}
+          >
             삭제하기
           </Button>
         </ButtonContainer>

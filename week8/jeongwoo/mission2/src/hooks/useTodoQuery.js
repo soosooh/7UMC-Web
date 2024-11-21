@@ -8,7 +8,7 @@ const getTodos = async (searchTitle = '') => {
   const response = await axios.get(`${API_BASE_URL}/todo`, {
     params: searchTitle ? { title: searchTitle } : {}
   });
-  return response.data[0];
+  return Array.isArray(response.data) ? response.data[0] : [];
 };
 
 const getTodoById = async (id) => {
@@ -35,8 +35,11 @@ export const useTodos = (searchTitle = '') => {
   return useQuery({
     queryKey: ['todos', searchTitle],
     queryFn: () => getTodos(searchTitle),
-    // 검색어가 변경될 때마다 새로운 쿼리 실행
     enabled: true,
+    staleTime: 2000,
+    retry: false,
+    refetchOnWindowFocus: false,
+    keepPreviousData: true
   });
 };
 
@@ -45,6 +48,9 @@ export const useTodoById = (id) => {
     queryKey: ['todo', id],
     queryFn: () => getTodoById(id),
     enabled: !!id,
+    staleTime: 2000,
+    retry: false,
+    refetchOnWindowFocus: false
   });
 };
 
@@ -54,9 +60,8 @@ export const useCreateTodo = () => {
   return useMutation({
     mutationFn: createTodo,
     onSuccess: () => {
-      // 목록 새로고침
       queryClient.invalidateQueries({ queryKey: ['todos'] });
-    },
+    }
   });
 };
 
@@ -66,10 +71,9 @@ export const useUpdateTodo = () => {
   return useMutation({
     mutationFn: updateTodo,
     onSuccess: (data, variables) => {
-      // 목록과 상세 데이터 모두 새로고침
       queryClient.invalidateQueries({ queryKey: ['todos'] });
       queryClient.invalidateQueries({ queryKey: ['todo', variables.id] });
-    },
+    }
   });
 };
 
@@ -79,8 +83,15 @@ export const useDeleteTodo = () => {
   return useMutation({
     mutationFn: deleteTodo,
     onSuccess: () => {
-      // 목록 새로고침
       queryClient.invalidateQueries({ queryKey: ['todos'] });
-    },
+    }
   });
+};
+
+export default {
+  useTodos,
+  useTodoById,
+  useCreateTodo,
+  useUpdateTodo,
+  useDeleteTodo
 };

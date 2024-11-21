@@ -70,14 +70,14 @@ const CreateButton = styled.button`
   border: none;
   border-radius: 4px;
   font-size: 1rem;
-  cursor: ${props => props.active ? 'pointer' : 'not-allowed'};
-  background-color: ${props => props.active ? '#226844' : '#e9ecef'};
-  color: ${props => props.active ? 'white' : '#adb5bd'};
+  cursor: ${props => props.$active ? 'pointer' : 'not-allowed'};
+  background-color: ${props => props.$active ? '#226844' : '#e9ecef'};
+  color: ${props => props.$active ? 'white' : '#adb5bd'};
   transition: all 0.2s;
   margin: 1rem 0;
 
   &:hover {
-    background-color: ${props => props.active ? '#1a5235' : '#e9ecef'};
+    background-color: ${props => props.$active ? '#1a5235' : '#e9ecef'};
   }
 `;
 
@@ -106,6 +106,22 @@ const LoadingOverlay = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
+`;
+
+const SearchLoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SearchLoadingSpinner = styled(LoadingSpinner)`
+  padding: 0.5rem;
 `;
 
 const TodoListContainer = styled.ul`
@@ -145,7 +161,7 @@ const TodoTitle = styled.h3`
   margin: 0;
   font-size: 1rem;
   color: #212529;
-  text-decoration: ${props => props.checked ? 'line-through' : 'none'};
+  text-decoration: ${props => props.$checked ? 'line-through' : 'none'};
 `;
 
 const TodoDescription = styled.p`
@@ -165,7 +181,7 @@ const ActionButton = styled.button`
   border-radius: 4px;
   font-size: 0.9rem;
   cursor: pointer;
-  background-color: ${props => props.variant === 'delete' ? '#dc3545' : '#226844'};
+  background-color: ${props => props.$variant === 'delete' ? '#dc3545' : '#226844'};
   color: white;
 
   &:hover {
@@ -173,24 +189,58 @@ const ActionButton = styled.button`
   }
 `;
 
-const ErrorMessage = styled.div`
-  color: #dc3545;
-  padding: 1rem;
-  background-color: #f8d7da;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  text-align: center;
-`;
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 const TodoListComponent = () => {
   const navigate = useNavigate();
   const [newTodo, setNewTodo] = useState({ title: '', content: '' });
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 800);
 
-  // React Query hooks
-  const { data: todos = [], isLoading, error } = useTodos(searchTerm);
+  const { data: todos = [], isLoading, refetch } = useTodos(debouncedSearchTerm);
   const createMutation = useCreateTodo();
   const updateMutation = useUpdateTodo();
+
+  useEffect(() => {
+    if (searchTerm !== '') {
+      setIsSearching(true);
+      const timer = setTimeout(() => {
+        setIsSearching(false);
+      }, 800);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    } else {
+      setIsSearching(false);
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (debouncedSearchTerm !== searchTerm) {
+      setIsSearching(true);
+    }
+  }, [debouncedSearchTerm, searchTerm]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchTerm(e.target.value);
+  };
 
   const handleCreate = async () => {
     if (!newTodo.title.trim() || !newTodo.content.trim()) return;
@@ -221,14 +271,6 @@ const TodoListComponent = () => {
 
   const isFormValid = newTodo.title.trim() && newTodo.content.trim();
 
-  if (isLoading) {
-    return (
-      <LoadingOverlay>
-        <LoadingSpinner />
-      </LoadingOverlay>
-    );
-  }
-
   return (
     <Container>
       <Header>
@@ -240,8 +282,6 @@ const TodoListComponent = () => {
       </Header>
 
       <ContentContainer>
-        {error && <ErrorMessage>{error.message}</ErrorMessage>}
-
         <StyledInput
           value={newTodo.title}
           onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
@@ -254,7 +294,7 @@ const TodoListComponent = () => {
         />
         
         <CreateButton
-          active={isFormValid}
+          $active={isFormValid}
           disabled={!isFormValid || createMutation.isPending}
           onClick={handleCreate}
         >
@@ -265,43 +305,59 @@ const TodoListComponent = () => {
           <SearchTitle>검색</SearchTitle>
           <StyledInput
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearch}
             placeholder="제목으로 검색해보세요."
           />
+          {isSearching && (
+            <SearchLoadingOverlay>
+              <SearchLoadingSpinner text="검색 중..." />
+            </SearchLoadingOverlay>
+          )}
         </SearchSection>
 
-        <TodoListContainer>
-          {todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              onClick={() => navigate(`/todo/${todo.id}`)}
-            >
-              <Checkbox
-                type="checkbox"
-                checked={todo.checked}
-                onChange={(e) => handleToggle(e, todo)}
-              />
-              <TodoContent>
-                <TodoTitle checked={todo.checked}>{todo.title}</TodoTitle>
-                <TodoDescription>{todo.content}</TodoDescription>
-              </TodoContent>
-              <ActionButtons>
-                <ActionButton onClick={(e) => {
-                  e.stopPropagation();
-                  handleToggle(e, todo);
-                }}>
-                  {todo.checked ? '미완료' : '완료'}
-                </ActionButton>
-                <ActionButton variant="delete" onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/todo/${todo.id}`);
-                }}>
-                  수정
-                </ActionButton>
-              </ActionButtons>
-            </TodoItem>
-          ))}
-        </TodoListContainer>
+        {isLoading && !isSearching ? (
+          <LoadingOverlay>
+            <LoadingSpinner />
+          </LoadingOverlay>
+        ) : (
+          <TodoListContainer>
+            {todos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                onClick={() => navigate(`/todo/${todo.id}`)}
+              >
+                <Checkbox
+                  type="checkbox"
+                  checked={todo.checked}
+                  onChange={(e) => handleToggle(e, todo)}
+                />
+                <TodoContent>
+                  <TodoTitle $checked={todo.checked}>{todo.title}</TodoTitle>
+                  <TodoDescription>{todo.content}</TodoDescription>
+                </TodoContent>
+                <ActionButtons>
+                  <ActionButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleToggle(e, todo);
+                    }}
+                  >
+                    {todo.checked ? '미완료' : '완료'}
+                  </ActionButton>
+                  <ActionButton
+                    $variant="delete"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/todo/${todo.id}`);
+                    }}
+                  >
+                    수정
+                  </ActionButton>
+                </ActionButtons>
+              </TodoItem>
+            ))}
+          </TodoListContainer>
+        )}
       </ContentContainer>
     </Container>
   );
