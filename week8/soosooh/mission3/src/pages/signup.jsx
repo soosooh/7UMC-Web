@@ -4,6 +4,7 @@ import useForm from "../hooks/use-form";
 import { validateSignUp } from "../utils/validateZod";
 import { axiosAuth } from "../apis/axios-auth";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -97,38 +98,37 @@ const SignUpPage = () => {
     validate: validateSignUp,
   });
 
-  const handlePressSignUp = async () => {
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      return await axiosAuth.post("/auth/register", userData); // 바꿈
+    },
+    onSuccess: () => {
+      alert("회원가입 성공!");
+      navigate("/login");
+    },
+    onError: (error) => {
+      alert(
+        "회원가입 실패: " +
+          (error.response ? error.response.data : error.message) // 바꿈
+      );
+      console.error(
+        "회원가입 실패:",
+        error.response ? error.response.data : error.message // 바꿈
+      );
+    },
+  });
+
+  const handlePressSignUp = () => {
     const newErrors = signup.validate(signup.values);
     signup.setErrors(newErrors);
 
-    // 오류가 없을 경우에만 데이터 출력
     if (!Object.values(newErrors).some((error) => error)) {
-      try {
-        const response = await axiosAuth.post("/auth/register", {
-          email: signup.values.email,
-          password: signup.values.password,
-          passwordCheck: signup.values.passwordCheck,
-        });
-        alert("회원가입 성공!");
-        console.log("회원가입 성공:", response.data);
-        navigate("/login");
-      } catch (error) {
-        alert(
-          "회원가입 실패: " +
-            (error.response ? error.response.data : error.message)
-        );
-        console.error(
-          "회원가입 실패:",
-          error.response ? error.response.data : error.message
-        );
-      }
-
-      console.log(
-        signup.values.email,
-        signup.values.password,
-        signup.values.passwordCheck,
-        signup.values.name
-      );
+      mutation.mutate({
+        name: signup.values.name,
+        email: signup.values.email,
+        password: signup.values.password,
+        passwordCheck: signup.values.passwordCheck,
+      });
     }
   };
 
@@ -177,7 +177,12 @@ const SignUpPage = () => {
           <ErrorText>{signup.errors.passwordCheck}</ErrorText>
         )}
       </InputWrapper>
-      <StyledSubmit onClick={handlePressSignUp}>가입하기</StyledSubmit>
+      <StyledSubmit
+        onClick={handlePressSignUp}
+        disabled={mutation.isLoading} // 로딩 상태에서 버튼 비활성화
+      >
+        가입하기
+      </StyledSubmit>
     </SignUpContainer>
   );
 };

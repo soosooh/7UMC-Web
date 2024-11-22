@@ -3,6 +3,7 @@ import useForm from "../hooks/use-form";
 import { validateLogin } from "../utils/validate";
 import { axiosAuth } from "../apis/axios-auth";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 const LogInContainer = styled.div`
   display: flex;
@@ -99,31 +100,43 @@ const LogInPage = () => {
 
     // 오류가 없을 경우에만 요청 진행
     if (!Object.values(newErrors).some((error) => error)) {
-      try {
-        const response = await axiosAuth.post("/auth/login", {
-          email: login.values.email,
-          password: login.values.password,
-        });
-        const { accessToken, refreshToken } = response.data;
-
-        // 토큰을 로컬 저장소에 저장
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-
-        const userName = login.values.email.split("@")[0];
-        localStorage.setItem("userName", userName);
-        alert("로그인 성공!");
-        console.log("로그인 성공:", response.data);
-        navigate("/");
-        window.location.reload();
-      } catch (error) {
-        console.error(
-          "로그인 실패:",
-          error.response ? error.response.data : error.message
-        );
-      }
+      mutation.mutate({
+        email: login.values.email,
+        password: login.values.password,
+      });
     }
   };
+
+  const mutation = useMutation({
+    mutationFn: async (userData) => {
+      return await axiosAuth.post("/auth/login", userData);
+    },
+    onSuccess: (response) => {
+      const { accessToken, refreshToken } = response.data;
+
+      // 토큰을 로컬 저장소에 저장
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      const userName = login.values.email.split("@")[0];
+      localStorage.setItem("userName", userName);
+      alert("로그인 성공!");
+      console.log("로그인 성공:", response.data);
+      navigate("/");
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error(
+        "로그인 실패:",
+        error.response ? error.response.data : error.message
+      );
+      alert(
+        `로그인 실패: ${
+          error.response?.data?.message || "서버 오류가 발생했습니다."
+        }`
+      );
+    },
+  });
 
   return (
     <LogInContainer>
@@ -149,7 +162,9 @@ const LogInPage = () => {
           <ErrorText>{login.errors.password}</ErrorText>
         )}
       </InputWrapper>
-      <StyledSubmit onClick={handlePressLogin}>로그인</StyledSubmit>
+      <StyledSubmit onClick={handlePressLogin} disabled={mutation.isLoading}>
+        로그인
+      </StyledSubmit>
     </LogInContainer>
   );
 };
