@@ -1,3 +1,6 @@
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -12,7 +15,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+html{
+background-color: #e1e7f5;
+height: 100vh;
+min-width: 100vw;
+margin: 0;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -26,8 +34,9 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  width: 100vw; 
+  background-color: #e1e7f5;
 }
 
 h1 {
@@ -66,3 +75,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+`;
+
+export default GlobalStyle;
