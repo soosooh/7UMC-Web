@@ -17,7 +17,7 @@ const Container = styled.nav`
 
 const BrandLogo = styled(Link)`
   font-size: 20px;
-  font-weight: bold;
+  font-weight: bold;  
   color: #FF073D;
   text-decoration: none;
   cursor: pointer;
