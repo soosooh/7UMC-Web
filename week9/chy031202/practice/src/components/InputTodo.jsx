@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { add } from "../redux/todoSlice";
 import s from '../styles/TodoList.module.css'
-
+import styled from "styled-components";
 
 export default function InputTodo() {
     const dispatch = useDispatch()
@@ -25,7 +25,7 @@ export default function InputTodo() {
     
         
     return (
-        <div className={s.InputTodo}>
+        <Wrapp>
         <form onSubmit={(e) => {
             e.preventDefault()
             if(todolist.text !== ""){dispatch(add(todolist.text))}
@@ -38,7 +38,14 @@ export default function InputTodo() {
                 <input className={s.submitbutton} type="submit" value="+"></input>
                 </div>
             </form>
-        </div>
+        </Wrapp>
 
         )
     }
+
+
+const Wrapp = styled.main`
+width:100%;
+margin-top:25px;
+height:100%;
+`

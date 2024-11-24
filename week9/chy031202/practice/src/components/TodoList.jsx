@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { remove, complete } from "../redux/todoSlice";
 import s from '../styles/TodoList.module.css'
 import { FaTrashAlt } from "react-icons/fa";
+import styled from "styled-components";
 
 export default function TodoList() {
     const todolist = useSelector(state => state.todo)
@@ -25,8 +26,15 @@ export default function TodoList() {
 
 
     return (
-        <>
+        <Wrapp>
         <ul>{todolistView}</ul>   
-        </>
+        </Wrapp>
     )
     }
+
+const Wrapp = styled.main`
+width:100%;
+height:100%;
+display:flex;
+
+`
