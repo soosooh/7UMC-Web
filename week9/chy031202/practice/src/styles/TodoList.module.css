@@ -1,0 +1,17 @@
+.list {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.checkbox {
+    margin-right: 10px;
+}
+.todolist {
+    flex-grow: 1;
+}
+.deleteBtn {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
