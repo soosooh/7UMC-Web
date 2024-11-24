@@ -7,7 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 const styles = {
   input: {
-    width: '300px',
+    width: '100%',
+    maxWidth: '300px',
     padding: '8px',
     borderRadius: '8px',
     marginBottom: '5px',
@@ -18,7 +19,8 @@ const styles = {
     marginTop: '5px',
   },
   button: (isValid) => ({
-    width: '300px',
+    width: '100%',
+    maxWidth: '300px',
     padding: '10px',
     borderRadius: '8px',
     backgroundColor: isValid ? 'red' : 'gray',
@@ -28,10 +30,12 @@ const styles = {
     marginBottom: '20px',
   }),
   formContainer: {
-    width: '300px',
+    width: '100%',
+    maxWidth: '320px',
     margin: '0 auto',
-    marginTop: '150px',
+    marginTop: '10vh',
     textAlign: 'center',
+    padding: '0 20px',
   },
 };
 
@@ -50,7 +54,7 @@ const signUpSchema = z
   });
 
 const CustomInput = ({ label, type, register, error }) => (
-  <div style={{ height: '45px', marginBottom: '15px' }}>
+  <div style={{ height: '55px', marginBottom: '15px' }}>
     <input
       type={type}
       {...register}
@@ -93,7 +97,7 @@ function SignUp() {
 
   return (
     <div style={styles.formContainer}>
-      <h3 style={{ marginBottom: '20px' }}>회원가입</h3>
+      <h3 style={{ marginBottom: '20px', fontSize: '1.5rem' }}>회원가입</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CustomInput label="이메일" type="email" register={register('email')} error={errors.email} />
         <CustomInput label="비밀번호" type="password" register={register('password')} error={errors.password} />
