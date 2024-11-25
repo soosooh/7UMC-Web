@@ -48,4 +48,5 @@ const Wrapp = styled.main`
 width:100%;
 margin-top:25px;
 height:100%;
+height:30px;
 `

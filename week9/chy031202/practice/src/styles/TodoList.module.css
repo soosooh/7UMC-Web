@@ -1,26 +1,12 @@
 .list {
     display: flex;
     align-items: center;
+    width:100%;
     margin-bottom: 10px;
 }
-.checkbox {
-    margin-right: 10px;
-    box-sizing: border-box;
-    width: 30px;
-    height: 30px;
-    background: #FFFFFF;
-    border: 3px solid #D9D9D9;
-    border-radius: 50%;
-}
-.todolist {
-    flex-grow: 1;
-}
-.deleteBtn {
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+
+
+
 .textbar {
 box-sizing: border-box;
 width: 70%;

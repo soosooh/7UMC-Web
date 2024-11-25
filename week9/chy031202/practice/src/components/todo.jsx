@@ -21,8 +21,10 @@ function Todo() {
 
 const Wrapp = styled.main`
 background:white;
-width:40vw;
-height:50vw;
+width:30vw;
+min-width:380px;
+min-height:510px;
+height:40vw;
 display:flex;
 flex-direction:column;
 justify-content: center;

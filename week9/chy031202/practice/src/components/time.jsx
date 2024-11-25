@@ -41,6 +41,7 @@ padding:15px;
 margin-top:20px;
 width: "100%";
 flex-direction:column;
+transform: scale(0.95);
 `
 
 const Dates = styled.div`
@@ -53,13 +54,17 @@ width: 100%;
 max-width: 400px;
 
 justify-content: space-between;
-gap:30px;
+gap: 16px; /* 요소들 간의 간격 설정 */
+padding: 0 16px; /* 컨테이너 양 옆의 여백 추가 */
+
 `
 
 const Span = styled.span `
+margin-top:20px;
 display: flex;
 justify-content: flex-start;
 color:gray;
+padding: 0 16px;
 `
 
 export default DateTimeDisplay;
