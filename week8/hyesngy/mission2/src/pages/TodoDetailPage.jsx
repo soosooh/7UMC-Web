@@ -15,8 +15,7 @@ const TodoDetailPage = () => {
   const queryClient = useQueryClient();
 
   const [editedData, setEditedData] = useState({ title: "", content: "" });
-  const [isEditing, setIsEditing] = useState({ title: false, content: false });
-
+  const [isEditing, setIsEditing] = useState(false);
 
   const { data: todo, isLoading, isError } = useQuery({
     queryKey: ["todo", id],
@@ -46,15 +45,15 @@ const TodoDetailPage = () => {
     },
   });
 
-  const handleEdit = (field) => {
-    setIsEditing((prev) => ({ ...prev, [field]: true }));
-    setEditedData((prev) => ({ ...prev, [field]: todo[field] }));
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditedData({ title: todo.title, content: todo.content });
   };
 
-  const handleSave = (field) => {
-    const updatedTodo = { id, [field]: editedData[field] };
+  const handleSave = () => {
+    const updatedTodo = { ...todo, ...editedData };
     updateTodoMutation(updatedTodo);
-    setIsEditing((prev) => ({ ...prev, [field]: false }));
+    setIsEditing(false);
   };
 
   const handleChange = (field, value) => {
@@ -85,21 +84,27 @@ const TodoDetailPage = () => {
         <span>{todo.checked ? "완료됨" : "미완료"}</span>
       </CheckboxWrapper>
       <EditField
-        value={isEditing.title ? editedData.title : todo.title}
-        isEditing={isEditing.title}
-        onEdit={() => handleEdit("title")}
-        onSave={() => handleSave("title")}
+        value={isEditing ? editedData.title : todo.title}
+        isEditing={isEditing}
         onChange={(e) => handleChange("title", e.target.value)}
       />
       <EditField
-        value={isEditing.content ? editedData.content : todo.content}
-        isEditing={isEditing.content}
-        onEdit={() => handleEdit("content")}
-        onSave={() => handleSave("content")}
+        value={isEditing ? editedData.content : todo.content}
+        isEditing={isEditing}
         onChange={(e) => handleChange("content", e.target.value)}
       />
-      <DateP>생성 날짜: {todo.createdAt?.slice(0, 10)}</DateP>
-      <DeleteButton onClick={handleDelete}>삭제</DeleteButton>
+      <FooterDiv>
+
+        <DateP>생성 날짜: {todo.createdAt?.slice(0, 10)}</DateP>
+        {isEditing ? (
+          <EditButton onClick={handleSave}>저장</EditButton>
+        ) : (
+          <EditButton onClick={handleEdit}>수정</EditButton>
+        )
+        }
+        <DeleteButton onClick={handleDelete}>삭제</DeleteButton>
+      </FooterDiv>
+
     </DetailWrapper>
   );
 };
@@ -124,14 +129,14 @@ const EditButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   position: absolute;
-  right: 1rem;
+  right: 5.5rem;
+  bottom: 3rem;
   &:hover {
     background-color: darkblue;
   }
 `
 const DeleteButton = styled(EditButton)`
   background-color: red;
-  bottom: 3rem;
   right: 2rem;
   &:hover {
     background-color: hotpink;
@@ -160,4 +165,7 @@ const CloseButton = styled.button`
 `
 const DateP = styled.p`
   margin-top: 2rem;
+`
+const FooterDiv = styled.div`
+  margin-top: 3rem;
 `
