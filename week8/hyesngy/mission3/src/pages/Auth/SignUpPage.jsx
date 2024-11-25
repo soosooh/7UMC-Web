@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Input, SubmitBtn, ErrorMsg, FormContainer, InputWrapper } from '../../styles/auth/authStyles';
 import { useAuthForm } from '../../hooks/use-Form';
 import { useNavigate } from 'react-router-dom';
-import signup from '../../api/auth/signup';
+import authApi from '../../api/auth/authApi';
 import { useMutation } from '@tanstack/react-query';
 
 const PageContainer = styled.div`
@@ -31,13 +31,12 @@ const SignUpPage = () => {
     const navigate = useNavigate();
 
     const { mutate: signupMutation } = useMutation({
-        mutationFn: signup,
+        mutationFn: (data) => authApi(data, 'register'),
         onSuccess: () => {
-            console.log("회원가입 성공");
             navigate("/login");
         },
         onError: (error) => {
-            console.error("회원가입 실패:", error.message);
+            console.error(error.message);
         },
     });
 
