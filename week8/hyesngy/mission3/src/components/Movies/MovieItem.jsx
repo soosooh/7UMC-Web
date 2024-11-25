@@ -55,7 +55,6 @@ const MovieItem = ({ movie }) => {
 
   const handleClick = () => {
     navigate(`/movies/${movie.id}`);
-    console.log('정채가뭐냐너 ', movie);
   }
 
   return (
