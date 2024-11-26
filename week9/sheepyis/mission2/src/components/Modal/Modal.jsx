@@ -2,6 +2,7 @@ import styled from "styled-components";
 import colors from "../../styles/colors";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../features/cart/cartSlice";
+import { closeModal } from "../../features/modal/modalSlice";
 
 const ModalOverlay = styled.div`
     position: fixed;
@@ -57,7 +58,11 @@ const Modal = ({ onClose }) => {
 
     const handleConfirm = () => {
         dispatch(clearCart());
-        onClose();
+        dispatch(closeModal());
+    };
+
+    const handleClose = () => {
+        dispatch(closeModal());
     };
     
     return (
@@ -66,7 +71,7 @@ const Modal = ({ onClose }) => {
                 <ModalP>담아두신 모든 음반을 삭제하시겠습니까?</ModalP>
                 <ButtonContainer>
                     <ModalButton confirm onClick={handleConfirm}>네</ModalButton>
-                    <ModalButton onClick={onClose}>아니요</ModalButton>
+                    <ModalButton onClick={handleClose}>아니요</ModalButton>
                 </ButtonContainer>
             </ModalContent>
         </ModalOverlay>

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import colors from "../../styles/colors";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "../Modal/Modal";
+import { openModal } from "../../features/modal/modalSlice";
 
 const FooterContainer = styled.div`
     width: 60%;
@@ -42,10 +43,12 @@ const InitButton = styled.div`
 
 const Footer = () => {
     const { total } = useSelector((store) => store.cart);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const isModalOpen = useSelector((store) => store.modal.isOpen); // Redux 상태 사용
+    const dispatch = useDispatch();
 
-    const handleOpenModal = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
+    const handleOpenModal = () => {
+        dispatch(openModal());
+    };
 
     return (
         <div className="pageContainer">
@@ -57,9 +60,7 @@ const Footer = () => {
 
                 <InitButton onClick={handleOpenModal}>장바구니 초기화</InitButton>
 
-                {isModalOpen && (
-                    <Modal onClose={handleCloseModal}/>
-                )}
+                {isModalOpen && <Modal />}
             </FooterContainer>
         </div>
     )
