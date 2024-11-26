@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+import './styles/App.css'
 import Navbar from './components/navbar'
 import CartContainer from './components/CartContaoner'
 import { useDispatch, useSelector } from 'react-redux'
 import { calculateTotals } from './features/cart/cartSlice'
 import ModalPortal from './components/modals/modalpatal'
 import Modal from './components/modals/modal'
+
+import styled from "styled-components";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -17,7 +20,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+    <Main>
       <header>
         <Navbar />
       </header>
@@ -32,8 +35,15 @@ function App() {
       <footer>
         
       </footer>
-    </>
+    </Main>
   )
 }
+
+const Main = styled.main`
+display:flex;
+flex-direction:column;
+align-items: center;
+min-height: 100vh;
+`
 
 export default App
