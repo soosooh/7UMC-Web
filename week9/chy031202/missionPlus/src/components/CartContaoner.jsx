@@ -1,5 +1,4 @@
-import cartItems from "../constants/cartItems"
-import { clearCart } from "../features/cart/cartSlice";
+
 import CartItem from "./CartItem"
 
 import styled from "styled-components";
