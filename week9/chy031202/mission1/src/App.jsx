@@ -4,7 +4,7 @@ import Navbar from './components/navbar'
 import CartContainer from './components/CartContaoner'
 import { useDispatch, useSelector } from 'react-redux'
 import { calculateTotals } from './features/cart/cartSlice'
-import ModalPortal from './components/modals/modalpatal'
+import ModalPortal from './components/modals/modalpotal'
 import Modal from './components/modals/modal'
 
 import styled from "styled-components";
@@ -13,6 +13,7 @@ import styled from "styled-components";
 function App() {
   const dispatch = useDispatch();
   const {cartItems} = useSelector((store) => store.cart);
+  const {isOpen} = useSelector((store) => store.modal)
 
   useEffect(() =>{
     dispatch(calculateTotals())
@@ -26,11 +27,13 @@ function App() {
       </header>
       <main>
         <CartContainer />
-        <ModalPortal >
-          <Modal>
-            담아두신 모든 음반을 삭제하시겠습니까?
-          </Modal>
-        </ModalPortal>
+        {isOpen &&
+            <ModalPortal >
+            <Modal>
+              담아두신 모든 음반을 삭제하시겠습니까?
+            </Modal>
+          </ModalPortal>
+        } 
       </main>
       <footer>
         

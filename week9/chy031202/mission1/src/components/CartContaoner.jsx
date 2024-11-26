@@ -1,13 +1,16 @@
 import cartItems from "../constants/cartItems"
 import { clearCart } from "../features/cart/cartSlice";
-import { openModal } from "../features/modal/modalSlice";
 import CartItem from "./CartItem"
-import { useDispatch, useSelector} from "react-redux"
+import { useDispatch, useSelector, useStore} from "react-redux"
 import styled from "styled-components";
+import Footer from "./CartFooter";
 
 const CartContainer = () =>{
-    const {amount, cartItems, total} = useSelector((store)=>store.cart);
-    const dispatch = useDispatch();
+    const {cartItems,} = useSelector((store)=>store.cart);
+    
+    const store = useStore(); 
+
+    // console.log("스토어 전체:", store.getState()); //스토어 상태 출력
     return(
         <Wrapp>
         <Header>
@@ -19,46 +22,11 @@ const CartContainer = () =>{
             })}
         </Contents>
         <footer>
-            <hr />
-            <h4>
-                <Price>
-                <span>총 가격</span>  <span> 7777원</span>
-                </Price>
-            </h4>
-            <Rebutton onClick={()=>{
-                dispatch(openModal());
-            }}>장바구니 초기화</Rebutton>
+            <Footer />
         </footer>
         </Wrapp>
     )
 }
-
-const Price = styled.footer`
-display:flex;
-width:100%;
-justify-content: space-between;
-`
-
-const Rebutton = styled.button`
-box-sizing: border-box;
-width: 150px;
-height: 30px;
-background: #FFFFFF;
-border: 3px solid #D20000;
-border-radius: 5px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 15px;
-line-height: 24px;
-cursor:pointer;
-margin-bottom:30px;
-
-color: #D20000;
-
-`
-
 const Header = styled.header`
 margin-top:40px;
 margin-bottom:40px;
