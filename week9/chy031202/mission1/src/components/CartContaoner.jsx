@@ -4,9 +4,10 @@ import CartItem from "./CartItem"
 import { useDispatch, useSelector, useStore} from "react-redux"
 import styled from "styled-components";
 import Footer from "./CartFooter";
+import NotCart from "./modals/notcart";
 
 const CartContainer = () =>{
-    const {cartItems,} = useSelector((store)=>store.cart);
+    const {cartItems,amount} = useSelector((store)=>store.cart);
     
     const store = useStore(); 
 
@@ -16,11 +17,16 @@ const CartContainer = () =>{
         <Header>
             <h2>당신이 선택한 음반</h2>
         </Header>
-        <Contents style={{width:'65vw',}}>
-            {cartItems.map((item) =>{
-                return <CartItem key={item.id} {...item} />
-            })}
-        </Contents>
+        {amount > 0 ? (
+                    <Contents style={{ width: "65vw" }}>
+                        {cartItems.map((item) => (
+                            <CartItem key={item.id} {...item} />
+                        ))}
+                    </Contents>
+                ) : (
+                    <NotCart /> // amount가 0일 때 NotCart 컴포넌트 렌더링
+                )}
+
         <footer>
             <Footer />
         </footer>
