@@ -1,25 +1,28 @@
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../features/cart/cartSlice";
+import { useCartStore } from "../../features/cart/cartStore";
+import { useModalStore } from "../../features/modal/modalStore";
+
+
 import styled from "styled-components";
-import { closeModal } from "../../features/modal/modalSlice";
 
 const ModalPannel = () =>{
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     //const {isOpen} = useSelector((state) =>state.modal);
+    const clearCart = useCartStore((state) => state.clearCart);
+    const closeModal = useModalStore((state) => state.closeModal);
 
     return(
         <ButtonWrapp>
         <Button onClick={()=>{
-            dispatch(clearCart());
+            clearCart();
             //모달 꺼지는 상태 연결
-            dispatch(closeModal());
+            closeModal();
             }}
             color="#6D6FFF"
         >네</Button>
 
         <Button onClick={()=>{
             //모달 꺼짐
-            dispatch(closeModal());
+            closeModal();
         }}
         color="#D20000"
         >아니요</Button>

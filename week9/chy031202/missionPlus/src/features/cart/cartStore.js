@@ -5,7 +5,6 @@ export const useCartStore= create((set) => ({
     cartItems: cartItems,
     amount: 0,
     total: 0,
-    isOpen: false,
     name:'cart',
     increase: (payload) => 
         set((state) => {

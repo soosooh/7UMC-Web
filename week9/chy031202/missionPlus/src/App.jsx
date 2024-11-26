@@ -6,6 +6,8 @@ import ModalPortal from './components/modals/modalpotal'
 import Modal from './components/modals/modal'
 
 import {useCartStore} from './features/cart/cartStore';
+import { useModalStore } from './features/modal/modalStore'
+
 
 import styled from "styled-components";
 
@@ -13,11 +15,13 @@ import styled from "styled-components";
 function App() {
   //const cartItems = useCartStore((state) => state.cartItems);
   const calculateTotals = useCartStore((state) => state.calculateTotals);
+  const cartItems = useCartStore((state)=>state.cartItems);
+  const isOpen = useModalStore((state)=>state.isOpen);
 
 
   useEffect(() =>{
     calculateTotals();
-  }, [calculateTotals]);
+  }, [calculateTotals, cartItems]);
   
 
   return (
@@ -27,13 +31,13 @@ function App() {
       </header>
       <main>
         <CartContainer />
-        {/* {isOpen &&
+        {isOpen &&
             <ModalPortal >
             <Modal>
               담아두신 모든 음반을 삭제하시겠습니까?
             </Modal>
           </ModalPortal>
-        }  */}
+        } 
       </main>
       <footer>
         

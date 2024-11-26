@@ -1,12 +1,14 @@
 import styled from "styled-components";
 //import { useSelector, useDispatch } from "react-redux";
-import { openModal } from "../features/modal/modalSlice";
+//import { openModal } from "../features/modal/modalSlice";
 import { useCartStore } from "../features/cart/cartStore";
+import { useModalStore } from "../features/modal/modalStore";
 
 const Footer = () =>{
     //const dispatch = useDispatch();
     //const {total} = useSelector((store)=>store.cart);
-    const total = useCartStore((state)=>state.total)
+    const total = useCartStore((state)=>state.total);
+    const openModal = useModalStore((state) =>state.openModal);
 
     return(
         <>
@@ -17,7 +19,7 @@ const Footer = () =>{
                 </Price>
             </h4>
             <Rebutton onClick={()=>{
-                // dispatch(openModal());
+                openModal();
             }}>장바구니 초기화</Rebutton>
         </>
     )
