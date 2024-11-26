@@ -1,0 +1,34 @@
+.timeContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 16px;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+}
+
+.dateText {
+  font-style: italic;
+}
+.date strong {
+  font-size: 18px;
+}
+
+.date span {
+  font-size: 14px;
+  color: #888888;
+}
+
+.clock {
+  font-size: 18px;
+}
+
+.day {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
