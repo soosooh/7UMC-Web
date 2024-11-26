@@ -53,7 +53,7 @@ const ModalButton = styled.button`
 `;
 
 
-const Modal = ({ onClose }) => {
+const Modal = () => {
     const dispatch = useDispatch();
 
     const handleConfirm = () => {

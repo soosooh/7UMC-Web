@@ -43,7 +43,7 @@ const InitButton = styled.div`
 
 const Footer = () => {
     const { total } = useSelector((store) => store.cart);
-    const isModalOpen = useSelector((store) => store.modal.isOpen); // Redux 상태 사용
+    const isModalOpen = useSelector((store) => store.modal.isOpen);
     const dispatch = useDispatch();
 
     const handleOpenModal = () => {
