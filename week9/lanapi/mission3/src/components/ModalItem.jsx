@@ -41,7 +41,6 @@ export const ModalButton = styled.button`
   cursor: pointer;
   display: inline-block;
 
-  /* Primary Button Styles (Yes button) */
   ${(props) =>
     props.primary
       ? `

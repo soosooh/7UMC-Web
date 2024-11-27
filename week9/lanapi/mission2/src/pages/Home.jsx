@@ -41,9 +41,9 @@ const Home = () => {
         </CartIconContainer>
       </Header>
       <Main>
-        <Subtitle>당신이 선택한 음반</Subtitle>
+        <Subtitle>고객님의 장바구니입니다. </Subtitle>
         {items.length === 0 ? (
-          <EmptyCartMessage>고객님이 좋아하는 음반을 담아보세요~!</EmptyCartMessage>
+          <EmptyCartMessage>고객님이 좋아하는 음반을 담아보세요!</EmptyCartMessage>
         ) : (
           <>
             <CartList />
