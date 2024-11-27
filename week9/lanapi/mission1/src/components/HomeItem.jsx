@@ -105,10 +105,10 @@ export const TotalPrice = styled.div`
 `;
 
 export const ClearCartButton = styled.button`
-  background-color: #5d5bf0;
-  color: white;
+  background-color: white;
+  color: #D20000;  
   padding: 8px 16px;
-  border: none;
+  border: 3px solid #D20000;  
   border-radius: 5px;
   font-size: 15px;
   cursor: pointer;
@@ -116,6 +116,7 @@ export const ClearCartButton = styled.button`
   align-self: center;
   
   &:hover {
-    background-color: #7a77f2;
+    background-color: #f8d5d5;  
+    color: #D20000;  
   }
 `;
