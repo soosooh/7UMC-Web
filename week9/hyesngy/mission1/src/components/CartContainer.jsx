@@ -1,0 +1,42 @@
+
+import { useSelector } from "react-redux";
+import React from 'react';
+import styled from 'styled-components';
+import AlbumItem from './AlbumItem';
+import Footer from './footer';
+
+const CartContainer = () => {
+  const { cartItems, total } = useSelector((store) => store.cart);
+  console.log(cartItems);
+  return (
+    <Container>
+      <TitleP>당신이 선택한 음반</TitleP>
+      <ListContainer>
+        {cartItems.map((item) => (
+          <AlbumItem props={item} key={item.id} />
+        ))}
+      </ListContainer>
+      <Footer />
+    </Container>
+  );
+};
+
+export default CartContainer;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+`
+const TitleP = styled.p`
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 5rem;
+`
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
+`
