@@ -39,4 +39,6 @@ const ListContainer = styled.div`
   flex-direction: column;
   gap: 2.5rem;
   align-items: center;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 1.5rem; 
 `
