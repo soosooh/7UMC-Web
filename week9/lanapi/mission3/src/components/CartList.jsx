@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { ChevronUp, ChevronDown } from '../components/icons';
+import { ChevronUp, ChevronDown } from './icons';
 import { increment, decrement, calculateTotals } from '../slice/cartSlice';
 
 const CartContainer = styled.div`
@@ -79,7 +79,7 @@ const CartList = () => {
     const dispatch = useDispatch();
   
     useEffect(() => {
-      dispatch(calculateTotals()); 
+      dispatch(calculateTotals()); // 총 수량 및 금액 계산
     }, [cartItems, dispatch]);  
 
   return (
