@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Input, SubmitBtn, ErrorMsg, FormContainer, InputWrapper } from '../../styles/auth/authStyles';
 import { useAuthForm } from '../../hooks/use-Form';
 import { useNavigate } from 'react-router-dom';
-import login from '../../api/auth/login';
+import authApi from '../../api/auth/authApi';
 import { useMutation } from '@tanstack/react-query';
 
 const PageContainer = styled.div`
@@ -30,7 +30,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: login,
+    mutationFn: (data) => authApi(data, 'login'),
     onSuccess: (data) => {
       const { accessToken, refreshToken } = data;
       localStorage.setItem("accessToken", accessToken);

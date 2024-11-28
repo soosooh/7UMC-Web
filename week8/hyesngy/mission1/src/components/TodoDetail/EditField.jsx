@@ -1,23 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const EditField = ({ value, isEditing, onEdit, onSave, onChange }) => {
+const EditField = ({ value, isEditing, onChange }) => {
   return (
     <EditableWrapper>
       {isEditing ? (
-        <>
-          <EditableInput
-            type="text"
-            value={value}
-            onChange={onChange}
-          />
-          <EditButton onClick={onSave}>저장</EditButton>
-        </>
+        <EditableInput
+          type="text"
+          value={value}
+          onChange={onChange}
+        />
       ) : (
-        <>
-          <FieldValue>{value}</FieldValue>
-          <EditButton onClick={onEdit}>수정</EditButton>
-        </>
+        <FieldValue>{value}</FieldValue>
       )}
     </EditableWrapper>
   );
@@ -33,22 +27,9 @@ const EditableWrapper = styled.div`
 `
 const EditableInput = styled.input`
   flex: 1;
-  border: 1px solid lightgray;
+  border: 1px dashed lightgray;
   padding: 0.5rem;
   border-radius: 4px;
-`
-const EditButton = styled.button`
-  padding: 0.25rem 0.5rem;
-  font-size: 0.9rem;
-  border: none;
-  background-color: dodgerblue;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: darkblue;
-  }
 `
 const FieldValue = styled.div`
   flex: 1;
