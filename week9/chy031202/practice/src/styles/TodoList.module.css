@@ -1,0 +1,30 @@
+.list {
+    display: flex;
+    align-items: center;
+    width:100%;
+    margin-bottom: 10px;
+}
+
+
+
+.textbar {
+box-sizing: border-box;
+width: 70%;
+height: 30px;
+
+margin-right: 20px;
+background: #FFFFFF;
+border: 3px solid #00B7FF;
+border-radius: 20px;
+}
+
+.submitbutton{
+width: 10%;
+height: 30px;
+background: #FFFFFF;
+border: 3px solid #00B7FF;
+border-radius: 50px;
+color:#00B7FF;
+font-weight: 200;
+
+}
