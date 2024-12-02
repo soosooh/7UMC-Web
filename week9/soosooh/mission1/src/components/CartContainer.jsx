@@ -1,39 +1,69 @@
 import { useDispatch, useSelector } from "react-redux";
 import cartItems from "../constants/cartItems";
 import CartItem from "./CartItem";
-
+import styled from "styled-components";
 const CartContainer = () => {
   const { cartItems, total } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
 
   return (
-    <section className="cart">
+    <StyledSection className="cart">
       <header>
-        <h2>당신이 선택한 음반</h2>
+        <StyledTitle>당신이 선택한 음반</StyledTitle>
       </header>
       <div>
         {cartItems.map((item) => {
           return <CartItem key={item.id} {...item} />;
         })}
       </div>
-      <footer>
+      <StyledFooter>
         <hr />
-        <div className="cart-total">
-          <h4>
-            총 가격 <span>₩ {total}원</span>
-          </h4>
-        </div>
-        <button
-          className="btn clear-btn"
+        <TotalDiv>
+          <h4>총 가격</h4>
+          <h4>₩ {total}원</h4>
+        </TotalDiv>
+        <ClearButton
           onClick={() => {
             dispatch(clearCart());
           }}
         >
           장바구니 초기화
-        </button>
-      </footer>
-    </section>
+        </ClearButton>
+      </StyledFooter>
+    </StyledSection>
   );
 };
 
 export default CartContainer;
+
+const StyledSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const StyledTitle = styled.h2`
+  color: black;
+`;
+
+const TotalDiv = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  color: black;
+`;
+
+const StyledFooter = styled.footer`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const ClearButton = styled.button`
+  color: #d20000;
+  background-color: white;
+  border-color: #d20000;
+`;
