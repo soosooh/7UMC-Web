@@ -1,0 +1,9 @@
+.todoPage {
+  width: 37rem;
+  height: 45rem;
+  margin: 20px auto;
+  background-color: #ffffff;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}

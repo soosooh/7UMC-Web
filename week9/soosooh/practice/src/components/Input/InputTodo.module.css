@@ -1,0 +1,37 @@
+.InputTodo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+.InputContainer {
+  display: flex;
+  align-items: center;
+}
+.textbar {
+  width: 24rem;
+  height: 40px;
+  border: 2px solid #00b7ff;
+  border-radius: 20px;
+  padding: 0 15px;
+  outline: none;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.submitbutton {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 10px;
+  border: 2px solid #00b7ff;
+  border-radius: 50%;
+  background-color: white;
+  color: #00b7ff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.submitbutton:hover {
+  background-color: #00b7ff;
+}
