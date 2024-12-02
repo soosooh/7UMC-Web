@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import ModalPortal from "./components/ModalPortal";
 import Modal from "./components/Modal";
 import styled from "styled-components";
+import zustandSlice from "./features/zustand/zustandSlice";
 
 function App() {
-  const dispatch = useDispatch();
-  const { cartItems } = useSelector((store) => store.cart);
-  const { isOpen } = useSelector((store) => store.modal);
+  const { cartItems, calculateTotals, isOpen } = zustandSlice();
+
   useEffect(() => {
-    dispatch(calculateTotals());
-  }, [cartItems, dispatch]);
+    calculateTotals();
+  }, [cartItems]);
 
   return (
     <StyledContainer>

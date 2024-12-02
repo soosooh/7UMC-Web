@@ -1,18 +1,16 @@
-import { useSelector, useDispatch } from "react-redux";
-import { closeModal } from "../features/modal/modalSlice";
+import zustandSlice from "../features/zustand/zustandSlice";
 import ModalButton from "./ModalButton";
 import styled from "styled-components";
 
 const Modal = () => {
-  const { isOpen } = useSelector((state) => state.modal);
-  const dispatch = useDispatch();
+  const { isOpen, closeModal } = zustandSlice();
 
   if (!isOpen) return null; // 모달이 닫혀 있으면 렌더링하지 않음
 
   return (
     <ModalContainer
       onClick={() => {
-        dispatch(closeModal()); // 배경 클릭 시 모달 닫기
+        closeModal(); // 배경 클릭 시 모달 닫기
       }}
     >
       <ModalContent onClick={(e) => e.stopPropagation()}>

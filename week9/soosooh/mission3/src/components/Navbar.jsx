@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import zustandSlice from "../features/zustand/zustandSlice";
 import { CartIcon } from "../constants/icons";
 import styled from "styled-components";
 
 const Navbar = () => {
-  const { amount } = useSelector((state) => state.cart);
+  const { amount } = zustandSlice();
 
   return (
     <nav>

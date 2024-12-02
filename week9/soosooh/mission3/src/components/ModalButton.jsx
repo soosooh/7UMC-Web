@@ -1,10 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../features/cart/cartSlice";
-import { closeModal } from "../features/modal/modalSlice";
 import styled from "styled-components";
+import zustandSlice from "../features/zustand/zustandSlice";
 
 const ModalButton = () => {
-  const dispatch = useDispatch();
+  const { clearCart, closeModal } = zustandSlice();
   //const { isOpen } = useSelector((state) => state.modal);
   return (
     <ButtonContainer>
@@ -13,9 +11,9 @@ const ModalButton = () => {
         className="btn confirm-btn"
         onClick={() => {
           console.log("장바구니 초기화");
-          dispatch(clearCart());
+          clearCart();
           //TODO : 모달도 꺼지는 상태를 연결
-          dispatch(closeModal());
+          closeModal();
         }}
       >
         네
@@ -26,7 +24,7 @@ const ModalButton = () => {
         onClick={() => {
           //TODO : 모달도 꺼지는 상태를 연결
           console.log("모달 닫기");
-          dispatch(closeModal());
+          closeModal();
         }}
       >
         아니요

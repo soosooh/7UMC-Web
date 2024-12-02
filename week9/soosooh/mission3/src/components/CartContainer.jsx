@@ -1,12 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
-import cartItems from "../constants/cartItems";
+import zustandSlice from "../features/zustand/zustandSlice";
 import CartItem from "./CartItem";
-import { openModal } from "../features/modal/modalSlice";
 import styled from "styled-components";
 
 const CartContainer = () => {
-  const { cartItems, total } = useSelector((store) => store.cart);
-  const dispatch = useDispatch();
+  const { cartItems, total, openModal } = zustandSlice();
 
   const isEmpty = cartItems.length === 0;
 
@@ -32,7 +29,7 @@ const CartContainer = () => {
             </TotalDiv>
             <ClearButton
               onClick={() => {
-                dispatch(openModal());
+                openModal();
               }}
             >
               장바구니 초기화

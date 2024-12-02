@@ -1,10 +1,8 @@
-import { ChevronDown, ChevronUp } from "../constants/icons";
-import { useDispatch } from "react-redux";
-import { decrease, increase, removeItem } from "../features/cart/cartSlice";
 import styled from "styled-components";
+import zustandSlice from "../features/zustand/zustandSlice";
 
 const CartItem = ({ id, title, singer, price, img, amount }) => {
-  const dispatch = useDispatch();
+  const { increase, decrease, removeItem } = zustandSlice();
 
   return (
     <StyledArticle>
@@ -18,10 +16,7 @@ const CartItem = ({ id, title, singer, price, img, amount }) => {
         </div>
       </StyledDiv>
       <ButtonDiv>
-        <StyledButton
-          className="amount-btn"
-          onClick={() => dispatch(increase(id))}
-        >
+        <StyledButton className="amount-btn" onClick={() => increase(id)}>
           ▲
         </StyledButton>
         <StyledP className="amount">{amount}</StyledP>
@@ -29,10 +24,10 @@ const CartItem = ({ id, title, singer, price, img, amount }) => {
         <StyledButton
           onClick={() => {
             if (amount === 1) {
-              dispatch(removeItem(id));
+              removeItem(id);
               return;
             }
-            dispatch(decrease(id));
+            decrease(id);
           }}
         >
           ▼
