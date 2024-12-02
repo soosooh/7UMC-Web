@@ -6,6 +6,7 @@ import { calculateTotals } from "./features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ModalPortal from "./components/ModalPortal";
 import Modal from "./components/Modal";
+import styled from "styled-components";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,11 +17,11 @@ function App() {
   }, [cartItems, dispatch]);
 
   return (
-    <>
+    <StyledContainer>
       <header>
         <Navbar />
       </header>
-      <main>
+      <StyledMain>
         <CartContainer />
         {isOpen && (
           <ModalPortal>
@@ -29,11 +30,24 @@ function App() {
             </Modal>
           </ModalPortal>
         )}
-      </main>
+      </StyledMain>
       <footer>
         <Footer />
       </footer>
-    </>
+    </StyledContainer>
   );
 }
 export default App;
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+`;
+const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;

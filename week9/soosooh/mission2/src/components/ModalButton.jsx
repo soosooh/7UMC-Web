@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../features/cart/cartSlice";
 import { closeModal } from "../features/modal/modalSlice";
+import styled from "styled-components";
+
 const ModalButton = () => {
   const dispatch = useDispatch();
   //const { isOpen } = useSelector((state) => state.modal);
   return (
-    <div className="btn-container">
-      <button
+    <ButtonContainer>
+      <YesButton
         type="button"
         className="btn confirm-btn"
         onClick={() => {
@@ -17,8 +19,8 @@ const ModalButton = () => {
         }}
       >
         네
-      </button>
-      <button
+      </YesButton>
+      <NoButton
         type="button"
         className="btn clear-btn"
         onClick={() => {
@@ -28,9 +30,29 @@ const ModalButton = () => {
         }}
       >
         아니요
-      </button>
-    </div>
+      </NoButton>
+    </ButtonContainer>
   );
 };
 
 export default ModalButton;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+const YesButton = styled.button`
+  width: 6rem;
+  background-color: white;
+  color: #6d6fff;
+  border-color: #6d6fff;
+`;
+
+const NoButton = styled.button`
+  width: 6rem;
+  background-color: white;
+  color: #d20000;
+  border-color: #d20000;
+`;
