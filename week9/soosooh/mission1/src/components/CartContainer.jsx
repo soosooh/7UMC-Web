@@ -1,35 +1,43 @@
 import { useDispatch, useSelector } from "react-redux";
-import cartItems from "../constants/cartItems";
+import { clearCart } from "../features/cart/cartSlice";
 import CartItem from "./CartItem";
 import styled from "styled-components";
 const CartContainer = () => {
   const { cartItems, total } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
 
+  const isEmpty = cartItems.length === 0;
+
   return (
     <StyledSection className="cart">
       <header>
         <StyledTitle>당신이 선택한 음반</StyledTitle>
       </header>
-      <div>
-        {cartItems.map((item) => {
-          return <CartItem key={item.id} {...item} />;
-        })}
-      </div>
-      <StyledFooter>
-        <hr />
-        <TotalDiv>
-          <h4>총 가격</h4>
-          <h4>₩ {total}원</h4>
-        </TotalDiv>
-        <ClearButton
-          onClick={() => {
-            dispatch(clearCart());
-          }}
-        >
-          장바구니 초기화
-        </ClearButton>
-      </StyledFooter>
+      {isEmpty ? (
+        <EmptyMessage>고객님이 좋아하는 음반을 담아보세요~!</EmptyMessage>
+      ) : (
+        <>
+          <div>
+            {cartItems.map((item) => {
+              return <CartItem key={item.id} {...item} />;
+            })}
+          </div>
+          <StyledFooter>
+            <hr />
+            <TotalDiv>
+              <h4>총 가격</h4>
+              <h4>₩ {total}원</h4>
+            </TotalDiv>
+            <ClearButton
+              onClick={() => {
+                dispatch(clearCart()); // clearCart 액션 디스패치
+              }}
+            >
+              장바구니 초기화
+            </ClearButton>
+          </StyledFooter>
+        </>
+      )}
     </StyledSection>
   );
 };
@@ -41,6 +49,7 @@ const StyledSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 `;
 const StyledTitle = styled.h2`
   color: black;
@@ -66,4 +75,11 @@ const ClearButton = styled.button`
   color: #d20000;
   background-color: white;
   border-color: #d20000;
+`;
+const EmptyMessage = styled.p`
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #6d6fff;
+  margin-top: 2rem;
+  text-align: center;
 `;
