@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../slice/modalSlice';
-import { clearCart } from '../slice/cartSlice'; // 여기서 clearCart를 올바르게 임포트해야 합니다.
+import { clearCart } from '../slice/cartSlice';
 import {
   ModalOverlay,
   ModalContainer,
