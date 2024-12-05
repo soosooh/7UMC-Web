@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import useCartStore from '../slice/cartSlice'; 
 import styled from 'styled-components';
 import { ChevronUp, ChevronDown } from '../components/icons';
-import { increment, decrement, calculateTotals } from '../slice/cartSlice';
 
 const CartContainer = styled.div`
   display: flex;
@@ -74,13 +73,15 @@ const Quantity = styled.span`
 `;
 
 const CartList = () => {
-    const cartItems = useSelector((state) => state.cart.items);
-    const totalPrice = useSelector((state) => state.cart.totalPrice);
-    const dispatch = useDispatch();
-  
-    useEffect(() => {
-      dispatch(calculateTotals()); 
-    }, [cartItems, dispatch]);  
+  const cartItems = useCartStore((state) => state.items);  // Zustand에서 cartItems 가져오기
+  const totalPrice = useCartStore((state) => state.totalPrice);  // Zustand에서 totalPrice 가져오기
+  const increment = useCartStore((state) => state.increment);  // increment 액션 가져오기
+  const decrement = useCartStore((state) => state.decrement);  // decrement 액션 가져오기
+  const calculateTotals = useCartStore((state) => state.calculateTotals);  // calculateTotals 액션 가져오기
+
+  useEffect(() => {
+    calculateTotals();  // 총 수량 및 금액 계산
+  }, [cartItems, calculateTotals]);
 
   return (
     <CartContainer>
@@ -94,11 +95,11 @@ const CartList = () => {
             <AlbumPrice>₩ {item.price}</AlbumPrice>
           </AlbumDetails>
           <QuantityContainer>
-            <QuantityButton onClick={() => dispatch(increment(item.id))}>
+            <QuantityButton onClick={() => increment(item.id)}>
               <ChevronUp />
             </QuantityButton>
             <Quantity>{item.amount}</Quantity>
-            <QuantityButton onClick={() => dispatch(decrement(item.id))}>
+            <QuantityButton onClick={() => decrement(item.id)}>
               <ChevronDown />
             </QuantityButton>
           </QuantityContainer>
