@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { API } from '../../api/authAxios';
 
+
 const LoginPage = () => {
     const navigate = useNavigate();
 
@@ -70,6 +71,7 @@ const LoginPage = () => {
 
                 <InputBox type={'submit'} value={loginMutation.isLoading ? "로그인 중..." : "로그인"} disabled={!isValid || loginMutation.isLoading} />
             </form>
+
         </div>
     );
 };
