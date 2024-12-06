@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import colors from "../../styles/colors";
 import { Link } from "react-router-dom";
 import { API } from "../../api/authAxios";
 import { useQuery } from "@tanstack/react-query";
+import { getRedirectURI } from "../../api/redirectURI";
 
 const NavBarContainer = styled.div`
     width: 100vw;
@@ -50,27 +51,52 @@ const SignButton2 = styled(SignButton)`
 `;
 
 const NavBar = () => {
-    // useQuery 변경
-    const { data: nickname, error } = useQuery({
+    const [nickname, setNickname] = useState(null);
+
+    const { data: fetchedNickname, error } = useQuery({
         queryKey: ["nickname"],
         queryFn: async () => {
             const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-            if (isLoggedIn) {
+            const accessToken = localStorage.getItem("token");
+
+            if (isLoggedIn && accessToken) {
                 const response = await API.get("/user/me");
                 const email = response.data.email;
                 return email.split("@")[0];
             }
             return null;
         },
+        onSuccess: (data) => {
+            if (data) setNickname(data);
+        },
     });
-    
 
-    const handleLogout = () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.setItem("isLoggedIn", "false");
-        alert("로그아웃이 완료되었습니다.");
-        window.location.reload();
+
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const storedNickname = localStorage.getItem("username");
+
+        if (isLoggedIn && storedNickname) {
+            setNickname(storedNickname);
+        }
+    }, []);
+
+    const handleLogout = async () => {
+        const client_id = import.meta.env.VITE_KAKAO_TOKEN;
+        const logout_redirect_uri = getRedirectURI();
+        const kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${client_id}&logout_redirect_uri=${logout_redirect_uri}`;
+
+        try {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("username");
+            localStorage.setItem("isLoggedIn", "false");
+            setNickname(null);
+            alert("로그아웃이 완료되었습니다.");
+            window.location.href = kakaoLogoutURL;
+        } catch (error) {
+            console.error("로그아웃 오류: ", error);
+        }
     };
 
     if (error) {
@@ -86,10 +112,7 @@ const NavBar = () => {
                         <NavP style={{ color: colors.white, fontSize: "1rem" }}>
                             {nickname}님 반갑습니다.
                         </NavP>
-                        <NavP
-                            style={{ color: colors.white, fontSize: "1rem" }}
-                            onClick={handleLogout}
-                        >
+                        <NavP style={{ color: colors.white, fontSize: "1rem" }} onClick={handleLogout}>
                             로그아웃
                         </NavP>
                     </>

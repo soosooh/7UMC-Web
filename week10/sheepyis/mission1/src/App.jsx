@@ -26,7 +26,17 @@ const router = createBrowserRouter([
         },
         {
           path: 'login',
-          element: <LoginPage />
+          errorElement: <NotFoundPage />,
+          children: [
+            {
+              index: true,
+              element: <LoginPage />,
+            },
+            {
+              path: 'auth',
+              element: <LoginPage />
+            },
+          ]
         },
         {
           path: 'signup',
