@@ -5,6 +5,7 @@ import { InputContainer, InputBox, ErrorP } from "../../styles/auth";
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { API } from '../../api/authAxios';
+import KakaoButton from '../../components/button/kakaoButton';
 
 
 const LoginPage = () => {
@@ -71,7 +72,8 @@ const LoginPage = () => {
 
                 <InputBox type={'submit'} value={loginMutation.isLoading ? "로그인 중..." : "로그인"} disabled={!isValid || loginMutation.isLoading} />
             </form>
-
+            
+            <KakaoButton />
         </div>
     );
 };
