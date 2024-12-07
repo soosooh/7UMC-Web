@@ -182,6 +182,12 @@ const GlobalStyle = createGlobalStyle`
         font-size: 1vw;
         font-weight: bold;
     }
+
+    .gm-style .gm-ui-hover-effect {
+        background-color: ${colors.signBackground} !important;
+        width: 10px !important;
+        height: 10px !important;
+    }
 `;
 
 export default GlobalStyle;

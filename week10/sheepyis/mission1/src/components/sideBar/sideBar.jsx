@@ -40,6 +40,10 @@ const SideBar = () => {
                 <FaSearch />
                 <SideP>영화</SideP>
             </CategoryContainer>
+            <CategoryContainer to="map">
+                <FaSearch />
+                <SideP>지도</SideP>
+            </CategoryContainer>
         </SideBarContainer>
     )
 }
