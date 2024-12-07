@@ -4,7 +4,7 @@ import { getRedirectURI } from "../../api/redirectURI";
 import axios from "axios";
 import KakaoBtn from "../../assets/images/kakaoBtn.png";
 
-const KakaoLoginBtn = styled.img`
+const KakaoLoginButton = styled.img`
     width: 22.5vw;
     cursor: pointer;
     margin-top: 2vw;
@@ -93,7 +93,7 @@ const KakaoButton = () => {
     };
 
     return (
-        <KakaoLoginBtn src={KakaoBtn} alt="kakaoBtn" onClick={handleLogin} />
+        <KakaoLoginButton src={KakaoBtn} alt="kakaoBtn" onClick={handleLogin} />
     )
 }
 
