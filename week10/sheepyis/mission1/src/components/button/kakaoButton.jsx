@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { getRedirectURI } from "../../api/redirectURI";
 import axios from "axios";
-import KakaoBtn from "../../assets/images/KakaoBtn.png";
+import KakaoBtn from "../../assets/images/kakaoBtn.png";
 
 const KakaoLoginBtn = styled.img`
     width: 22.5vw;
@@ -66,7 +66,7 @@ const KakaoButton = () => {
             const accessToken = response.data.access_token;
             if (accessToken) {
                 localStorage.setItem('token', accessToken);
-                localStorage.setItem('isLoggedIn', 'true'); // 로그인 성공 여부 저장
+                localStorage.setItem('isLoggedIn', 'true');
                 getUserInfo(accessToken);
             }
         } catch (err) {
