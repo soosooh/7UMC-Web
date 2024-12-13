@@ -24,12 +24,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  // useMutation으로 비동기 요청 처리
   const mutation = useMutation({
     mutationFn: signIn,
-    onSuccess: (response) => {
+    onSuccess: (response, variables) => { // variables 매개변수 추가
       console.log('서버 응답:', response);
-      login({ email: response.email }); // 사용자 데이터 설정
+      login({ email: variables.email }); // 수정된 부분
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
       alert('로그인에 성공했습니다!');
@@ -44,9 +43,8 @@ const LoginPage = () => {
 
   const onSubmit = (userData) => {
     console.log('로그인 요청 데이터:', userData);
-    mutation.mutate(userData); 
+    mutation.mutate(userData);
   };
-
   return (
     <Wrapper>
       <FormContainer>
