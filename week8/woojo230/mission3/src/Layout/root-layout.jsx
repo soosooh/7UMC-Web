@@ -6,7 +6,8 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
+  width: 100%;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -20,9 +21,11 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  height: calc(100vh - 60px); // 모바일 사이드바 높이 고려
 
-  @media (max-width: 768px) {
-    padding: 10px;
+  @media (min-width: 768px) {
+    height: 100vh;
+    padding: 20px;
   }
 `;
 

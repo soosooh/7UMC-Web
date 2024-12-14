@@ -6,16 +6,14 @@ const CastContainer = styled.div`
   flex-wrap: wrap;
   justify-content: flex-start;
   color: white;
-  gap: 20px; /* 카드 간격 추가 */
+  gap: 20px;
+  padding: 0 20px;
 
   @media (max-width: 768px) {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(120px, 1fr)
-    ); /* 그리드로 변경하여 반응형 출력 */
-    justify-content: center;
-    gap: 15px; /* 모바일에서 간격 조정 */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    padding: 0 10px;
   }
 `;
 

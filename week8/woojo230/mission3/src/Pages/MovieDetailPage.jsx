@@ -9,8 +9,12 @@ const MovieDetail = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  // padding: 30px;
-  overflow-x: hidden; /* 좌우 스크롤 제거 */
+  overflow-x: hidden;
+  padding: 0;
+
+  @media (min-width: 769px) {
+    padding: 0 20px;
+  }
 `;
 
 const MovieDetailPage = () => {

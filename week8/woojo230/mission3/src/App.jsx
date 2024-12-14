@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './Layout/root-layout';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { GlobalStyle } from './styles/globalStyle.js';
 
 // 페이지
 import LogIn from './Pages/LogIn.jsx';
@@ -15,21 +16,6 @@ import Popular from './Pages/MovieCategory/Popular.jsx';
 import TopRated from './Pages/MovieCategory/Top-rated.jsx';
 import UpComing from './Pages/MovieCategory/Up-coming.jsx';
 import MovieDetailPage from './Pages/MovieDetailPage.jsx';
-
-const GlobalStyle = createGlobalStyle`
-  html, body, #root {
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
-    min-width: 320px;
-    overflow-x: hidden; /* 전체 페이지에서 좌우 스크롤 제거 */
-  }
-`;
 
 const router = createBrowserRouter([
   {
@@ -54,27 +40,32 @@ const router = createBrowserRouter([
       },
       {
         path: 'movies',
-        element: <Movies />,
-      },
-      {
-        path: 'movies/NowPlaying',
-        element: <NowPlaying />,
-      },
-      {
-        path: 'movies/Popular',
-        element: <Popular />,
-      },
-      {
-        path: 'movies/TopRated',
-        element: <TopRated />,
-      },
-      {
-        path: 'movies/UpComing',
-        element: <UpComing />,
-      },
-      {
-        path: 'movies/:movieId',
-        element: <MovieDetailPage />,
+        children: [
+          {
+            index: true,
+            element: <Movies />,
+          },
+          {
+            path: 'NowPlaying',
+            element: <NowPlaying />,
+          },
+          {
+            path: 'Popular',
+            element: <Popular />,
+          },
+          {
+            path: 'TopRated',
+            element: <TopRated />,
+          },
+          {
+            path: 'UpComing',
+            element: <UpComing />,
+          },
+          {
+            path: ':movieId',
+            element: <MovieDetailPage />,
+          },
+        ],
       },
     ],
   },
@@ -86,10 +77,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <RouterProvider router={router} />
     </>
   );
 }
