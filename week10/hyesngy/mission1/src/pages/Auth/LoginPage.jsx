@@ -5,6 +5,7 @@ import { useAuthForm } from '../../hooks/use-Form';
 import { useNavigate } from 'react-router-dom';
 import authApi from '../../api/auth/authApi';
 import { useMutation } from '@tanstack/react-query';
+import KakaoLoginBtn from '../../components/auth/kakaoLogin';
 
 const PageContainer = styled.div`
   width: 100%;
@@ -73,7 +74,11 @@ const LoginPage = () => {
           {isVisiblePwd && <ErrorMsg>{errors.password?.message}</ErrorMsg>}
         </InputWrapper>
         <SubmitBtn type={"submit"} disabled={!isValid}>로그인</SubmitBtn>
+
+        <KakaoLoginBtn />
       </FormContainer>
+
+
     </PageContainer>
   );
 };

@@ -4,10 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import getUser from '../api/auth/getUser';
 import { useQuery } from '@tanstack/react-query';
 import { FaBars } from 'react-icons/fa';
+import { getRedirectURI } from '../api/auth/redirectURI'
 
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
+  const isKakaoLogin = localStorage.getItem('isKakaoLogin');
+  const nickname = localStorage.getItem('nickname');
+  const kakaoRestAPI = import.meta.env.VITE_KAKAO_TOKEN;
+  const redirectURI = getRedirectURI();
 
   const { data: user, refetch } = useQuery({
     queryKey: ['user'],
@@ -17,12 +22,17 @@ const Navbar = ({ toggleSidebar }) => {
     cacheTime: 10000,
   })
 
-  const nickname = user ? user.email.split('@')[0] : null;
-
   const handleLogout = () => {
+    if (isKakaoLogin) {
+      const kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${kakaoRestAPI}&logout_redirect_uri=${redirectURI}`;
+      window.location.href = kakaoLogoutURL;
+    } else {
+      navigate('/login');
+    }
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    navigate('/login');
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('isKakaoLogin');
     refetch();
   };
 
@@ -32,7 +42,7 @@ const Navbar = ({ toggleSidebar }) => {
         <HamburgerIcon onClick={toggleSidebar} />
         <Logo to="/">HaenCHA</Logo>
         <UserContainer>
-          {user ? (
+          {nickname ? (
             <>
               <NicknameSpan>{nickname}님 반갑습니다.</NicknameSpan>
               <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
@@ -51,7 +61,6 @@ const Navbar = ({ toggleSidebar }) => {
 };
 
 export default Navbar;
-
 
 const NavbarContainer = styled.div`
   width: 100%;

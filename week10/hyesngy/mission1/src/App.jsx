@@ -54,10 +54,19 @@ const router = createBrowserRouter([
           }
         ]
       },
-
       {
         path: 'login',
-        element: <Login />
+        errorElement: <NotFound />,
+        children: [
+          {
+            index: true,
+            element: <Login />
+          },
+          {
+            path: 'auth',
+            element: <Login />
+          }
+        ]
       },
       {
         path: 'signup',
