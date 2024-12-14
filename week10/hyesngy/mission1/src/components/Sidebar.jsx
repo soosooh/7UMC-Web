@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IoSearch } from "react-icons/io5";
 import { MdMovie } from "react-icons/md";
+import { MdMap } from "react-icons/md";
 
 const SidebarContainer = styled.div`
   width: 180px;
@@ -46,6 +47,11 @@ const Sidebar = ({ $isSidebarOpen, toggleSidebar }) => {
         <MdMovie />
         <MenuName to="/movies">영화</MenuName>
       </SidebarItem>
+      <SidebarItem onClick={toggleSidebar}>
+        <MdMap />
+        <MenuName to="/maps">지도</MenuName>
+      </SidebarItem>
+
     </SidebarContainer>
   );
 };
