@@ -9,7 +9,8 @@ import { getRedirectURI } from '../api/auth/redirectURI'
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
-  const kakaoNickname = localStorage.getItem('nickname');
+  const isKakaoLogin = localStorage.getItem('isKakaoLogin');
+  const nickname = localStorage.getItem('nickname');
   const kakaoRestAPI = import.meta.env.VITE_KAKAO_TOKEN;
   const redirectURI = getRedirectURI();
 
@@ -21,21 +22,17 @@ const Navbar = ({ toggleSidebar }) => {
     cacheTime: 10000,
   })
 
-  const nickname = kakaoNickname || (user ? user.email.split('@')[0] : null);
-
   const handleLogout = () => {
-    if (kakaoNickname) {
+    if (isKakaoLogin) {
       const kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${kakaoRestAPI}&logout_redirect_uri=${redirectURI}`;
       window.location.href = kakaoLogoutURL;
     } else {
       navigate('/login');
     }
-
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('nickname');
     localStorage.removeItem('isKakaoLogin');
-
     refetch();
   };
 
