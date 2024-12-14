@@ -5,18 +5,20 @@ import { PiFilmSlateBold } from 'react-icons/pi';
 
 const Sidebar__container = styled.div`
   background-color: rgb(20, 20, 20);
-  width: 13%;
-  height: 100vh;
+  width: 100%;
+  height: 60px;
   display: flex;
-  flex-direction: column;
-  position: relative;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: start;
+  padding: 0 10px;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    height: auto;
-    flex-direction: row; /* 모바일에서는 가로로 배치 */
-    justify-content: space-around;
-    padding: 10px 0;
+  @media (min-width: 768px) {
+    width: 13%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px 0;
   }
 `;
 
@@ -26,13 +28,14 @@ const Find__button = styled.div`
   color: white;
   font-weight: bold;
   white-space: nowrap;
-  // font-size: 1.2rem;
-  padding: 0px 20px;
-  gap: 10px;
+  font-size: 14px;
+  padding: 8px 12px;
+  gap: 8px;
+  margin-left: 20px;
 
-  @media (max-width: 768px) {
+  @media (min-width: 768px) {
     font-size: 16px;
-    padding: 0 10px;
+    padding: 0 20px;
   }
 `;
 
@@ -42,13 +45,14 @@ const Movie__button = styled.div`
   color: white;
   font-weight: bold;
   white-space: nowrap;
-  // font-size: 1.2rem;
-  padding: 0px 20px;
-  gap: 10px;
+  font-size: 14px;
+  padding: 8px 12px;
+  gap: 8px;
+  margin-left: 20px;
 
-  @media (max-width: 768px) {
+  @media (min-width: 768px) {
     font-size: 16px;
-    padding: 0 10px;
+    padding: 0 20px;
   }
 `;
 

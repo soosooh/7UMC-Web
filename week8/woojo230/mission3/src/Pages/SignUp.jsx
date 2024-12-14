@@ -6,7 +6,6 @@ import { registerUser } from '../apis/authService';
 import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
-// 스타일 정의
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,12 +30,19 @@ const Title = styled.h2`
   text-align: center;
 `;
 
+const InputContainer = styled.div`
+  position: relative;
+  height: 80px;
+`;
+
 const Input = styled.input`
   padding: 15px;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   background-color: white;
+  width: 100%;
+  box-sizing: border-box;
 
   &:focus {
     outline: none;
@@ -51,6 +57,7 @@ const SubmitButton = styled.button`
   font-size: 1rem;
   font-weight: bold;
   color: white;
+  width: 100%;
   background-color: ${(props) => (props.disabled ? 'gray' : '#ff4d78')};
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 
@@ -62,7 +69,9 @@ const SubmitButton = styled.button`
 const ErrorMessage = styled.p`
   color: #ff4d78;
   font-size: 0.875rem;
-  margin: 0;
+  margin: 4px 0 0 0;
+  position: absolute;
+  bottom: 0;
 `;
 
 const GenderContainer = styled.div`
@@ -71,6 +80,8 @@ const GenderContainer = styled.div`
   padding: 10px;
   background-color: white;
   border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const HiddenRadio = styled.input`
@@ -96,6 +107,7 @@ const SuccessMessage = styled.p`
   color: green;
   font-size: 0.875rem;
   margin: 10px 0 0 0;
+  text-align: center;
 `;
 
 const SignUp = () => {
@@ -164,47 +176,61 @@ const SignUp = () => {
 
   return (
     <FormContainer>
-      <Title>회원가입</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          type="email"
-          {...register('email')}
-          placeholder="이메일을 입력해주세요!"
-          onBlur={() => handleBlur('email')}
-        />
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+        <Title>회원가입</Title>
+        <InputContainer>
+          <Input
+            type="email"
+            {...register('email')}
+            placeholder="이메일을 입력해주세요!"
+            onBlur={() => handleBlur('email')}
+          />
+          {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+        </InputContainer>
 
-        <Input
-          type="password"
-          {...register('password')}
-          placeholder="비밀번호를 입력해주세요!"
-          onBlur={() => handleBlur('password')}
-        />
-        {errors.password && (
-          <ErrorMessage>{errors.password.message}</ErrorMessage>
-        )}
+        <InputContainer>
+          <Input
+            type="password"
+            {...register('password')}
+            placeholder="비밀번호를 입력해주세요!"
+            onBlur={() => handleBlur('password')}
+          />
+          {errors.password && (
+            <ErrorMessage>{errors.password.message}</ErrorMessage>
+          )}
+        </InputContainer>
 
-        <Input
-          type="password"
-          {...register('passwordCheck')}
-          placeholder="비밀번호를 확인해주세요!"
-          onBlur={() => handleBlur('passwordCheck')}
-        />
-        {errors.passwordCheck && (
-          <ErrorMessage>{errors.passwordCheck.message}</ErrorMessage>
-        )}
+        <InputContainer>
+          <Input
+            type="password"
+            {...register('passwordCheck')}
+            placeholder="비밀번호를 확인해주세요!"
+            onBlur={() => handleBlur('passwordCheck')}
+          />
+          {errors.passwordCheck && (
+            <ErrorMessage>{errors.passwordCheck.message}</ErrorMessage>
+          )}
+        </InputContainer>
 
-        <GenderContainer>
-          <GenderLabel selected={selectedGender === 'male'}>
-            <HiddenRadio type="radio" value="male" {...register('gender')} />
-            남성
-          </GenderLabel>
-          <GenderLabel selected={selectedGender === 'female'}>
-            <HiddenRadio type="radio" value="female" {...register('gender')} />
-            여성
-          </GenderLabel>
-        </GenderContainer>
-        {errors.gender && <ErrorMessage>{errors.gender.message}</ErrorMessage>}
+        <InputContainer>
+          <GenderContainer>
+            <GenderLabel selected={selectedGender === 'male'}>
+              <HiddenRadio type="radio" value="male" {...register('gender')} />
+              남성
+            </GenderLabel>
+            <GenderLabel selected={selectedGender === 'female'}>
+              <HiddenRadio
+                type="radio"
+                value="female"
+                {...register('gender')}
+              />
+              여성
+            </GenderLabel>
+          </GenderContainer>
+          {errors.gender && (
+            <ErrorMessage>{errors.gender.message}</ErrorMessage>
+          )}
+        </InputContainer>
 
         <SubmitButton type="submit" disabled={!isValid}>
           회원가입

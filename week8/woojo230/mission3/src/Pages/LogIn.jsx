@@ -4,9 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { loginUser } from '../apis/authService';
-import { useMutation } from '@tanstack/react-query'; // React Query import 추가
+import { useMutation } from '@tanstack/react-query';
 
-// 스타일 정의
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,12 +30,19 @@ const Title = styled.h2`
   text-align: center;
 `;
 
+const InputContainer = styled.div`
+  position: relative;
+  height: 80px;
+`;
+
 const Input = styled.input`
   padding: 15px;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   background-color: white;
+  width: 100%;
+  box-sizing: border-box;
 
   &:focus {
     outline: none;
@@ -51,6 +57,7 @@ const SubmitButton = styled.button`
   font-size: 1rem;
   font-weight: bold;
   color: white;
+  width: 100%;
   background-color: ${(props) => (props.disabled ? 'gray' : '#ff4d78')};
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 
@@ -62,7 +69,9 @@ const SubmitButton = styled.button`
 const ErrorMessage = styled.p`
   color: #ff4d78;
   font-size: 0.875rem;
-  margin: 0;
+  margin: 4px 0 0 0;
+  position: absolute;
+  bottom: 0;
 `;
 
 const LoginPage = () => {
@@ -97,7 +106,6 @@ const LoginPage = () => {
     trigger(field);
   };
 
-  // useMutation 훅 사용
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
@@ -117,26 +125,28 @@ const LoginPage = () => {
 
   return (
     <FormContainer>
-      <Title>로그인</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          type="email"
-          {...register('email')}
-          placeholder="이메일을 입력해주세요!"
-          onBlur={() => handleBlur('email')}
-        />
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-
-        <Input
-          type="password"
-          {...register('password')}
-          placeholder="비밀번호를 입력해주세요!"
-          onBlur={() => handleBlur('password')}
-        />
-        {errors.password && (
-          <ErrorMessage>{errors.password.message}</ErrorMessage>
-        )}
-
+        <Title>로그인</Title>
+        <InputContainer>
+          <Input
+            type="email"
+            placeholder="이메일"
+            {...register('email')}
+            onBlur={() => handleBlur('email')}
+          />
+          {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+        </InputContainer>
+        <InputContainer>
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            {...register('password')}
+            onBlur={() => handleBlur('password')}
+          />
+          {errors.password && (
+            <ErrorMessage>{errors.password.message}</ErrorMessage>
+          )}
+        </InputContainer>
         <SubmitButton type="submit" disabled={!isValid}>
           로그인
         </SubmitButton>
