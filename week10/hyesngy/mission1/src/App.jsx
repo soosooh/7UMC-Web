@@ -12,7 +12,7 @@ import Login from './pages/Auth/LoginPage';
 import SignUp from './pages/Auth/SignUpPage';
 import Category from './pages/CategoryPage';
 import Search from './pages/SearchPage';
-import Maps from './pages/Maps/mapsPage';
+import Maps from './pages/Maps/MapsPage';
 import RootLayout from './layout/root-layout';
 
 const router = createBrowserRouter([
