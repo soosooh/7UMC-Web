@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import TodoList from "./components/TodoList";
 import InputTodo from "./components/InputTodo";
 import styled from "styled-components";
-import "./App.css";
+import "./styles/App.css";
 
 const PageContainer = styled.div`
   width: 100vw;
