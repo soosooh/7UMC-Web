@@ -21,7 +21,7 @@ export default CastItem;
 
 const CreList = styled.li`
     width: 130px;
-    height: 176px;
+    height: auto;
     text-align: center;
 `;
 

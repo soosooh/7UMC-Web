@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from "../contexts/LoginContext.jsx";
 import { useQuery } from "@tanstack/react-query";
 const SIDEBAR_WIDTH = '180px';
-
+import { useMediaQuery } from 'react-responsive';
 
 const RootLayout = () => {
     const { isLoggedIn, logout } = useAuth();
@@ -58,12 +58,14 @@ const RootLayout = () => {
 
     
 
+    const isMobile = useMediaQuery({ maxWidth: 500 });
+
     return (
         <LayoutContainer>
             {isLoggedIn ? <NavbarLog nickname={nickname} onLogout={logout} /> : <Navbar />} 
             
             <UnderWrapp>
-                <Sidbar/>
+                {!isMobile && <Sidbar />}
 
                 <OutletContent sidebarWidth={SIDEBAR_WIDTH}>
                     <Outlet/>
@@ -96,9 +98,10 @@ const OutletContent = styled.div `
     // @media (max-width: 760px) {
     // width: 100%;
     // }
+    overflow-y:auto;
 
     color: white;
-    overflow: hidden;
+    
 `
 export default RootLayout;
 

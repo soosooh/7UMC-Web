@@ -68,7 +68,7 @@ const Wrapp = styled.div `
 display: flex;
     flex-direction: column; /* 세로 정렬 */
     align-items: center; /* 가로 가운데 정렬 */
-    height: 100vh; /* 화면 전체 높이 */
+    height: 100%; /* 화면 전체 높이 */
     
     
 `

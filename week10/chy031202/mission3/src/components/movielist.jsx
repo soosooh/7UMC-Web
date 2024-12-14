@@ -14,17 +14,20 @@ const ListData = ({ movies }) => {
     }, [movies]);
 
     return (
-        <>
+        <Wrapp>
             <MovieLi className="movieLi">
                 {movies.map((movie) => (
                     <MovieItem key={movie.id} movie={movie} />
                 ))}
             </MovieLi>
-        </>
+        </Wrapp>
     );
 };
 
 const Wrapp = styled.div `
+display:flex;
+justify-content:center;
+
 `
 
 const MovieLi = styled.ul `

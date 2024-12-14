@@ -46,17 +46,25 @@ const Loginuseform = () => {
     return (
         <MainWrapp>
         <h1 style={{marginTop:'257px'}}>로그인</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
             <Input placeholder='이메일을 입력해주세요!' type={'email'} {...register("email")}/>     
             <p style={{color: 'red', marginTop:0}}>{errors.email?.message}</p>
             <Input placeholder='비밀번호를 입력해주세요!' type={'password'} {...register("password")}/>
             <p style={{color: 'red', marginTop:0}}>{errors.password?.message}</p>
             <Submit value='로그인' type='submit' disabled={!isValid} isValid={isValid}/>
-        </form>
+        </Form>
         </MainWrapp>
         
     );
 };
+
+const Form = styled.form`
+display:flex;
+justify-content: center;
+flex-direction: column;
+align-items: center;
+width:80%;
+`
 
 const MainWrapp = styled.main`
 display:flex;
@@ -67,8 +75,9 @@ align-items: center;
 `
 
 const Input = styled.input`
-width: 450px;
-height: 50px;
+max-width:450px;
+width: 100%;
+height: 3em;
 
 background: #FFFFFF;
 border-radius: 10px;
@@ -78,8 +87,9 @@ border-radius: 10px;
 const Submit = styled.input `
 /* 로그인 버튼 배경 */
 
-width: 458px;
-height: 50px;
+max-width: 458px;
+width: 100%;
+height: 3em;
 
 
 background: ${(props) => (props.isValid ? '#FF073D' : 'gray')};

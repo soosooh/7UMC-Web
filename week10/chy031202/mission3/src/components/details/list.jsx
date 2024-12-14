@@ -20,4 +20,6 @@ const Credits = styled.ul`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    padding-bottom:30px;
+    height:100%;
 `;

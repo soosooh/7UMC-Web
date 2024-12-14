@@ -54,12 +54,14 @@ const SearchComp = () => {
     
     return (
         <>
+        <Search>
         <Input placeholder='영화 제목을 입력해주세요.' 
         type={'text'} 
         value = {searchQuery}
         onChange={handleChange}
         />
         <Button onClick={handleSearch}>검색</Button>
+        </Search>
         <br></br>
         
         
@@ -92,14 +94,20 @@ const SearchComp = () => {
     
 }
 
+const Search = styled.div`
+display:flex;
+width:100%;
+
+justify-content:center;
+flex-direction:row;
+align-items:center;
+`
 
 const Input = styled.input`
-
-width: 80%;
-height: 50px;
+height: 3.7em;
+width:60%;
 left: 203px;
 top: 96px;
-min-width:499px;
 background: #FFFFFF;
 border-radius: 10px 0px 0px 10px;
 border:none;
@@ -109,7 +117,8 @@ border:none;
 const Button = styled.button `
 /* searchButtonBackground */
 
-width: 90px;
+max-width: 90px;
+width:15%;
 height: 52px;
 left: 1805px;
 top: 96px;

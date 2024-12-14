@@ -1,13 +1,24 @@
 //import {Link} from "react-router-dom";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
+import { useMediaQuery } from 'react-responsive';
+import SidebarComponent from "../sidebar";
+import { FaSearch } from "react-icons/fa";
+import { MdMovie } from "react-icons/md";
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const isMobile = useMediaQuery({ maxWidth: 500 });
     return (
         <NavTag>
             <StyledLink to={'/'} >YONGCHA</StyledLink>
 
+            {isMobile && (
+                <MobileIcons>
+                    <FaSearch onClick={() => navigate("/search")} />
+                    <MdMovie onClick={() => navigate("/category")} />
+                </MobileIcons>
+            )}
             <ButtonStyle>
                 <Button  color="#413F3F" onClick={() => navigate("/login")}>로그인</Button>
                 <Button color="#FF073D" onClick={()=> navigate("/signup")}>회원가입</Button>
@@ -16,7 +27,21 @@ const Navbar = () => {
     );
 };
 
+const MobileIcons = styled.div`
+    margin-left: auto; /* 오른쪽 정렬 */
+    display: flex;
+    gap: 10px;
 
+    svg {
+        font-size: 24px;
+        cursor: pointer;
+        color: #FF073D;
+
+        &:hover {
+            color: white;
+        }
+    }
+`;
 
 const NavTag = styled.div `
     width: 100%;
@@ -32,6 +57,7 @@ const NavTag = styled.div `
 
 const ButtonStyle = styled.div `
     margin-left: auto;
+    margin-right:10px;
 `
 const Button = styled.button `
     

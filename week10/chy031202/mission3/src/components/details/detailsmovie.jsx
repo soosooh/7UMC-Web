@@ -18,15 +18,21 @@ const DetailMovie = ({ movie, credits }) => {
     console.log("Director:", director);
     console.log("Credits data:", credits);
     return (
-        <>
+        <Wrapp>
         <Banner movie={movie} />
         
         <CastList cast={credits.cast || []} />
         
             
-        </>
+        </Wrapp>
     );
 }
+
+const Wrapp=styled.main`
+display:flex;
+width:98%;
+flex-direction:column;
+`
 
 export default DetailMovie;
 

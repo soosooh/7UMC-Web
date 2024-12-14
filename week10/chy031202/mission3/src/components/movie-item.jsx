@@ -69,6 +69,8 @@ const Poster = styled.img`
 `;
 
 const Modata = styled.li`
+    display:flex;
+    justify-content:center;
     position: relative;
     float: left;
     margin-right:20px;

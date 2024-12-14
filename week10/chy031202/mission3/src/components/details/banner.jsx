@@ -25,7 +25,6 @@ const Intro = styled.article`
     background-image: url(${(props) => props.bgimage});
     background-size: cover;
     background-position: center;
-    width: auto;
     height: 335px;
     border-radius: 10px;
 
@@ -42,7 +41,7 @@ const Intro = styled.article`
 `;
 
 const Overview = styled.div`
-    width: 500px;
+    width: 56vw;
 `;
 
 export default Banner;
