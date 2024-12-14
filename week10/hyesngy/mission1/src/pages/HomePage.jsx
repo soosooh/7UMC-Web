@@ -1,9 +1,10 @@
 import React from 'react';
+import MovieList from '../components/Movies/MovieList';
 
 const HomePage = () => {
     return (
         <div>
-            <h1>홈</h1>
+            <MovieList listType="popular" />
         </div>
     );
 };
