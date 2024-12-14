@@ -12,6 +12,7 @@ import Login from './pages/Auth/LoginPage';
 import SignUp from './pages/Auth/SignUpPage';
 import Category from './pages/CategoryPage';
 import Search from './pages/SearchPage';
+import Maps from './pages/Maps/mapsPage';
 import RootLayout from './layout/root-layout';
 
 const router = createBrowserRouter([
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: 'search',
         element: <Search />
+      },
+      {
+        path: 'maps',
+        element: <Maps />
       }
     ]
   },
