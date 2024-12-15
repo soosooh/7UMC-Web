@@ -5,8 +5,10 @@ import { FaSearch } from "react-icons/fa";
 import { MdMovie } from "react-icons/md";
 import { FaMapLocation } from "react-icons/fa6";
 import { useMediaQuery } from "react-responsive";
+import { useAuth } from "../../contexts/LoginContext";
 
-const NavbarLog = ({nickname, onLogout}) => {
+const NavbarLog = ({nickname}) => {
+    const { logout } = useAuth();
     const isMobile = useMediaQuery({ maxWidth: 500 });
     
     return (
@@ -23,7 +25,7 @@ const NavbarLog = ({nickname, onLogout}) => {
 
             <ButtonStyle>
                 <Name>{nickname} 님 반갑습니다.</Name>
-                <Button  color="#413F3F" onClick={onLogout}>로그아웃</Button>
+                <Button  color="#413F3F" onClick={logout}>로그아웃</Button>
                 
             </ButtonStyle>
         </NavTag>

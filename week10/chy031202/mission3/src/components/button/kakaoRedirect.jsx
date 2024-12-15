@@ -70,13 +70,14 @@ const KakaoRedirectHandler = () => {
 
                 // 4. 닉네임 저장
                 const nickname = userResponse.data.properties.nickname;
-                // if (nickname) {
-                //     localStorage.setItem("nickname", nickname);
-                //     console.log("닉네임 저장 성공:", nickname);
-                // } else {
-                //     console.error("사용자 정보에 닉네임이 없습니다.");
-                // }
                 login(nickname);
+
+                //로그아웃 구현 
+                const userLogin = await axios.get(
+                    `https://kauth.kakao.com/oauth/logout?client_id=${kakaoRestAPI}&logout_redirect_uri=${redirect_uri}`
+                );
+
+
 
 
                 // 로그인 성공 후 홈으로 이동

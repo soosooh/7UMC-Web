@@ -44,7 +44,7 @@ const RootLayout = () => {
 
     return (
         <LayoutContainer>
-            {isLoggedIn ? <NavbarLog nickname={nickname} onLogout={logout} /> : <Navbar />} 
+            {isLoggedIn ? <NavbarLog nickname={nickname} /> : <Navbar />} 
             
             <UnderWrapp>
                 {!isMobile && <Sidbar />}
