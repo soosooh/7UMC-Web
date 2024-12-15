@@ -19,7 +19,7 @@ import Popular from './Pages/MovieCategory/Popular.jsx';
 import TopRated from './Pages/MovieCategory/Top-rated.jsx';
 import UpComing from './Pages/MovieCategory/Up-coming.jsx';
 import MovieDetailPage from './Pages/MovieDetailPage.jsx';
-import Map from './Pages/map.jsx';
+import Map from './Pages/Map.jsx';
 
 const router = createBrowserRouter([
   {
