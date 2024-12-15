@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaBasketShopping } from "react-icons/fa6";
-import useStore from '../store/useStore';
+import useSlice from '../features/useSlice';
 
 const Navbar = () => {
-  const amount = useStore((state) => state.cart.amount);
+  const amount = useSlice((state) => state.cart.amount);
 
   return (
     <NavbarDiv>

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import AlbumItem from './AlbumItem';
-import CartFooter from './CartFooter';
-import useStore from '../store/useStore';
+import AlbumItem from '../../../components/AlbumItem';
+import CartFooter from '../../../components/CartFooter';
+import useSlice from '../../../features/useSlice';
 
 const CartContainer = () => {
-  const cartItems = useStore((state) => state.cart.cartItems);
+  const cartItems = useSlice((state) => state.cart.cartItems);
 
   console.log(cartItems);
   return (

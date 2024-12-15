@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import useStore from '../store/useStore';
+import useSlice from '../features/useSlice';
 
 const Modal = () => {
-  const isOpen = useStore((state) => state.modal.isOpen);
-  const clearCart = useStore((state) => state.clearCart);
-  const closeModal = useStore((state) => state.closeModal);
+  const isOpen = useSlice((state) => state.modal.isOpen);
+  const clearCart = useSlice((state) => state.clearCart);
+  const closeModal = useSlice((state) => state.closeModal);
 
   if (!isOpen) return null;
 
