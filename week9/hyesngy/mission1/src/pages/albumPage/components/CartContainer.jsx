@@ -2,8 +2,8 @@
 import { useSelector } from "react-redux";
 import React from 'react';
 import styled from 'styled-components';
-import AlbumItem from './AlbumItem';
-import Footer from './footer';
+import AlbumItem from '../../../components/AlbumItem';
+import Footer from '../../../components/footer';
 
 const CartContainer = () => {
   const { cartItems, total } = useSelector((store) => store.cart);

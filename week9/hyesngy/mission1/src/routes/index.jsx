@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from '../layouts/RootLayout';
-import AlbumPage from '../pages/AlbumPage';
+import AlbumPage from '../pages/albumPage';
 import NotFoundPage from "../pages/NotFoundPage";
 
 export const router = createBrowserRouter([
