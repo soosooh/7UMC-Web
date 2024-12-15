@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { loginUser } from '../apis/authService';
 import { useMutation } from '@tanstack/react-query';
+import KakaoButton from '../components/button/kakaoButton';
 
 const FormContainer = styled.div`
   display: flex;
@@ -150,6 +151,7 @@ const LoginPage = () => {
         <SubmitButton type="submit" disabled={!isValid}>
           로그인
         </SubmitButton>
+        <KakaoButton />
         {error && <ErrorMessage>{error}</ErrorMessage>}
       </Form>
     </FormContainer>
