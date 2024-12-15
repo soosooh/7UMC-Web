@@ -78,6 +78,12 @@ const Sidebar = () => {
             <Button>영화</Button>
           </Movie__button>
         </StyledLink>
+        <StyledLink to="/Map">
+          <Movie__button>
+            <PiFilmSlateBold />
+            <Button>지도</Button>
+          </Movie__button>
+        </StyledLink>
       </Sidebar__container>
     </>
   );

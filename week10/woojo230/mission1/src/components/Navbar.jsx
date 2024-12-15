@@ -93,46 +93,60 @@ const StyledLink = styled(Link)`
 `;
 
 const Navbar = () => {
-  const [nickname, setNickname] = useState(null); // 닉네임 상태 추가
+  const [nickname, setNickname] = useState(() => {
+    return localStorage.getItem('nickname');
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      const userInfo = await getUserInfo();
-      if (userInfo) {
-        const nicknameFromEmail = userInfo.email.split('@')[0]; // 이메일에서 @ 앞부분을 추출
-        setNickname(nicknameFromEmail);
-      }
-    };
-
-    fetchUserInfo();
+    // 컴포넌트 마운트 시 localStorage의 nickname 감시
+    const storedNickname = localStorage.getItem('nickname');
+    if (storedNickname) {
+      setNickname(storedNickname);
+    }
   }, []);
 
+  const handleLogin = () => {
+    navigate('/LogIn/auth');
+  };
+
   const handleLogout = () => {
-    logout();
-    setNickname(null);
-    navigate('/LogIn');
+    const kakaoToken = localStorage.getItem('kakaoToken');
+    if (kakaoToken) {
+      const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_TOKEN;
+      const logoutRedirectURI = 'http://localhost:5173/LogIn/auth';
+      const kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_REST_API_KEY}&logout_redirect_uri=${logoutRedirectURI}`;
+
+      localStorage.removeItem('kakaoToken');
+      localStorage.removeItem('nickname');
+      setNickname(null);
+
+      // 카카오 로그아웃 리다이렉션
+      window.location.href = kakaoLogoutURL;
+    } else {
+      localStorage.removeItem('nickname');
+      setNickname(null);
+      navigate('/LogIn');
+    }
   };
 
   return (
     <Navbar__container>
-      <StyledLink to="/Search">
-        <Navbar__icon>YONGCHA</Navbar__icon>
-      </StyledLink>
+      <Navbar__icon>YONGCHA</Navbar__icon>
       <Navbar__button>
         {nickname ? (
           <UserContainer>
-            <span style={{ color: 'white' }}>{nickname}님 반갑습니다</span>
+            <span>{nickname}님 반갑습니다</span>
             <LogOutButton onClick={handleLogout}>로그아웃</LogOutButton>
           </UserContainer>
         ) : (
           <>
-            <Link to="/LogIn">
-              <LogInButton>로그인</LogInButton>
-            </Link>
-            <Link to="/SignUp">
+            <StyledLink to="/LogIn">
+              <LogInButton onClick={handleLogin}>로그인</LogInButton>
+            </StyledLink>
+            <StyledLink to="/SignUp">
               <SignUpButton>회원가입</SignUpButton>
-            </Link>
+            </StyledLink>
           </>
         )}
       </Navbar__button>
