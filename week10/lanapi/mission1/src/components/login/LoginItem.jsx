@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LoginItem = ({ type, placeholder, register, error }) => (
-  <FieldContainer>
-    <TextInput 
-      type={type} 
-      placeholder={placeholder} 
-      {...register} 
-      hasError={!!error} 
-    />
-    <ErrorText>{error}</ErrorText>
-  </FieldContainer>
-);
+const LoginItem = ({ type, placeholder, register, error }) => {
+  const { ref, ...restRegister } = register; // register에서 ref 분리
+  
+  return (
+    <FieldContainer>
+      <TextInput
+        type={type}
+        placeholder={placeholder}
+        ref={ref}
+        {...restRegister} // hasError를 제외한 나머지 속성만 전달
+        $hasError={!!error} // styled-components에서 props 전달 시 $를 접두사로 사용
+      />
+      <ErrorText>{error}</ErrorText>
+    </FieldContainer>
+  );
+};
 
 export default LoginItem;
 
