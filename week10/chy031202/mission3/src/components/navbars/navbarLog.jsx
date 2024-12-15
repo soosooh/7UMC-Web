@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
 import { MdMovie } from "react-icons/md";
 import { FaMapLocation } from "react-icons/fa6";
+import { useMediaQuery } from "react-responsive";
 
 const NavbarLog = ({nickname, onLogout}) => {
+    const isMobile = useMediaQuery({ maxWidth: 500 });
     
     return (
         <NavTag>
