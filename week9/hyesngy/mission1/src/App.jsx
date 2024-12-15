@@ -3,7 +3,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import Navbar from './components/navbar';
 import CartContainer from './components/CartContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { calculateTotals } from '../features/cart/cartSlice';
+import { calculateTotals } from '../src/features/cart/cartSlice';
 
 const App = () => {
   const dispatch = useDispatch();

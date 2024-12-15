@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaSortUp, FaSortDown } from "react-icons/fa";
 import { useDispatch } from 'react-redux';
-import { increase, decrease, removeItem } from '../../features/cart/cartSlice';
+import { increase, decrease, removeItem } from '../features/cart/cartSlice';
 
 const AlbumItem = ({ props }) => {
   const dispatch = useDispatch();
