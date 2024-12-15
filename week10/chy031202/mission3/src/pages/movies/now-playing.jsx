@@ -1,14 +1,14 @@
 import React, { useRef,useEffect, useState } from 'react';
 import ListData from '../../components/movielist.jsx';
-import { axiosInstance } from '../../apis/axios~instance.js';
-import useCustomFetch from '../../hooks/useQuery.js';
+import { movieApi } from '../../apis/axios~instance.js';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import SckeletonWrapper from '../../components/skeletons/sckeletonWrapper.jsx';
 import Pagination from '../../components/pageButton.jsx';
 
+
 const fetchMovies = async (page) => {
-    const response = await axiosInstance.get(`/movie/now_playing?language=ko-KR&page=${page}`);
+    const response = await movieApi.get(`/movie/now_playing?language=ko-KR&page=${page}`);
     return response.data;
 };
 

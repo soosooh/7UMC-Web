@@ -5,6 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 import SidebarComponent from "../sidebar";
 import { FaSearch } from "react-icons/fa";
 import { MdMovie } from "react-icons/md";
+import { FaMapLocation } from "react-icons/fa6";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Navbar = () => {
                 <MobileIcons>
                     <FaSearch onClick={() => navigate("/search")} />
                     <MdMovie onClick={() => navigate("/category")} />
+                    <FaMapLocation nClick = {()=>navigate("/map")}/>
                 </MobileIcons>
             )}
             <ButtonStyle>

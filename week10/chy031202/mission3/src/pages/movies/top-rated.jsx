@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from "axios";
 import ListData from '../../components/movielist.jsx';
-import { axiosInstance } from '../../apis/axios~instance.js';
+// import { axiosInstance } from '../../apis/axios~instance.js';
 import useCustomFetch from '../../hooks/useQuery.js';
 import { useQuery , useInfiniteQuery} from '@tanstack/react-query';
 import SckeletonWrapper from '../../components/skeletons/sckeletonWrapper.jsx';

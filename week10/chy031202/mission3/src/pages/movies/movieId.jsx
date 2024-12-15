@@ -1,9 +1,8 @@
 import DetailMovie from "../../components/details/detailsmovie.jsx";
 import React, { useEffect, useState } from 'react';
-import useCustomFetch from '../../hooks/useQuery.js';
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../../apis/axios~instance.js";
+import { movieApi } from "../../apis/axios~instance.js";
 
 const MovieID = () => {
     const { movieId } = useParams();
