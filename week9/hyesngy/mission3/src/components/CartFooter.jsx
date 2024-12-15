@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useStore from '../store/useStore';
+import useSlice from '../features/useSlice';
 
 const CartFooter = () => {
-  const total = useStore((state) => state.cart.total);
-  const openModal = useStore((state) => state.openModal);
+  const total = useSlice((state) => state.cart.total);
+  const openModal = useSlice((state) => state.openModal);
 
   return (
     <FooterContainer>

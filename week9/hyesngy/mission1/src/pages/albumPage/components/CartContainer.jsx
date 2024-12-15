@@ -1,11 +1,12 @@
-import React from 'react';
+
 import { useSelector } from "react-redux";
+import React from 'react';
 import styled from 'styled-components';
-import AlbumItem from './AlbumItem';
-import CartFooter from './CartFooter';
+import AlbumItem from '../../../components/AlbumItem';
+import Footer from '../../../components/footer';
 
 const CartContainer = () => {
-  const { cartItems } = useSelector((store) => store.cart);
+  const { cartItems, total } = useSelector((store) => store.cart);
   console.log(cartItems);
   return (
     <Container>
@@ -15,7 +16,7 @@ const CartContainer = () => {
           <AlbumItem props={item} key={item.id} />
         ))}
       </ListContainer>
-      <CartFooter />
+      <Footer />
     </Container>
   );
 };

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaSortUp, FaSortDown } from "react-icons/fa";
-import useStore from '../store/useStore';
+import useSlice from '../features/useSlice';
 
 const AlbumItem = ({ props }) => {
-  const increase = useStore((state) => state.increase);
-  const decrease = useStore((state) => state.decrease);
-  const removeItem = useStore((state) => state.removeItem);
+  const increase = useSlice((state) => state.increase);
+  const decrease = useSlice((state) => state.decrease);
+  const removeItem = useSlice((state) => state.removeItem);
 
   return (
     <ItemWrapper>
