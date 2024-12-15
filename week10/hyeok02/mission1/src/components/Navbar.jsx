@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import axiosInstance from '../api/auth';
 import Item from './Item';
-
+import { getRedirectURI } from '../api/redirectURI';
 const Container = styled.nav`
   width: 100%;
   height: 60px;
@@ -31,7 +31,7 @@ const Container = styled.nav`
 
 const BrandLogo = styled(Link)`
   font-size: 20px;
-  font-weight: bold;  
+  font-weight: bold;
   color: #FF073D;
   text-decoration: none;
   cursor: pointer;
@@ -110,24 +110,47 @@ const RegisterLink = styled(ActionLink)`
 `;
 
 const fetchUserInfo = async () => {
-  const { data } = await axiosInstance.get('/user/info');
-  return data;
+  try {
+    const { data } = await axiosInstance.get('/user/info');
+    return data;
+  } catch (error) {
+    console.error('Error fetching user info:', error.response || error.message);
+    throw error;
+  }
 };
 
 const Navbar = ({ userEmail, setUserEmail }) => {
   const navigate = useNavigate();
+  const kakaoNickname = localStorage.getItem('username');
+  const redirect_uri = getRedirectURI();
 
   const { data: user, isLoading, isError, error } = useQuery('userInfo', fetchUserInfo, {
-    enabled: !!userEmail, 
+    enabled: !!userEmail,
+    refetchOnWindowFocus: false,
     onSuccess: (data) => setUserEmail(data.email),
   });
 
   const handleLogout = () => {
+    const client_id = import.meta.env.VITE_KAKAO_TOKEN; // .env 파일에서 REST API 키 가져오기
+    let kakaoLogoutURL = '';
+    
+    if (kakaoNickname) {
+        // 카카오톡 로그인 로그아웃
+        kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${client_id}&logout_redirect_uri=${redirect_uri}`;
+    } else {
+        // 일반 로그인 로그아웃
+        const logout_redirect_uri = encodeURIComponent("http://localhost:3000/login"); // 일반 로그인 리다이렉트 URI
+        kakaoLogoutURL = `http://localhost:3000/login`; // 일반 로그아웃 시 로컬 페이지로 리다이렉트
+    }
+
+    // 로컬 스토리지에서 토큰과 닉네임 제거
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-    setUserEmail(null); 
-    navigate('/login'); 
-  };
+    localStorage.removeItem('username');
+
+    // 해당 로그아웃 URL로 리다이렉트
+    window.location.href = kakaoLogoutURL;
+};
 
   if (isLoading) {
     return (
@@ -155,7 +178,12 @@ const Navbar = ({ userEmail, setUserEmail }) => {
     <Container>
       <BrandLogo to="/home">YongCHA</BrandLogo>
       <ActionContainer>
-        {userEmail ? (
+        {kakaoNickname ? (
+          <>
+            <span style={{ color: 'white' }}>{kakaoNickname}님 반갑습니다</span>
+            <ActionLink as="button" onClick={handleLogout}>로그아웃</ActionLink>
+          </>
+        ) : userEmail ? (
           <>
             <span style={{ color: 'white' }}>{userEmail}님 반갑습니다</span>
             <ActionLink as="button" onClick={handleLogout}>로그아웃</ActionLink>

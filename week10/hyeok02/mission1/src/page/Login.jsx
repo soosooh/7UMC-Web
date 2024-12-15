@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axiosInstance from '../api/auth';
+import LoginKakao from '../components/LoginKakao';
 
 const inputStyles = { width: '300px', padding: '8px', borderRadius: '8px', marginBottom: '5px' };
 const errorTextStyles = { color: 'red', fontSize: '12px', marginTop: '5px' };
@@ -41,8 +42,8 @@ function LoginPage({ setUserEmail }) {
         localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('refreshToken', response.data.refreshToken);
         const userName = data.email.split('@')[0];
-        setUserEmail(userName);
-        navigate('/home');
+        setUserEmail(userName); // 이메일 업데이트
+        navigate('/home'); // 홈으로 이동
       },
       onError: (error) => console.error('로그인 실패:', error.response?.data || error.message),
     }
@@ -61,7 +62,7 @@ function LoginPage({ setUserEmail }) {
           type="email"
           register={register('email', {
             required: '이메일을 입력하세요.',
-            pattern: { value: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, message: '올바른 이메일 형식을 입력하세요.' },
+            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: '올바른 이메일 형식을 입력하세요.' },
           })}
           error={errors.email}
         />
@@ -79,6 +80,8 @@ function LoginPage({ setUserEmail }) {
           {mutation.isLoading ? '처리 중...' : '로그인'}
         </button>
       </form>
+      {/* 카카오 로그인 버튼 */}
+      <LoginKakao setUserEmail={setUserEmail} /> {/* setUserEmail 전달 */}
     </div>
   );
 }

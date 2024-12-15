@@ -18,12 +18,12 @@ import Detail from './page/moviepage/Detail';
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [userEmail, setUserEmail] = useState(null); 
+  const [userEmail, setUserEmail] = useState(null); // 로그인된 사용자 이메일 상태
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <RootLayout userEmail={userEmail} setUserEmail={setUserEmail} />,
+      element: <RootLayout userEmail={userEmail} setUserEmail={setUserEmail} />, // 상태 전달
       errorElement: <NotFound />,
       children: [
         {
@@ -56,7 +56,17 @@ const App = () => {
         },
         {
           path: 'login',
-          element: <Login setUserEmail={setUserEmail} />,
+          errorElement: <NotFound />,
+          children: [
+            {
+              index: true,
+              element: <Login setUserEmail={setUserEmail} />, 
+            },
+            {
+              path: 'auth',
+              element: <Login setUserEmail={setUserEmail} />, 
+            },
+          ],
         },
         {
           path: 'signup',
