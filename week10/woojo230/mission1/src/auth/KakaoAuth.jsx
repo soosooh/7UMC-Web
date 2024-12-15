@@ -15,7 +15,7 @@ const KakaoAuth = () => {
             params: {
               grant_type: 'authorization_code',
               client_id: import.meta.env.VITE_KAKAO_TOKEN,
-              redirect_uri: 'http://localhost:5173/LogIn/auth',
+              redirect_uri: getRedirectURI(), // 동적 Redirect URI
               code: code,
             },
             headers: {
@@ -37,7 +37,6 @@ const KakaoAuth = () => {
           }
         );
 
-        // 닉네임 저장
         const nickname = userInfoResponse.data.properties.nickname;
         localStorage.setItem('nickname', nickname);
 
@@ -56,7 +55,16 @@ const KakaoAuth = () => {
     }
   }, [navigate]);
 
-  return <div>로그인 처리 중...</div>;
+  return null;
+};
+
+// Redirect URI를 동적으로 반환
+const getRedirectURI = () => {
+  const currentURL = window.location.origin;
+  if (currentURL.includes('localhost')) {
+    return 'http://localhost:5173/LogIn/auth';
+  }
+  return 'https://woojo230-week10-mission1.netlify.app/LogIn/auth';
 };
 
 export default KakaoAuth;
