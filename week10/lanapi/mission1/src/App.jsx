@@ -1,8 +1,8 @@
+
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { REST_API_KEY, getRedirectURI } from './api/redirectURI';
 
 import HomePage from './pages/home/HomePage';
 import NotFound from './pages/notFound/NotFound';
@@ -16,7 +16,6 @@ import UpComing from './pages/movies/category/UpComing';
 import MovieDetailPage from './pages/movies/detail/MovieDetailPage';
 import RootLayout from './layout/RootLayout';
 import Category from './pages/movies/category/Category';
-import KakaoAuthHandler from './context/KakaoAuthHandler'; // 카카오 인증 처리 컴포넌트
 import MapsPage from './pages/map/Maps'; 
 
 
@@ -42,10 +41,6 @@ const router = createBrowserRouter(
         { path: 'movies/up-coming', element: <UpComing /> },
         { path: 'movies/:movieId', element: <MovieDetailPage /> },
       ],
-    },
-    {
-      path: '/login/auth', // 로그인 인증 콜백 경로 추가
-      element: <KakaoAuthHandler />,
     },
   ],
   {

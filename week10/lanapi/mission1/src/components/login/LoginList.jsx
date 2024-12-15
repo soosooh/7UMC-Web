@@ -1,7 +1,6 @@
 import React from 'react';
 import LoginItem from './LoginItem';
 import styled from 'styled-components';
-import KakaoButton from '../../components/button/kakaoButton';
 
 const LoginList = ({ register, errors, isValid }) => (
   <>
@@ -19,9 +18,6 @@ const LoginList = ({ register, errors, isValid }) => (
     />
     <LoginButton type="submit" disabled={!isValid}>로그인</LoginButton>
 
-    <KakaoButtonContainer>
-      <KakaoButton />
-    </KakaoButtonContainer>
   </>
 );
 
@@ -52,7 +48,3 @@ const LoginButton = styled.button`
   }
 `;
 
-const KakaoButtonContainer = styled.div`
-  margin-top: 15px;
-  text-align: center;
-`;

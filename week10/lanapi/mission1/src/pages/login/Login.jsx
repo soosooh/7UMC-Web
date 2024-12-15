@@ -1,15 +1,16 @@
+
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useMutation } from '@tanstack/react-query'; // useMutation 임포트
-import { signIn } from '../../api/apiClient'; // 로그인 API 함수
+import { useMutation } from '@tanstack/react-query';
+import { signIn } from '../../api/apiClient';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import LoginList from '../../components/login/LoginList'; // LoginList 컴포넌트
-import { AuthContext } from '../../context/AuthContext'; // AuthContext 가져오기
+import LoginList from '../../components/login/LoginList';
+import { AuthContext } from '../../context/AuthContext';
+import KakaoButton from '../../components/button/kakaoButton'; // KakaoButton 임포트
 
-// 로그인 검증 스키마
 const loginSchema = z.object({
   email: z.string().email('유효하지 않은 이메일 형식입니다.').nonempty('이메일은 필수 입력 사항입니다.'),
   password: z.string().min(8, '비밀번호는 8자리 이상이어야 합니다.'),
@@ -26,9 +27,13 @@ const LoginPage = () => {
 
   const mutation = useMutation({
     mutationFn: signIn,
-    onSuccess: (response, variables) => { // variables 매개변수 추가
+    onSuccess: (response, variables) => {
       console.log('서버 응답:', response);
-      login({ email: variables.email }); // 수정된 부분
+      login({
+        email: variables.email,
+        nickname: variables.nickname || '',
+        loginType: 'local',
+      });
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
       alert('로그인에 성공했습니다!');
@@ -45,6 +50,7 @@ const LoginPage = () => {
     console.log('로그인 요청 데이터:', userData);
     mutation.mutate(userData);
   };
+
   return (
     <Wrapper>
       <FormContainer>
@@ -52,6 +58,8 @@ const LoginPage = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <LoginList register={register} errors={errors} isValid={isValid} />
         </Form>
+        <Separator></Separator>
+        <KakaoButton />
       </FormContainer>
     </Wrapper>
   );
@@ -110,4 +118,18 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+const Separator = styled.div`
+  color: #fff;
+  font-size: 14px;
+  margin: 20px 0;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid #fff;
+  line-height: 0.1em;
+  span {
+    background: #202832;
+    padding: 0 10px;
+  }
 `;
