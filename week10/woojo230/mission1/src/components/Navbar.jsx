@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import getRedirectURI from '../apis/redirectURI'; //
 import { getUserInfo, logout } from '../apis/authService';
 
 const Navbar__container = styled.div`
@@ -114,18 +115,15 @@ const Navbar = () => {
     const kakaoToken = localStorage.getItem('kakaoToken');
     if (kakaoToken) {
       const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_TOKEN;
-      const logoutRedirectURI = 'http://localhost:5173/LogIn/auth';
+      const logoutRedirectURI = getRedirectURI(); // 동적 Redirect URI
       const kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_REST_API_KEY}&logout_redirect_uri=${logoutRedirectURI}`;
 
       localStorage.removeItem('kakaoToken');
       localStorage.removeItem('nickname');
-      setNickname(null);
 
-      // 카카오 로그아웃 리다이렉션
-      window.location.href = kakaoLogoutURL;
+      window.location.href = kakaoLogoutURL; // 리다이렉션
     } else {
       localStorage.removeItem('nickname');
-      setNickname(null);
       navigate('/LogIn');
     }
   };
