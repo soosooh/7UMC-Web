@@ -5,7 +5,6 @@ import Sidbar from "../components/sidebar.jsx";
 import styled from "styled-components";
 import React, { useState, useEffect } from 'react';
 import { useAuth } from "../contexts/LoginContext.jsx";
-import { useQuery } from "@tanstack/react-query";
 const SIDEBAR_WIDTH = '180px';
 import { useMediaQuery } from 'react-responsive';
 

@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import getRedirectURI from "../../apis/redirectURI";
+import { useAuth } from "../../contexts/LoginContext";
 
 const KakaoRedirectHandler = () => {
     const navigate = useNavigate();
     const kakaoRestAPI = import.meta.env.VITE_KAKAO_TOKEN;
     const redirect_uri = getRedirectURI();
     const [isFetching, setIsFetching] = useState(false); // 중복 호출 방지 플래그
+    const { login } = useAuth();
 
 
     useEffect(() => {
@@ -27,7 +29,7 @@ const KakaoRedirectHandler = () => {
                     new URLSearchParams({
                         grant_type: "authorization_code",
                         client_id: kakaoRestAPI,
-                        redirect_uri: redirect_uri,
+                        redirect_uri: "http://localhost:5173/login/auth",
                         code: code,
                     }),
                     {
@@ -43,6 +45,9 @@ const KakaoRedirectHandler = () => {
                 const refreshToken = response.data.refresh_token;
                 localStorage.setItem("accessToken", accessToken);
                 localStorage.setItem("refreshToken", refreshToken);
+
+                // axiosInstance의 기본 헤더 갱신
+            //axiosInstance.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
 
                 // if (accessToken && refreshToken) {
                 //     // 로컬 스토리지에 토큰 저장
@@ -65,12 +70,13 @@ const KakaoRedirectHandler = () => {
 
                 // 4. 닉네임 저장
                 const nickname = userResponse.data.properties.nickname;
-                if (nickname) {
-                    localStorage.setItem("nickname", nickname);
-                    console.log("닉네임 저장 성공:", nickname);
-                } else {
-                    console.error("사용자 정보에 닉네임이 없습니다.");
-                }
+                // if (nickname) {
+                //     localStorage.setItem("nickname", nickname);
+                //     console.log("닉네임 저장 성공:", nickname);
+                // } else {
+                //     console.error("사용자 정보에 닉네임이 없습니다.");
+                // }
+                login(nickname);
 
 
                 // 로그인 성공 후 홈으로 이동
@@ -84,7 +90,7 @@ const KakaoRedirectHandler = () => {
         }
         fetchData();
 
-    }, [navigate, kakaoRestAPI, redirect_uri]); // 종속성 배열에 필요한 값 추가]);
+    }, [navigate, kakaoRestAPI, redirect_uri, login]); // 종속성 배열에 필요한 값 추가]);
 
 
     return <div>로그인 처리 중...</div>;

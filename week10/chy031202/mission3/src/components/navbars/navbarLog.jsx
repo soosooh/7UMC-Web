@@ -30,6 +30,22 @@ const NavbarLog = ({nickname, onLogout}) => {
     );
 };
 
+const MobileIcons = styled.div`
+    margin-left: auto; /* 오른쪽 정렬 */
+    display: flex;
+    gap: 10px;
+
+    svg {
+        font-size: 24px;
+        cursor: pointer;
+        color: #FF073D;
+
+        &:hover {
+            color: white;
+        }
+    }
+`;
+
 const Name = styled.span `
 color:white;
 `

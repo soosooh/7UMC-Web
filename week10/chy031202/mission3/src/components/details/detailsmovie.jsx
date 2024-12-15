@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from 'react';
-import useCustomFetch from "../../hooks/useQuery";
 import { useParams } from "react-router-dom";
 import Banner from "./banner";
 import CastList from "./list";

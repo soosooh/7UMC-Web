@@ -8,11 +8,12 @@ export const AuthProvider = ({ children }) => {
     const [nickname, setNickname] = useState(localStorage.getItem("nickname") || "");
 
 
-    // // 로그인 함수
-    // const login = (nickname) => {
-    //     setIsLoggedIn(true);
-    //     setNickname(nickname);
-    // };
+    // 로그인 상태 업데이트 함수
+    const login = (nickname) => {
+        setIsLoggedIn(true);
+        setNickname(nickname);
+        localStorage.setItem("nickname", nickname);
+    };
     const logout = () => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, nickname, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, nickname, logout , login}}>
             {children}
         </AuthContext.Provider>
     );
