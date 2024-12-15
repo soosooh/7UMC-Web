@@ -1,5 +1,6 @@
 import axios from 'axios';
 import tokenStorage from '../contexts/tokenStorage';
+import { getRedirectURI } from './redirectURI';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -11,7 +12,6 @@ const axiosInstance = axios.create({
   }
 });
 
-// Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = tokenStorage.getAccessToken();
@@ -23,13 +23,11 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // 토큰 만료 시 재발급 처리
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -70,7 +68,6 @@ const authApi = {
         passwordCheck
       });
 
-      // 회원가입 성공 시 토큰 저장
       const { accessToken, refreshToken } = data;
       if (accessToken && refreshToken) {
         tokenStorage.setTokens(accessToken, refreshToken);
@@ -93,7 +90,6 @@ const authApi = {
         password
       });
 
-      // 로그인 성공 시 토큰 저장
       const { accessToken, refreshToken } = data;
       if (accessToken && refreshToken) {
         tokenStorage.setTokens(accessToken, refreshToken);
@@ -114,7 +110,46 @@ const authApi = {
       console.error('Get user info error:', error.response?.data);
       throw error;
     }
-  }
+  },
+
+  kakaoLogin: async (code) => {
+    try {
+      const params = new URLSearchParams();
+      params.append('grant_type', 'authorization_code');
+      params.append('client_id', import.meta.env.VITE_KAKAO_TOKEN);
+      params.append('redirect_uri', getRedirectURI());
+      params.append('code', code);
+
+      const response = await axios.post(
+        'https://kauth.kakao.com/oauth/token',
+        params,
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Kakao token error:', error);
+      throw error;
+    }
+  },
+
+  getKakaoUserInfo: async (accessToken) => {
+    try {
+      const response = await axios.get('https://kapi.kakao.com/v2/user/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Kakao user info error:', error);
+      throw error;
+    }
+  },
 };
 
 export default authApi;

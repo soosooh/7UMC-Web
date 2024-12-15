@@ -1,15 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from './layout/RootLayout.jsx';
 import Home from './pages/Home/index.jsx';
-import  Login  from './pages/Auth/Login.jsx';  
-import  Signup  from './pages/Auth/Signup.jsx'; 
+import Login from './pages/Auth/Login.jsx';  
+import Signup from './pages/Auth/Signup.jsx'; 
 import Search from './pages/Search/index.jsx';
 import Movies from './pages/Movies/index.jsx';
 import NowPlaying from './pages/Movies/NowPlaying/index.jsx';
 import Popular from './pages/Movies/Popular/index.jsx';
 import TopRated from './pages/Movies/TopRated/index.jsx';
 import Upcoming from './pages/Movies/Upcoming/index.jsx';
-import MovieDetail from './pages/MovieDetail/index.jsx';  // 새로 추가
+import MovieDetail from './pages/MovieDetail/index.jsx';
+import Maps from './pages/Maps/index.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,12 +26,20 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
+        path: 'login/auth',  // 카카오 로그인 콜백을 처리할 경로 추가
+        element: <Login />
+      },
+      {
         path: 'signup',
         element: <Signup />
       },
       {
         path: 'search',
         element: <Search />
+      },
+      {
+        path: 'map',
+        element: <Maps />
       },
       {
         path: 'movies',
@@ -40,7 +49,7 @@ const router = createBrowserRouter([
             element: <Movies />
           },
           {
-            path: ':movieId',  // 영화 상세 페이지 라우트 추가
+            path: ':movieId',
             element: <MovieDetail />
           },
           {

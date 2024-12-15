@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import tokenStorage from '../../contexts/tokenStorage';
 import authApi from '../../api/authApi';
+import { getLogoutRedirectURI } from '../../api/redirectURI';
 
 const Nav = styled.nav`
  background-color: #413f3f;
@@ -111,52 +112,72 @@ const LogoutButton = styled.button`
  }
 `;
 
+
 const Navbar = () => {
- const navigate = useNavigate();
- const token = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken');
+  const isKakaoLogin = localStorage.getItem('isKakaoLogin');
+  const kakaoToken = localStorage.getItem('kakaoToken');
+  const username = localStorage.getItem('userNickname');
 
- const { data: userInfo, isError } = useQuery({
-   queryKey: ['user'],
-   queryFn: authApi.getUserInfo,
-   enabled: !!token,
-   retry: false,
-   onError: (error) => {
-     if (error.response?.status === 401) {
-       tokenStorage.removeTokens();
-     }
-   },
-   select: (data) => ({
-     isLoggedIn: true,
-     nickname: data.email ? data.email.split('@')[0] : ''
-   })
- });
+  useEffect(() => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(import.meta.env.VITE_KAKAO_TOKEN);
+    }
+  }, []);
 
- const isLoggedIn = !!token && !isError && userInfo?.isLoggedIn;
- const userEmail = userInfo?.nickname || '';
+  const { data: userInfo, isError } = useQuery({
+    queryKey: ['user'],
+    queryFn: authApi.getUserInfo,
+    enabled: !!token && !isKakaoLogin,
+    retry: false,
+    onError: (error) => {
+      if (error.response?.status === 401) {
+        tokenStorage.removeTokens();
+      }
+    },
+    select: (data) => ({
+      isLoggedIn: true,
+      nickname: data.email ? data.email.split('@')[0] : ''
+    })
+  });
 
- const handleLogout = () => {
-   tokenStorage.removeTokens();
-   navigate('/');
- };
+  const isLoggedIn = (!!token && !isError && userInfo?.isLoggedIn) || isKakaoLogin === 'true';
+  const displayName = username || userInfo?.nickname || '';
 
- return (
-   <Nav>
-     <Logo to="/">YONGCHA</Logo>
-     <AuthButtons>
-       {isLoggedIn ? (
-         <>
-           <UserInfo>{userEmail}님</UserInfo>
-           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
-         </>
-       ) : (
-         <>
-           <AuthButton to="/login">로그인</AuthButton>
-           <SignUpButton to="/signup">회원가입</SignUpButton>
-         </>
-       )}
-     </AuthButtons>
-   </Nav>
- );
+  const handleLogout = () => {
+    if (isKakaoLogin === 'true') {
+      localStorage.removeItem('isKakaoLogin');
+      localStorage.removeItem('kakaoToken');
+      localStorage.removeItem('userNickname');
+      
+      const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_TOKEN;
+      const logoutRedirectUri = getLogoutRedirectURI();
+      window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${KAKAO_REST_API_KEY}&logout_redirect_uri=${logoutRedirectUri}`;
+    } else {
+      tokenStorage.removeTokens();
+      navigate('/');
+    }
+  };
+
+  return (
+    <Nav>
+      <Logo to="/">YONGCHA</Logo>
+      <AuthButtons>
+        {isLoggedIn ? (
+          <>
+            <UserInfo>{displayName}님 환영합니다</UserInfo>
+            <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+          </>
+        ) : (
+          <>
+            <AuthButton to="/login">로그인</AuthButton>
+            <SignUpButton to="/signup">회원가입</SignUpButton>
+          </>
+        )}
+      </AuthButtons>
+    </Nav>
+  );
 };
 
 export default Navbar;

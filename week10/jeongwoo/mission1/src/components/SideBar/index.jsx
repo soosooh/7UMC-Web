@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { FaSearch, FaFilm } from 'react-icons/fa';
+import { FaSearch, FaFilm, FaMapMarkerAlt } from 'react-icons/fa';
 
 const SideBarContainer = styled.div`
   width: 200px;
@@ -36,8 +36,12 @@ const SideBar = () => {
         <IconWrapper><FaFilm /></IconWrapper>
         영화
       </SideBarItem>
+      <SideBarItem to="/map">
+        <IconWrapper><FaMapMarkerAlt /></IconWrapper>
+        지도
+      </SideBarItem>
     </SideBarContainer>
   );
 };
 
-export default SideBar;  
+export default SideBar;
