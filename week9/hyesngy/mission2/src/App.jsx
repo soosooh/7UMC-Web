@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { RouterProvider } from "react-router-dom";
+import { router } from './routes';
 import GlobalStyles from './styles/GlobalStyles';
-import Navbar from './components/navbar';
-import CartContainer from './components/CartContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateTotals } from '../src/features/cartSlice';
 import ModalPortal from './components/ModalPortal';
@@ -17,16 +17,15 @@ const App = () => {
   }, [cartItems, dispatch])
 
   return (
-    <div>
+    <>
       <GlobalStyles />
-      <Navbar />
+      <RouterProvider router={router} />
       {isOpen &&
         <ModalPortal>
-          <Modal></Modal>
+          <Modal />
         </ModalPortal>
       }
-      <CartContainer />
-    </div>
+    </>
   );
 };
 
