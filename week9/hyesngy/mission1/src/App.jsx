@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { RouterProvider } from "react-router-dom";
 import GlobalStyles from './styles/GlobalStyles';
-import Navbar from './components/navbar';
-import CartContainer from './components/CartContainer';
+import { router } from './routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateTotals } from '../src/features/cart/cartSlice';
 
@@ -14,11 +14,10 @@ const App = () => {
   }, [cartItems, dispatch])
 
   return (
-    <div>
+    <>
       <GlobalStyles />
-      <Navbar />
-      <CartContainer />
-    </div>
+      <RouterProvider router={router} />
+    </>
   );
 };
 
