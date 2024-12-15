@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React, { useEffect, useState } from 'react'; 
 import GlobalStyle from './styles/globalstyles.jsx';
 import RootLayout from './layout/root-layout.jsx';
+import NotFoundPage from "./pages/errorelement.jsx";
 
 import Home from './pages/home.jsx';
 import Login from './pages/login.jsx';
@@ -19,6 +20,9 @@ import Upcoming from './pages/movies/up-coming.jsx';
 import MovieID from './pages/movies/movieId.jsx';
 import { AuthProvider } from './contexts/LoginContext.jsx';
 import styled from "styled-components";
+import Maps from "./pages/maps.jsx";
+
+import KakaoRedirectHandler from "./components/button/kakaoRedirect.jsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -31,8 +35,22 @@ const router = createBrowserRouter([
         element: <Home/>
       },
       {
+        path: 'map',
+        element: <Maps/>
+      },
+      {
         path: 'login',
-        element: <Login/>
+        errorElement: <NotFoundPage />,
+        children: [
+          {
+            index:true,
+            element: <Login/>
+          },
+          {
+            path: 'auth',
+            element: <KakaoRedirectHandler />
+          },
+        ]
       },
       {
         path: 'signup',

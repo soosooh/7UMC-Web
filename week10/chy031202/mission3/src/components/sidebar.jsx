@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { MdMovie } from "react-icons/md";
+import { FaMapLocation } from "react-icons/fa6";
 
 const SidebarComponent =() =>{
     const navigate = useNavigate();
@@ -13,6 +14,9 @@ const SidebarComponent =() =>{
             <MovieContainer onClick = {()=>navigate("/category")}>
                 <MdMovie /> 영화
             </MovieContainer>
+            <div onClick = {()=>navigate("/map")}>
+                <FaMapLocation />  지도
+            </div>
         </Sidebar>
     )
 }

@@ -1,6 +1,9 @@
 //import {Link} from "react-router-dom";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
+import { FaSearch } from "react-icons/fa";
+import { MdMovie } from "react-icons/md";
+import { FaMapLocation } from "react-icons/fa6";
 
 const NavbarLog = ({nickname, onLogout}) => {
     
@@ -8,6 +11,13 @@ const NavbarLog = ({nickname, onLogout}) => {
         <NavTag>
             <StyledLink to={'/'} >YONGCHA</StyledLink>
             
+            {isMobile && (
+                            <MobileIcons>
+                                <FaSearch onClick={() => navigate("/search")} />
+                                <MdMovie onClick={() => navigate("/category")} />
+                                <FaMapLocation nClick = {()=>navigate("/map")}/>
+                            </MobileIcons>
+                        )}
 
             <ButtonStyle>
                 <Name>{nickname} 님 반갑습니다.</Name>
