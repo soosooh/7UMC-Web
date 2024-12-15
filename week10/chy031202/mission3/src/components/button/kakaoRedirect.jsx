@@ -29,7 +29,7 @@ const KakaoRedirectHandler = () => {
                     new URLSearchParams({
                         grant_type: "authorization_code",
                         client_id: kakaoRestAPI,
-                        redirect_uri: "http://localhost:5173/login/auth",
+                        redirect_uri: redirect_uri,
                         code: code,
                     }),
                     {
