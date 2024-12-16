@@ -14,16 +14,17 @@ import SignUp from './page/SignUp';
 import RootLayout from './Layout/Root-layout';
 import GlobalStyle from './styles/GlobalStyles';
 import Detail from './page/moviepage/Detail';
+import Maps from './page/Maps';
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [userEmail, setUserEmail] = useState(null); // 로그인된 사용자 이메일 상태
+  const [userEmail, setUserEmail] = useState(null); 
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <RootLayout userEmail={userEmail} setUserEmail={setUserEmail} />, // 상태 전달
+      element: <RootLayout userEmail={userEmail} setUserEmail={setUserEmail} />, 
       errorElement: <NotFound />,
       children: [
         {
@@ -79,6 +80,10 @@ const App = () => {
         {
           path: '/movies/:movieId',
           element: <Detail />,
+        },
+        {
+          path: '/map',
+          element: <Maps />,
         },
       ],
     },

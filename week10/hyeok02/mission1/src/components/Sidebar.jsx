@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
 import { BiSolidMoviePlay } from "react-icons/bi";
+import { FaMapMarkerAlt } from "react-icons/fa"; // 지도 아이콘 추가
 
 const Container = styled.div`
   width: 180px;
@@ -88,6 +89,10 @@ const Sidebar = () => {
       <Menu>
         <IconStyle><BiSolidMoviePlay /></IconStyle>
         <MenuLink to="/movies">영화</MenuLink>
+      </Menu>
+      <Menu>
+        <IconStyle><FaMapMarkerAlt /></IconStyle> 
+        <MenuLink to="/map">지도</MenuLink>
       </Menu>
     </Container>
   );
