@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import axios from "axios";
+import getRedirectURI from "../apis/redirectURI";
 import useForm from "../hooks/use-form";
+import { useEffect } from "react";
 import { validateLogin } from "../utils/validate";
 import { axiosAuth } from "../apis/axios-auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-
+import KakaoButton from "../components/button/kakaoButton";
 const LogInContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -86,6 +89,7 @@ const ErrorText = styled.p`
 
 const LogInPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const login = useForm({
     initialValues: {
       email: "",
@@ -138,6 +142,60 @@ const LogInPage = () => {
     },
   });
 
+  // 카카오 로그인 토큰 발급 및 사용자 정보 처리
+  const handleKakaoAuth = async (authCode) => {
+    try {
+      // 1. 카카오 토큰 요청
+      const tokenResponse = await axios.post(
+        "https://kauth.kakao.com/oauth/token",
+        new URLSearchParams({
+          grant_type: "authorization_code",
+          client_id: import.meta.env.VITE_KAKAO_TOKEN,
+          redirect_uri: getRedirectURI(),
+          code: authCode,
+        }),
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        }
+      );
+
+      const { access_token } = tokenResponse.data;
+
+      // 2. 사용자 정보 요청
+      const userResponse = await axios.get(
+        "https://kapi.kakao.com/v2/user/me",
+        {
+          headers: { Authorization: `Bearer ${access_token}` },
+        }
+      );
+
+      const nickname = userResponse.data.kakao_account.profile.nickname;
+
+      // 3. 사용자 정보 및 토큰 저장
+      localStorage.setItem("kakaoAccessToken", access_token);
+      localStorage.setItem("nickname", nickname);
+
+      console.log("카카오 사용자 정보:", userResponse.data); // 사용자 정보 로그 출력
+      alert(`${nickname}님, 카카오 로그인 성공!`);
+
+      navigate("/"); // 홈으로 이동
+      window.location.reload();
+    } catch (error) {
+      console.error("카카오 로그인 실패:", error);
+      alert("카카오 로그인에 실패했습니다.");
+    }
+  };
+
+  // URL에서 인가 코드 추출 및 처리
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const authCode = urlParams.get("code"); // URL에서 code 파라미터 추출
+
+    if (authCode) {
+      console.log("인가 코드:", authCode); // 인가 코드 로그 출력
+      handleKakaoAuth(authCode); // 인가 코드로 토큰 요청 및 사용자 정보 처리
+    }
+  }, [location]);
   return (
     <LogInContainer>
       <InputWrapper>
@@ -165,6 +223,7 @@ const LogInPage = () => {
       <StyledSubmit onClick={handlePressLogin} disabled={mutation.isLoading}>
         로그인
       </StyledSubmit>
+      <KakaoButton />
     </LogInContainer>
   );
 };
