@@ -65,11 +65,30 @@ const SignUp = styled.div`
 
 const Navbar = () => {
   const { isLoggedIn, userName, logout } = useContext(AuthContext);
+  const [kakaoNickname, setKakaoNickname] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // 로컬 스토리지에서 카카오 닉네임 확인
+    const storedNickname = localStorage.getItem("nickname");
+    if (storedNickname) {
+      setKakaoNickname(storedNickname);
+    }
+  }, []);
+
   const handleLogout = () => {
-    logout();
+    // AuthContext 로그아웃 실행
+    if (isLoggedIn) logout();
+
+    // 카카오 로그인 관련 정보 삭제
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("kakaoAccessToken");
+    localStorage.removeItem("nickname");
+
+    setKakaoNickname(null);
     navigate("/");
+    alert("로그아웃 되었습니다.");
   };
   return (
     <NavContainer>
@@ -77,9 +96,13 @@ const Navbar = () => {
         <Link to={"/"}>YONGCHA</Link>
       </Logo>
       <LinkContainer>
-        {isLoggedIn ? (
+        {isLoggedIn || kakaoNickname ? (
           <>
-            <StyledText>{userName}님 반갑습니다.</StyledText>
+            <StyledText>
+              {kakaoNickname
+                ? `${kakaoNickname}님 반갑습니다.`
+                : `${userName}님 반갑습니다.`}
+            </StyledText>
             <LogOut onClick={handleLogout}>로그아웃</LogOut>
           </>
         ) : (
