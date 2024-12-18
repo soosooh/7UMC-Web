@@ -5,10 +5,10 @@ export const getRedirectURI = () => {
 
     if (hostname === 'localhost') {
         return 'http://localhost:5173/login/auth';
-    } else if (hostname === 'lanapi-week10-mission1.netlify.app') {
-        return 'https://lanapi-week10-mission1.netlify.app/login/auth';
-    } else if (hostname === 'main-lanapi-week10-mission1.netlify.app') {
-        return 'https://main-lanapi-week10-mission1.netlify.app/login/auth';
+    } else if (hostname === 'lanapi-week10-final.netlify.app') {
+        return 'https://lanapi-week10-final.netlify.app/login/auth';
+    } else if (hostname === 'main-lanapi-week10-final.netlify.app') {
+        return 'https://main-lanapi-week10-final.netlify.app/login/auth';
     } else {
         throw new Error('Error: ', error);
     }
