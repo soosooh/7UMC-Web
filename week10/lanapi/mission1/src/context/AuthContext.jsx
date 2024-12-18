@@ -6,7 +6,6 @@ export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
-    // 초기 상태 복원
     useEffect(() => {
         const storedUser = JSON.parse(localStorage.getItem('user'));
         const accessToken = localStorage.getItem('accessToken');
@@ -21,24 +20,35 @@ export const AuthProvider = ({ children }) => {
     const login = (userData) => {
         console.log('Login userData:', userData);
 
-        // 이메일 존재 여부 확인
+        // 카카오 로그인의 경우 kakaoId와 nickname이 필수
+        if (userData.kakaoId) {
+            const loginData = {
+                ...userData,
+                loginType: 'kakao',
+                email: userData.email || `kakao_${userData.kakaoId}@kakao.com`
+            };
+            localStorage.setItem('user', JSON.stringify(loginData));
+            setIsLoggedIn(true);
+            setUser(loginData);
+            console.log('Kakao login successful:', loginData);
+            return;
+        }
+
+        // 일반 로그인의 경우 이메일 필수
         if (!userData.email) {
             console.error('Email is missing in userData');
             return;
         }
 
-        // 로그인 타입 추가 (기본값은 'local', 카카오 로그인의 경우 'kakao')
         const loginData = {
             ...userData,
-            loginType: userData.loginType || 'local'
+            loginType: 'local'
         };
 
-        // 로컬 스토리지에 사용자 정보 저장
         localStorage.setItem('user', JSON.stringify(loginData));
-
         setIsLoggedIn(true);
         setUser(loginData);
-        console.log('User state updated:', loginData);
+        console.log('Local login successful:', loginData);
     };
 
     const logout = () => {
@@ -57,9 +67,9 @@ export const AuthProvider = ({ children }) => {
     const getNickname = () => {
         if (!user) return '';
 
-        // 카카오 로그인의 경우 이메일의 첫 부분 또는 특정 닉네임 사용
-        if (user.loginType === 'kakao') {
-            return user.nickname || user.email.split('@')[0];
+        // 카카오 로그인의 경우 nickname 우선 사용
+        if (user.kakaoId === 'kakao') {
+            return user.nickname || '';
         }
 
         // 일반 로그인의 경우 닉네임 또는 이메일 사용
