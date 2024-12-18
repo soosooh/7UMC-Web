@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REST_API_KEY, getRedirectURI } from './apiConfig';  // 경로는 실제 파일 위치에 맞게 수정해주세요
+import { REST_API_KEY, getRedirectURI } from '../api/redirectURI';  // 경로는 실제 파일 위치에 맞게 수정해주세요
 
 // 카카오 인증 URL 생성 함수
 const getKakaoAuthURL = () => {
