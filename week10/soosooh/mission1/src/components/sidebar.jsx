@@ -1,5 +1,6 @@
 import { FaSearch } from "react-icons/fa";
 import { BiSolidMovie } from "react-icons/bi";
+import { FaMapMarkedAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 const SideContainer = styled.div`
@@ -25,6 +26,13 @@ const Movie = styled.div`
   a {
     color: white;
   }
+  margin-bottom: 20px;
+`;
+
+const Map = styled.div`
+  a {
+    color: white;
+  }
 `;
 const Sidebar = () => {
   return (
@@ -40,6 +48,12 @@ const Sidebar = () => {
           <BiSolidMovie /> 영화
         </Link>
       </Movie>
+
+      <Map>
+        <Link to="map">
+          <FaMapMarkedAlt /> 지도
+        </Link>
+      </Map>
     </SideContainer>
   );
 };

@@ -11,6 +11,7 @@ import Popular from "./pages/movies/popular";
 import TopRated from "./pages/movies/top-rated";
 import UpComing from "./pages/movies/up-coming";
 import MovieDetail from "./pages/movies/movie-detail";
+import MapsPage from "./pages/maps";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const router = createBrowserRouter([
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
             element: <MovieDetail />,
           },
         ],
+      },
+      {
+        path: "map",
+        element: <MapsPage />,
       },
     ],
   },
