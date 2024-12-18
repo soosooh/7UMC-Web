@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleAuthCode } from '../../context/AuthLKakao'; // 경로는 실제 파일 위치에 맞게 조정
-
+  
 const AuthHandler = () => {
   const navigate = useNavigate();
 
