@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import axiosInstance from '../api/auth';
 import Item from './Item';
 import { getRedirectURI } from '../api/redirectURI';
+
 const Container = styled.nav`
   width: 100%;
   height: 60px;
@@ -109,6 +110,17 @@ const RegisterLink = styled(ActionLink)`
   }
 `;
 
+const LogoutButton = styled(ActionLink)`
+  background-color: #F82F62; /* 로그아웃 버튼 색상 */
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #e52958; /* 호버 시 색상 */
+  }
+`;
+
 const fetchUserInfo = async () => {
   try {
     const { data } = await axiosInstance.get('/user/info');
@@ -133,14 +145,13 @@ const Navbar = ({ userEmail, setUserEmail }) => {
   const handleLogout = () => {
     const client_id = import.meta.env.VITE_KAKAO_TOKEN; // .env 파일에서 REST API 키 가져오기
     let kakaoLogoutURL = '';
-    
+
     if (kakaoNickname) {
-        // 카카오톡 로그인 로그아웃
-        kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${client_id}&logout_redirect_uri=${redirect_uri}`;
+      // 카카오톡 로그인 로그아웃
+      kakaoLogoutURL = `https://kauth.kakao.com/oauth/logout?client_id=${client_id}&logout_redirect_uri=${redirect_uri}`;
     } else {
-        // 일반 로그인 로그아웃
-        const logout_redirect_uri = encodeURIComponent("http://localhost:3000/login"); // 일반 로그인 리다이렉트 URI
-        kakaoLogoutURL = `http://localhost:3000/login`; // 일반 로그아웃 시 로컬 페이지로 리다이렉트
+      // 일반 로그인 로그아웃
+      kakaoLogoutURL = `http://localhost:3000/login`;
     }
 
     // 로컬 스토리지에서 토큰과 닉네임 제거
@@ -148,9 +159,9 @@ const Navbar = ({ userEmail, setUserEmail }) => {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('username');
 
-    // 해당 로그아웃 URL로 리다이렉트
+    // 로그아웃 URL로 리다이렉트
     window.location.href = kakaoLogoutURL;
-};
+  };
 
   if (isLoading) {
     return (
@@ -181,12 +192,12 @@ const Navbar = ({ userEmail, setUserEmail }) => {
         {kakaoNickname ? (
           <>
             <span style={{ color: 'white' }}>{kakaoNickname}님 반갑습니다</span>
-            <ActionLink as="button" onClick={handleLogout}>로그아웃</ActionLink>
+            <LogoutButton as="button" onClick={handleLogout}>로그아웃</LogoutButton>
           </>
         ) : userEmail ? (
           <>
             <span style={{ color: 'white' }}>{userEmail}님 반갑습니다</span>
-            <ActionLink as="button" onClick={handleLogout}>로그아웃</ActionLink>
+            <LogoutButton as="button" onClick={handleLogout}>로그아웃</LogoutButton>
           </>
         ) : (
           <>
