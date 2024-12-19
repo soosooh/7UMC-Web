@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker , InfoWindow} from "@react-google-maps/api";
 import styled from "styled-components";
 import { useState } from "react";
 
@@ -14,6 +14,7 @@ const MapsComp = () =>{
     const [error, setError] = useState(null); // 오류 메시지 저장
     const mapRef = useRef(null); // 맵 객체 저장
     const [theaters, setTheaters] = useState([]); // 영화관 리스트 저장
+    const [selectedTheater, setSelectedTheater] = useState(null); // 선택된 영화관 상태
 
     // 사용자의 현재 위치 가져오기
     // 사용자의 현재 위치 가져오기
@@ -34,9 +35,6 @@ const MapsComp = () =>{
         } else {
             setError("이 브라우저는 Geolocation을 지원하지 않습니다.");
         }
-        // if (currentPosition && mapRef.current) {
-        //     fetchNearbyTheaters(mapRef.current, currentPosition);
-        // }
     }, []);
 
 
@@ -64,12 +62,12 @@ const MapsComp = () =>{
     };
 
     // currentPosition 변경 시 지도 중심 이동
-    useEffect(() => {
-        if (currentPosition && mapRef.current) {
-            console.log("Fetching nearby theaters...");
-            fetchNearbyTheaters(mapRef.current, currentPosition);
-        }
-    }, [currentPosition]);
+    // useEffect(() => {
+    //     if (currentPosition && mapRef.current) {
+    //         console.log("Fetching nearby theaters...");
+    //         fetchNearbyTheaters(mapRef.current, currentPosition);
+    //     }
+    // }, [currentPosition]);
 
 
     if (!isLoaded) return <div>Loading...</div>;
@@ -107,10 +105,31 @@ const MapsComp = () =>{
                         icon={{
                             url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", // 영화관 마커
                         }}
-                        title={theater.name}
+                        //title={theater.name}
+                        //마커 클릭 이벤트
+                        onClick={() => {
+                            if (selectedTheater?.place_id !== theater.place_id) {
+                                setSelectedTheater(theater);
+                                console.log("마커 클릭 이벤트 호출:", theater.name);
+                            }
+                        }}
                     />
             ))}
-            
+            {/* 선택된 영화관 정보창 */}
+            {selectedTheater && (
+                    <InfoWindow
+                        position={{
+                            lat: selectedTheater.geometry.location.lat(),
+                            lng: selectedTheater.geometry.location.lng(),
+                        }}
+                        onCloseClick={() => setSelectedTheater(null)} // 닫기 버튼 클릭 시 선택 해제
+                    >
+                        <InfoWrapp>
+                            <h3>{selectedTheater.name}</h3>
+                            <p>{selectedTheater.vicinity}</p> {/* 주소 정보 */}
+                        </InfoWrapp>
+                    </InfoWindow>
+                )}
         </GoogleMap>
         </Wrapp>
         
@@ -123,5 +142,7 @@ justify-content:center;
 padding-right:10px;
 
 `
-
+const InfoWrapp = styled.div`
+color:black;
+`
 export default MapsComp;
