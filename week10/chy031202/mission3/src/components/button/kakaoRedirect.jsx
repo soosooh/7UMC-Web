@@ -29,7 +29,7 @@ const KakaoRedirectHandler = () => {
                     new URLSearchParams({
                         grant_type: "authorization_code",
                         client_id: kakaoRestAPI,
-                        redirect_uri: "http://localhost:5173/login/auth",
+                        redirect_uri: redirect_uri,
                         code: code,
                     }),
                     {
@@ -67,17 +67,15 @@ const KakaoRedirectHandler = () => {
                 });
 
                 console.log("사용자 정보:", userResponse.data);
-
+                
                 // 4. 닉네임 저장
                 const nickname = userResponse.data.properties.nickname;
                 login(nickname);
 
                 //로그아웃 구현 
-                const userLogin = await axios.get(
+                const userLogout = await axios.get(
                     `https://kauth.kakao.com/oauth/logout?client_id=${kakaoRestAPI}&logout_redirect_uri=${redirect_uri}`
                 );
-
-
 
 
                 // 로그인 성공 후 홈으로 이동
