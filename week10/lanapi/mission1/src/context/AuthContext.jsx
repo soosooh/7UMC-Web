@@ -80,12 +80,32 @@ export const AuthProvider = ({ children }) => {
         console.log('일반 로그인 완료:', loginData);
     };
 
-    const logout = () => {
+    const logout = async () => {
         console.log('로그아웃 시작');
+        
+        // 카카오 로그아웃 처리
+        if (user?.loginType === 'kakao') {
+            try {
+                const response = await fetch('https://kapi.kakao.com/v1/user/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('kakao_access_token')}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    console.error('카카오 로그아웃 실패:', response.status);
+                }
+            } catch (error) {
+                console.error('카카오 로그아웃 중 에러 발생:', error);
+            }
+        }
+
+        // Context 상태 초기화
         setUser(null);
         setIsLoggedIn(false);
 
-        // 모든 인증 관련 데이터 제거
+        // 로컬스토리지 데이터 제거
         localStorage.removeItem('user');
         localStorage.removeItem('accessToken');
         localStorage.removeItem('kakao_access_token');
